@@ -1,0 +1,125 @@
+{
+  "language": "python",
+  "display_name": "Python",
+  "levels": [
+    {
+      "id": "py_01_variables",
+      "title": "Nivel 1: El Bosque de las Variables",
+      "concept": "variables_tipos",
+      "difficulty": 1,
+      "theory": "En Python las variables no tienen un tipo fijo: el tipo lo determina el valor que contienen (tipado dinamico). int, float, str y bool son los tipos basicos. Puedes cambiar el tipo de una variable simplemente reasignandola.",
+      "exercise": {
+        "prompt": "Escribe una funcion llamada calcular_imc(peso, altura) que reciba el peso en kg y la altura en metros, y retorne el Indice de Masa Corporal (peso / altura**2) redondeado a 2 decimales.",
+        "starter_code": "def calcular_imc(peso, altura):\n    # tu codigo aqui\n    pass\n",
+        "tests": [
+          {"call": "calcular_imc(70, 1.75)", "expected": 22.86},
+          {"call": "calcular_imc(60, 1.60)", "expected": 23.44}
+        ]
+      }
+    },
+    {
+      "id": "py_02_control",
+      "title": "Nivel 2: El Laberinto Condicional",
+      "concept": "control_flujo",
+      "difficulty": 1,
+      "theory": "if/elif/else controlan el flujo segun condiciones. for itera sobre secuencias, while repite mientras una condicion sea verdadera. Python usa indentacion (no llaves) para definir bloques.",
+      "exercise": {
+        "prompt": "Escribe una funcion clasificar_triangulo(a, b, c) que reciba los 3 lados de un triangulo y retorne 'equilatero', 'isosceles' o 'escaleno'.",
+        "starter_code": "def clasificar_triangulo(a, b, c):\n    # tu codigo aqui\n    pass\n",
+        "tests": [
+          {"call": "clasificar_triangulo(3, 3, 3)", "expected": "equilatero"},
+          {"call": "clasificar_triangulo(3, 3, 4)", "expected": "isosceles"},
+          {"call": "clasificar_triangulo(3, 4, 5)", "expected": "escaleno"}
+        ]
+      }
+    },
+    {
+      "id": "py_03_funciones",
+      "title": "Nivel 3: La Torre de la Recursion",
+      "concept": "funciones_recursion",
+      "difficulty": 2,
+      "theory": "Las funciones encapsulan logica reutilizable. Una funcion recursiva se llama a si misma con un caso base que detiene la recursion. El alcance (scope) determina donde una variable es visible: local vs global.",
+      "exercise": {
+        "prompt": "Escribe una funcion fibonacci(n) que retorne el n-esimo numero de Fibonacci usando recursion (fibonacci(0)=0, fibonacci(1)=1).",
+        "starter_code": "def fibonacci(n):\n    # tu codigo aqui (usa recursion)\n    pass\n",
+        "tests": [
+          {"call": "fibonacci(0)", "expected": 0},
+          {"call": "fibonacci(6)", "expected": 8},
+          {"call": "fibonacci(10)", "expected": 55}
+        ]
+      }
+    },
+    {
+      "id": "py_04_estructuras",
+      "title": "Nivel 4: La Fortaleza de Datos",
+      "concept": "estructuras_datos",
+      "difficulty": 2,
+      "theory": "Listas, tuplas, diccionarios y sets son las estructuras de datos base de Python. Cada una tiene un caso de uso: listas para secuencias ordenadas mutables, tuplas para datos fijos, diccionarios para mapeo clave-valor, sets para unicidad.",
+      "exercise": {
+        "prompt": "Escribe una funcion contar_frecuencias(palabras) que reciba una lista de strings y retorne un diccionario con la frecuencia de cada palabra.",
+        "starter_code": "def contar_frecuencias(palabras):\n    # tu codigo aqui\n    pass\n",
+        "tests": [
+          {"call": "contar_frecuencias(['a','b','a','c','b','a'])", "expected": {"a": 3, "b": 2, "c": 1}}
+        ]
+      }
+    },
+    {
+      "id": "py_05_errores",
+      "title": "Nivel 5: El Pantano de las Excepciones",
+      "concept": "manejo_errores",
+      "difficulty": 3,
+      "theory": "try/except captura errores en tiempo de ejecucion sin detener el programa. except TipoError: captura un tipo especifico (mejor practica que un except generico). Esto es clave para escribir codigo robusto que no truene ante entradas inesperadas.",
+      "exercise": {
+        "prompt": "Escribe una funcion dividir_seguro(a, b) que retorne a/b, o el string 'Error: division por cero' si b es 0, usando try/except (sin usar un if para revisar b antes).",
+        "starter_code": "def dividir_seguro(a, b):\n    # tu codigo aqui (usa try/except)\n    pass\n",
+        "tests": [
+          {"call": "dividir_seguro(10, 2)", "expected": 5.0},
+          {"call": "dividir_seguro(5, 0)", "expected": "Error: division por cero"}
+        ]
+      }
+    },
+    {
+      "id": "py_06_comprensiones",
+      "title": "Nivel 6: El Rio de las Comprensiones",
+      "concept": "comprensiones_generadores",
+      "difficulty": 3,
+      "theory": "Las comprensiones de listas ([expr for x in iterable if condicion]) transforman y filtran colecciones en una sola linea legible, evitando loops explicitos con append. Son idiomaticas en Python: codigo mas corto y frecuentemente mas rapido.",
+      "exercise": {
+        "prompt": "Escribe una funcion cuadrados_pares(n) que retorne una lista con los cuadrados de todos los numeros pares del 1 al n (inclusive), usando UNA sola comprension de lista.",
+        "starter_code": "def cuadrados_pares(n):\n    # tu codigo aqui (usa comprension de lista)\n    pass\n",
+        "tests": [
+          {"call": "cuadrados_pares(10)", "expected": [4, 16, 36, 64, 100]}
+        ]
+      }
+    },
+    {
+      "id": "py_07_poo",
+      "title": "Nivel 7: La Ciudadela de Objetos",
+      "concept": "poo",
+      "difficulty": 4,
+      "theory": "La Programacion Orientada a Objetos organiza datos y comportamiento en clases. __init__ inicializa, self referencia la instancia, y la herencia permite reutilizar y extender clases.",
+      "exercise": {
+        "prompt": "Crea una clase CuentaBancaria con saldo inicial, metodo depositar(monto) y retirar(monto) que lance ValueError si el retiro excede el saldo. Incluye un metodo consultar_saldo().",
+        "starter_code": "class CuentaBancaria:\n    def __init__(self, saldo_inicial=0):\n        # tu codigo aqui\n        pass\n",
+        "tests": [
+          {"call": "CuentaBancaria(100).consultar_saldo()", "expected": 100}
+        ]
+      }
+    },
+    {
+      "id": "py_08_decoradores",
+      "title": "Nivel 8 (Jefe Final): La Ciudadela Funcional",
+      "concept": "funcional_decoradores",
+      "difficulty": 5,
+      "theory": "Las funciones son ciudadanos de primera clase: pueden pasarse como argumentos y retornarse desde otras funciones. Un decorador es una funcion que envuelve a otra para modificar o extender su comportamiento sin cambiar su codigo -- la base de frameworks como Flask.",
+      "exercise": {
+        "prompt": "Escribe un decorador repetir(n) que, aplicado a una funcion sin argumentos, ejecute esa funcion n veces y retorne una lista con los n resultados.",
+        "starter_code": "def repetir(n):\n    def decorador(func):\n        def wrapper(*args, **kwargs):\n            # tu codigo aqui\n            pass\n        return wrapper\n    return decorador\n",
+        "tests": [
+          {"call": "repetir(3)(lambda: 7)()", "expected": [7, 7, 7]},
+          {"call": "repetir(1)(lambda: 'hola')()", "expected": ["hola"]}
+        ]
+      }
+    }
+  ]
+}

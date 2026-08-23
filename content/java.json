@@ -1,0 +1,110 @@
+{
+  "language": "java",
+  "display_name": "Java",
+  "levels": [
+    {
+      "id": "java_01_variables",
+      "title": "Nivel 1: El Bosque del Tipado Estatico",
+      "concept": "variables_tipos",
+      "difficulty": 1,
+      "theory": "Java es de tipado estatico como C: cada variable declara su tipo (int, double, boolean, String) y el compilador lo verifica antes de ejecutar. A diferencia de C, Java gestiona memoria automaticamente (garbage collector).",
+      "exercise": {
+        "prompt": "Escribe un metodo static double calcularIMC(double peso, double altura) que retorne el Indice de Masa Corporal.",
+        "starter_code": "public static double calcularIMC(double peso, double altura) {\n    // tu codigo aqui\n}",
+        "harness_main": "System.out.println(calcularIMC(70, 1.75));\nSystem.out.println(calcularIMC(60, 1.60));",
+        "expected_stdout": "22.857142857142858\n23.437499999999996"
+      }
+    },
+    {
+      "id": "java_02_control",
+      "title": "Nivel 2: El Laberinto Condicional",
+      "concept": "control_flujo",
+      "difficulty": 1,
+      "theory": "if/else, for, while y switch controlan el flujo, con sintaxis casi identica a C. Java exige llaves y tipos explicitos en cada declaracion, sin inferencia dinamica como Python.",
+      "exercise": {
+        "prompt": "Escribe un metodo static boolean esPrimo(int n) que retorne true si n es primo.",
+        "starter_code": "public static boolean esPrimo(int n) {\n    // tu codigo aqui\n}",
+        "harness_main": "System.out.println(esPrimo(7));\nSystem.out.println(esPrimo(8));",
+        "expected_stdout": "true\nfalse"
+      }
+    },
+    {
+      "id": "java_03_metodos",
+      "title": "Nivel 3: La Torre de la Sobrecarga",
+      "concept": "metodos_sobrecarga",
+      "difficulty": 2,
+      "theory": "La sobrecarga (overloading) permite tener varios metodos con el mismo nombre pero distinta firma (numero o tipo de parametros). El compilador elige cual usar segun los argumentos -- esto no existe en Python, donde solo puede haber una funcion por nombre.",
+      "exercise": {
+        "prompt": "Escribe dos metodos sobrecargados llamados sumar: uno que reciba dos int y otro que reciba dos double, ambos retornando la suma.",
+        "starter_code": "public static int sumar(int a, int b) {\n    // tu codigo aqui\n}\n\npublic static double sumar(double a, double b) {\n    // tu codigo aqui\n}",
+        "harness_main": "System.out.println(sumar(2, 3));\nSystem.out.println(sumar(2.5, 3.5));",
+        "expected_stdout": "5\n6.0"
+      }
+    },
+    {
+      "id": "java_04_arrays",
+      "title": "Nivel 4: La Fortaleza de Arrays",
+      "concept": "arrays_colecciones",
+      "difficulty": 2,
+      "theory": "Los arrays en Java tienen tamano fijo y tipo declarado (int[]). Para colecciones dinamicas se usa ArrayList<T> del paquete java.util, mas flexible pero con algo mas de overhead que un array primitivo.",
+      "exercise": {
+        "prompt": "Escribe un metodo static int sumarArreglo(int[] arr) que retorne la suma de todos los elementos.",
+        "starter_code": "public static int sumarArreglo(int[] arr) {\n    // tu codigo aqui\n}",
+        "harness_main": "System.out.println(sumarArreglo(new int[]{1,2,3,4,5}));",
+        "expected_stdout": "15"
+      }
+    },
+    {
+      "id": "java_05_poo_clases",
+      "title": "Nivel 5: La Ciudadela de Clases y Objetos",
+      "concept": "poo_clases",
+      "difficulty": 3,
+      "theory": "Una clase agrupa estado (campos) y comportamiento (metodos). El constructor inicializa un objeto nuevo. A diferencia de Python (self explicito), Java usa 'this' de forma implicita en la mayoria de los casos.",
+      "exercise": {
+        "prompt": "Crea una clase CuentaBancaria con un campo saldo, un constructor CuentaBancaria(double saldoInicial), y un metodo double consultarSaldo().",
+        "starter_code": "class CuentaBancaria {\n    // tu codigo aqui\n}",
+        "harness_main": "CuentaBancaria c = new CuentaBancaria(100.0);\nSystem.out.println(c.consultarSaldo());",
+        "expected_stdout": "100.0"
+      }
+    },
+    {
+      "id": "java_06_herencia",
+      "title": "Nivel 6: El Arbol de la Herencia",
+      "concept": "herencia_polimorfismo",
+      "difficulty": 3,
+      "theory": "extends permite que una clase herede campos y metodos de otra. El polimorfismo permite que una subclase sobreescriba (@Override) un metodo del padre, y que el metodo correcto se ejecute segun el tipo real del objeto en tiempo de ejecucion.",
+      "exercise": {
+        "prompt": "Crea una clase Animal con metodo String hacerSonido() que retorne 'Sonido generico'. Crea una subclase Perro que sobreescriba hacerSonido() para retornar 'Guau'.",
+        "starter_code": "class Animal {\n    // tu codigo aqui\n}\n\nclass Perro extends Animal {\n    // tu codigo aqui\n}",
+        "harness_main": "Animal a = new Perro();\nSystem.out.println(a.hacerSonido());",
+        "expected_stdout": "Guau"
+      }
+    },
+    {
+      "id": "java_07_interfaces",
+      "title": "Nivel 7: El Pacto de las Interfaces",
+      "concept": "interfaces_abstraccion",
+      "difficulty": 4,
+      "theory": "Una interface define un contrato (metodos sin implementacion) que las clases deben cumplir con 'implements'. Permite que objetos de clases distintas se traten de forma uniforme si comparten la misma interface -- clave para arquitecturas desacopladas.",
+      "exercise": {
+        "prompt": "Crea una interface Figura con el metodo double area(). Crea una clase Circulo que implemente Figura, con constructor Circulo(double radio) y area() = PI * radio^2.",
+        "starter_code": "interface Figura {\n    double area();\n}\n\nclass Circulo implements Figura {\n    // tu codigo aqui\n}",
+        "harness_main": "Figura f = new Circulo(2.0);\nSystem.out.printf(\"%.2f%n\", f.area());",
+        "expected_stdout": "12.57"
+      }
+    },
+    {
+      "id": "java_08_excepciones",
+      "title": "Nivel 8 (Jefe Final): La Ciudadela de las Excepciones",
+      "concept": "manejo_excepciones",
+      "difficulty": 5,
+      "theory": "try/catch captura errores en tiempo de ejecucion sin detener el programa. Java distingue excepciones checked (deben declararse o manejarse, ej. IOException) de unchecked (ej. ArithmeticException). Un buen manejo de excepciones evita que un error trivial tumbe toda la aplicacion.",
+      "exercise": {
+        "prompt": "Escribe un metodo static String dividirSeguro(int a, int b) que retorne el resultado de a/b como String, o 'Error: division por cero' si b es 0, usando try/catch con ArithmeticException.",
+        "starter_code": "public static String dividirSeguro(int a, int b) {\n    // tu codigo aqui\n}",
+        "harness_main": "System.out.println(dividirSeguro(10, 2));\nSystem.out.println(dividirSeguro(5, 0));",
+        "expected_stdout": "5\nError: division por cero"
+      }
+    }
+  ]
+}

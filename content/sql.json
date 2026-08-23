@@ -1,0 +1,112 @@
+{
+  "language": "sql",
+  "display_name": "SQL",
+  "schema": "CREATE TABLE clientes (id INTEGER PRIMARY KEY, nombre TEXT, ciudad TEXT);\nCREATE TABLE pedidos (id INTEGER PRIMARY KEY, cliente_id INTEGER, producto TEXT, monto REAL, fecha TEXT);\n\nINSERT INTO clientes VALUES (1,'Ana Torres','Quito');\nINSERT INTO clientes VALUES (2,'Luis Vega','Guayaquil');\nINSERT INTO clientes VALUES (3,'Marta Ruiz','Quito');\nINSERT INTO clientes VALUES (4,'Pedro Sanchez','Cuenca');\nINSERT INTO clientes VALUES (5,'Sofia Leon','Quito');\n\nINSERT INTO pedidos VALUES (1,1,'Laptop',850.00,'2026-01-10');\nINSERT INTO pedidos VALUES (2,1,'Mouse',25.00,'2026-02-15');\nINSERT INTO pedidos VALUES (3,2,'Teclado',45.00,'2026-01-20');\nINSERT INTO pedidos VALUES (4,3,'Monitor',300.00,'2026-03-05');\nINSERT INTO pedidos VALUES (5,3,'Laptop',900.00,'2026-03-10');\nINSERT INTO pedidos VALUES (6,5,'Silla',150.00,'2026-01-25');\nINSERT INTO pedidos VALUES (7,1,'Monitor',280.00,'2026-04-01');\nINSERT INTO pedidos VALUES (8,2,'Laptop',870.00,'2026-04-10');",
+  "schema_description": "Dos tablas: clientes(id, nombre, ciudad) y pedidos(id, cliente_id, producto, monto, fecha). Cada pedido pertenece a un cliente via cliente_id.",
+  "levels": [
+    {
+      "id": "sql_01_select",
+      "title": "Nivel 1: El Templo del SELECT",
+      "concept": "select_where",
+      "difficulty": 1,
+      "theory": "SQL es declarativo: describes QUE datos quieres, no COMO obtenerlos (a diferencia de Python/C/Java que son imperativos). SELECT columnas FROM tabla WHERE condicion filtra filas.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne el nombre y la ciudad de todos los clientes que viven en 'Quito'.",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": false,
+        "expected_result": [["Ana Torres", "Quito"], ["Marta Ruiz", "Quito"], ["Sofia Leon", "Quito"]]
+      }
+    },
+    {
+      "id": "sql_02_orderby",
+      "title": "Nivel 2: La Escalera de ORDER BY",
+      "concept": "orderby_limit",
+      "difficulty": 1,
+      "theory": "ORDER BY columna DESC/ASC ordena resultados. LIMIT n restringe cuantas filas se retornan. Son de las pocas clausulas donde el orden de escritura en SQL es fijo: SELECT...FROM...WHERE...ORDER BY...LIMIT.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne el producto y monto de los 3 pedidos con mayor monto, ordenados de mayor a menor.",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": true,
+        "expected_result": [["Laptop", 900.0], ["Laptop", 870.0], ["Laptop", 850.0]]
+      }
+    },
+    {
+      "id": "sql_03_agregacion",
+      "title": "Nivel 3: El Altar de las Agregaciones",
+      "concept": "agregacion_groupby",
+      "difficulty": 2,
+      "theory": "Funciones de agregacion (COUNT, SUM, AVG, MAX, MIN) resumen multiples filas en un solo valor. GROUP BY agrupa filas que comparten un valor antes de agregar -- sin GROUP BY, la agregacion aplica a toda la tabla.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne cliente_id y cuantos pedidos ha hecho cada cliente.",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": false,
+        "expected_result": [[1, 3], [2, 2], [3, 2], [5, 1]]
+      }
+    },
+    {
+      "id": "sql_04_join",
+      "title": "Nivel 4: El Puente del JOIN",
+      "concept": "inner_join",
+      "difficulty": 2,
+      "theory": "INNER JOIN combina filas de dos tablas donde una condicion coincide (tipicamente una clave foranea con una primaria). Sin JOIN, los datos relacionales quedan fragmentados en tablas separadas.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne el nombre del cliente y el producto de cada pedido, uniendo clientes y pedidos.",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": false,
+        "expected_result": [["Ana Torres","Laptop"],["Ana Torres","Mouse"],["Luis Vega","Teclado"],["Marta Ruiz","Monitor"],["Marta Ruiz","Laptop"],["Sofia Leon","Silla"],["Ana Torres","Monitor"],["Luis Vega","Laptop"]]
+      }
+    },
+    {
+      "id": "sql_05_left_join",
+      "title": "Nivel 5: La Puerta del LEFT JOIN",
+      "concept": "left_join",
+      "difficulty": 3,
+      "theory": "LEFT JOIN conserva TODAS las filas de la tabla izquierda aunque no haya coincidencia en la derecha (rellenando con NULL). Es clave para no perder registros 'sin actividad', como clientes que nunca compraron.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne el nombre de cada cliente y cuantos pedidos tiene, incluyendo clientes con 0 pedidos.",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": false,
+        "expected_result": [["Ana Torres",3],["Luis Vega",2],["Marta Ruiz",2],["Pedro Sanchez",0],["Sofia Leon",1]]
+      }
+    },
+    {
+      "id": "sql_06_having",
+      "title": "Nivel 6: El Filtro Posterior de HAVING",
+      "concept": "having",
+      "difficulty": 3,
+      "theory": "WHERE filtra filas ANTES de agrupar; HAVING filtra grupos DESPUES de agregar (no puedes usar WHERE con SUM/COUNT directamente). Confundir WHERE con HAVING es el error mas comun al aprender SQL.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne cliente_id y su gasto total (SUM de monto), pero solo para clientes cuyo gasto total supera 500.",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": false,
+        "expected_result": [[1, 1155.0], [2, 915.0], [3, 1200.0]]
+      }
+    },
+    {
+      "id": "sql_07_subconsultas",
+      "title": "Nivel 7: El Laberinto de Subconsultas",
+      "concept": "subconsultas",
+      "difficulty": 4,
+      "theory": "Una subconsulta es un SELECT dentro de otro SELECT. Permite comparar contra un valor calculado dinamicamente (como un promedio) en vez de un numero fijo, haciendo la consulta reutilizable sin importar los datos.",
+      "exercise": {
+        "prompt": "Escribe una consulta que retorne cliente_id y gasto total, solo para clientes cuyo gasto total supera el PROMEDIO del gasto total de todos los clientes (calculado con una subconsulta, no con un numero fijo).",
+        "starter_code": "-- tu consulta aqui\n",
+        "order_matters": false,
+        "expected_result": [[1, 1155.0], [2, 915.0], [3, 1200.0]]
+      }
+    },
+    {
+      "id": "sql_08_cte",
+      "title": "Nivel 8 (Jefe Final): La Ciudadela de los CTEs",
+      "concept": "cte",
+      "difficulty": 5,
+      "theory": "Un CTE (Common Table Expression, WITH nombre AS (...)) define una tabla temporal nombrada dentro de la consulta. Hace las subconsultas complejas legibles: en vez de anidar SELECTs, les das nombre y las usas como si fueran tablas normales.",
+      "exercise": {
+        "prompt": "Usando un CTE (WITH), calcula el gasto total por cliente y muestra solo cliente_id y total para los clientes cuyo gasto total supera 900.",
+        "starter_code": "-- tu consulta aqui (usa WITH)\n",
+        "order_matters": false,
+        "expected_result": [[1, 1155.0], [2, 915.0], [3, 1200.0]]
+      }
+    }
+  ]
+}

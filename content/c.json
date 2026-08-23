@@ -1,0 +1,110 @@
+{
+  "language": "c",
+  "display_name": "C",
+  "levels": [
+    {
+      "id": "c_01_variables",
+      "title": "Nivel 1: Las Minas de Tipos Estaticos",
+      "concept": "variables_tipos",
+      "difficulty": 1,
+      "theory": "C es de tipado estatico: cada variable declara su tipo (int, float, char, double) y no cambia. El tamano en memoria de cada tipo es fijo y depende de la arquitectura.",
+      "exercise": {
+        "prompt": "Escribe una funcion float calcular_imc(float peso, float altura) que retorne el Indice de Masa Corporal (peso / altura^2).",
+        "starter_code": "float calcular_imc(float peso, float altura) {\n    // tu codigo aqui\n}",
+        "harness_main": "printf(\"%.2f\\n\", calcular_imc(70, 1.75));\nprintf(\"%.2f\\n\", calcular_imc(60, 1.60));",
+        "expected_stdout": "22.86\n23.44"
+      }
+    },
+    {
+      "id": "c_02_control",
+      "title": "Nivel 2: El Laberinto de Sentencias",
+      "concept": "control_flujo",
+      "difficulty": 1,
+      "theory": "if/else, for, while y switch controlan el flujo. A diferencia de Python, C usa llaves {} para bloques y punto y coma para terminar sentencias.",
+      "exercise": {
+        "prompt": "Escribe una funcion int es_primo(int n) que retorne 1 si n es primo, 0 si no.",
+        "starter_code": "int es_primo(int n) {\n    // tu codigo aqui\n}",
+        "harness_main": "printf(\"%d\\n\", es_primo(7));\nprintf(\"%d\\n\", es_primo(8));",
+        "expected_stdout": "1\n0"
+      }
+    },
+    {
+      "id": "c_03_funciones_arrays",
+      "title": "Nivel 3: La Torre de Arreglos",
+      "concept": "funciones_arrays",
+      "difficulty": 2,
+      "theory": "Un arreglo en C es un bloque contiguo de memoria. Al pasarlo a una funcion, en realidad se pasa un puntero al primer elemento (no una copia) -- por eso las funciones que reciben arreglos tambien necesitan el tamano como parametro aparte.",
+      "exercise": {
+        "prompt": "Escribe una funcion int suma_arreglo(int arr[], int n) que retorne la suma de los n elementos del arreglo.",
+        "starter_code": "int suma_arreglo(int arr[], int n) {\n    // tu codigo aqui\n}",
+        "harness_main": "int arr[] = {1,2,3,4,5};\nprintf(\"%d\\n\", suma_arreglo(arr, 5));",
+        "expected_stdout": "15"
+      }
+    },
+    {
+      "id": "c_04_punteros",
+      "title": "Nivel 4: La Cripta de Punteros",
+      "concept": "punteros_memoria",
+      "difficulty": 3,
+      "theory": "Un puntero almacena la direccion de memoria de otra variable. * desreferencia (accede al valor apuntado), & obtiene la direccion. Esto permite que una funcion modifique variables del que la llamo -- algo que Python/Java no permiten con tipos primitivos.",
+      "exercise": {
+        "prompt": "Escribe una funcion void intercambiar(int *a, int *b) que intercambie los valores apuntados por a y b usando punteros.",
+        "starter_code": "void intercambiar(int *a, int *b) {\n    // tu codigo aqui\n}",
+        "harness_main": "int x = 3, y = 5;\nintercambiar(&x, &y);\nprintf(\"%d\\n%d\\n\", x, y);",
+        "expected_stdout": "5\n3"
+      }
+    },
+    {
+      "id": "c_05_structs",
+      "title": "Nivel 5: La Fortaleza de Structs",
+      "concept": "estructuras_datos",
+      "difficulty": 3,
+      "theory": "struct agrupa datos relacionados bajo un solo tipo compuesto, similar a una clase sin metodos. Es la base para construir estructuras de datos mas complejas como listas enlazadas y arboles.",
+      "exercise": {
+        "prompt": "Define un struct Punto {int x; int y;} e implementa float distancia(struct Punto a, struct Punto b) que calcule la distancia euclidiana (usa sqrt y pow de math.h).",
+        "starter_code": "struct Punto { int x; int y; };\n\nfloat distancia(struct Punto a, struct Punto b) {\n    // tu codigo aqui\n}",
+        "harness_main": "struct Punto a = {0,0};\nstruct Punto b = {3,4};\nprintf(\"%.2f\\n\", distancia(a, b));",
+        "expected_stdout": "5.00"
+      }
+    },
+    {
+      "id": "c_06_strings",
+      "title": "Nivel 6: El Rio de las Cadenas",
+      "concept": "cadenas_strings",
+      "difficulty": 3,
+      "theory": "En C un string es un arreglo de char terminado en el caracter nulo '\\0'. No existe un tipo string nativo como en Python/Java -- todo el manejo de texto se hace recorriendo el arreglo manualmente o con funciones de string.h.",
+      "exercise": {
+        "prompt": "Escribe una funcion int contar_vocales(char *s) que retorne cuantas vocales (a,e,i,o,u, mayus o minus) contiene el string.",
+        "starter_code": "int contar_vocales(char *s) {\n    // tu codigo aqui\n}",
+        "harness_main": "printf(\"%d\\n\", contar_vocales(\"Hola Mundo\"));",
+        "expected_stdout": "4"
+      }
+    },
+    {
+      "id": "c_07_memoria_dinamica",
+      "title": "Nivel 7: La Ciudadela de Memoria Dinamica",
+      "concept": "memoria_dinamica",
+      "difficulty": 4,
+      "theory": "malloc reserva memoria en el heap en tiempo de ejecucion, free la libera. No liberar memoria causa fugas (memory leaks); usarla despues de liberar causa comportamiento indefinido (dangling pointers). Este manejo manual es la diferencia mas grande frente a Python/Java, que tienen garbage collector.",
+      "exercise": {
+        "prompt": "Escribe int* crear_arreglo_dinamico(int n) que reserve memoria con malloc para n enteros inicializados en 0, y void liberar_arreglo(int *arr) que la libere con free.",
+        "starter_code": "int* crear_arreglo_dinamico(int n) {\n    // tu codigo aqui\n}\n\nvoid liberar_arreglo(int *arr) {\n    // tu codigo aqui\n}",
+        "harness_main": "int *arr = crear_arreglo_dinamico(5);\nfor (int i = 0; i < 5; i++) printf(\"%d \", arr[i]);\nprintf(\"\\n\");\nliberar_arreglo(arr);",
+        "expected_stdout": "0 0 0 0 0"
+      }
+    },
+    {
+      "id": "c_08_listas_enlazadas",
+      "title": "Nivel 8 (Jefe Final): La Ciudadela de Listas Enlazadas",
+      "concept": "listas_enlazadas",
+      "difficulty": 5,
+      "theory": "Una lista enlazada es una cadena de nodos (struct con un valor y un puntero al siguiente nodo), construida con malloc dinamicamente. A diferencia de un arreglo, no requiere memoria contigua ni tamano fijo -- combina structs, punteros y memoria dinamica, los tres conceptos previos.",
+      "exercise": {
+        "prompt": "Define struct Nodo {int valor; struct Nodo *siguiente;}. Implementa struct Nodo* insertar_al_inicio(struct Nodo *cabeza, int valor) que inserte un nodo nuevo al inicio de la lista, y int sumar_lista(struct Nodo *cabeza) que retorne la suma de todos los valores.",
+        "starter_code": "struct Nodo { int valor; struct Nodo *siguiente; };\n\nstruct Nodo* insertar_al_inicio(struct Nodo *cabeza, int valor) {\n    // tu codigo aqui\n}\n\nint sumar_lista(struct Nodo *cabeza) {\n    // tu codigo aqui\n}",
+        "harness_main": "struct Nodo *lista = NULL;\nlista = insertar_al_inicio(lista, 10);\nlista = insertar_al_inicio(lista, 20);\nlista = insertar_al_inicio(lista, 30);\nprintf(\"%d\\n\", sumar_lista(lista));",
+        "expected_stdout": "60"
+      }
+    }
+  ]
+}

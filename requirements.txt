@@ -1,0 +1,12 @@
+# Interfaz principal
+streamlit>=1.38.0
+
+# LLM (instala el que vayas a usar segun LLM_PROVIDER; puedes instalar
+# los tres sin problema, no interfieren entre si):
+groq>=0.13.0                 # para Groq (console.groq.com) -- recomendado, gratis, rapido
+anthropic>=0.40.0            # para Claude (Sonnet, Fable, etc.) via API
+google-generativeai>=0.8.0    # para Gemini via Google AI Studio
+
+# El resto del motor (mastery.py, sandbox.py, recommender.py) no requiere
+# dependencias externas -- usa solo la libreria estandar de Python
+# (incluyendo sqlite3 para el mundo de SQL).
