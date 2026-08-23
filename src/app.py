@@ -90,7 +90,7 @@ KEY_LABELS = {
 }
 DEFAULT_MODELS = {
     "anthropic": "claude-sonnet-5",
-    "gemini": "gemini-2.0-flash",
+    "gemini": "gemini-3.6-flash",
     "groq": "openai/gpt-oss-120b",
 }
 
@@ -241,6 +241,9 @@ else:
         st.write(judgment.get("feedback", ""))
         for issue in judgment.get("detected_issues", []):
             st.markdown(f"- {issue}")
+        if judgment.get("_source") == "fallback" and judgment.get("_error"):
+            with st.expander("Detalle técnico del error (para depuración)"):
+                st.code(judgment["_error"])
 
         st.markdown(f"**Decisión del sistema:** `{decision['action']}`")
         st.caption(decision["reason"])

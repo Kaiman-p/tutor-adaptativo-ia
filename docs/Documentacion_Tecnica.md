@@ -171,6 +171,27 @@ forzado a los 4:
   oficial de testing de Streamlit (`AppTest`), no solo revisada a ojo:
   flujo completo de Python y de SQL ejecutado sin excepciones, incluyendo
   el mapa de niveles actualizándose correctamente tras cada envío.
+- **Verificación en vivo con LLM real:** se probó end-to-end con Gemini
+  (`gemini-3.6-flash`) resolviendo el nivel de punteros en C. La IA
+  identificó correctamente y por su nombre el concepto evaluado
+  ("desreferenciación de punteros"), confirmando que el análisis es
+  real y específico al código enviado, no una respuesta genérica.
+
+### 3.6 Nota sobre los tres proveedores probados
+
+Durante las pruebas en la VM de desarrollo se probaron los tres
+proveedores soportados, con resultados distintos que vale la pena
+documentar (y son un buen tema para la sección de Defensa):
+
+| Proveedor | Resultado |
+|---|---|
+| Groq | Conexión externa (`curl`, script standalone) funcionaba, pero dentro de la app fallaba de forma intermitente con `Connection error`. Probablemente un problema de red NAT de la VM, no del código (la misma llamada exacta funcionaba fuera de Streamlit). |
+| Anthropic | No se llegó a probar en esta VM (se generó por error una key de Groq en su lugar). |
+| Gemini | **Funcionando y verificado end-to-end**, con feedback conceptual real y específico. |
+
+Esto es una ventaja de haber diseñado el sistema con proveedor
+intercambiable (`LLM_PROVIDER`) desde el inicio: un fallo de conectividad
+con un proveedor no bloquea el proyecto.
 
 ---
 

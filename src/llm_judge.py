@@ -62,7 +62,7 @@ def _call_anthropic(system: str, user: str) -> str:
     model = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5")
     resp = client.messages.create(
         model=model,
-        max_tokens=500,
+        max_tokens=1024,
         system=system,
         messages=[{"role": "user", "content": user}],
     )
@@ -72,7 +72,7 @@ def _call_anthropic(system: str, user: str) -> str:
 def _call_gemini(system: str, user: str) -> str:
     import google.generativeai as genai  # pip install google-generativeai
     genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-    model_name = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+    model_name = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
     model = genai.GenerativeModel(model_name, system_instruction=system)
     resp = model.generate_content(user)
     return resp.text
@@ -80,11 +80,15 @@ def _call_gemini(system: str, user: str) -> str:
 
 def _call_groq(system: str, user: str) -> str:
     from groq import Groq  # pip install groq
-    client = Groq()  # lee GROQ_API_KEY del entorno
+    client = Groq(timeout=30.0)  # mas margen de tiempo, la VM puede ser mas lenta
     model = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
+    # max_tokens alto a proposito: gpt-oss-120b es un modelo "razonador"
+    # que gasta una parte de los tokens pensando internamente (ver
+    # reasoning_tokens en la respuesta) antes de escribir el JSON final.
+    # Con poco margen, la respuesta puede llegar vacia o cortada.
     resp = client.chat.completions.create(
         model=model,
-        max_tokens=500,
+        max_tokens=1024,
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": user},
