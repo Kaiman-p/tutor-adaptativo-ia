@@ -8,13 +8,31 @@
       "concept": "variables_tipos",
       "difficulty": 1,
       "theory": "En Python las variables no tienen un tipo fijo: el tipo lo determina el valor que contienen (tipado dinamico). int, float, str y bool son los tipos basicos. Puedes cambiar el tipo de una variable simplemente reasignandola.",
+      "lesson": {
+        "explicacion_simple": "En una frase: una variable es como una caja donde guardas algo para usarlo despues.\n\nImagina una variable como una caja de carton con una etiqueta pegada. La etiqueta es el NOMBRE de la variable (por ejemplo 'edad'), y adentro de la caja pones lo que quieras guardar (por ejemplo el numero 15).\n\nEn muchos lenguajes de programacion tienes que decirle a la computadora por adelantado que tipo de cosa va a ir en la caja (¿un numero? ¿texto?). En Python no: simplemente metes lo que quieras, y Python se da cuenta solo de que tipo es. Si metes un numero como 15, Python sabe que es un 'int' (numero entero). Si metes texto entre comillas como 'Juan', sabe que es un 'str' (string, texto). Si metes 15.5, es un 'float' (numero con decimales). Si metes True o False, es un 'bool' (verdadero/falso).\n\nLo interesante es que puedes vaciar la caja y volver a llenarla con otra cosa distinta: primero guardas un numero, y despues guardas texto en esa misma caja, sin ningun problema. Eso es lo que significa 'tipado dinamico'.",
+        "ejemplo_resuelto": {
+          "descripcion": "Guardemos el nombre y la edad de una persona, y calculemos en cuantos anios cumplira 100 anios.",
+          "codigo": "nombre = \"Sofia\"\nedad = 15\nanios_para_100 = 100 - edad\n\nprint(nombre)\nprint(edad)\nprint(anios_para_100)",
+          "explicacion_paso_a_paso": "Linea 1: creamos una caja llamada 'nombre' y guardamos el texto \"Sofia\" (las comillas le dicen a Python que es texto, no codigo).\nLinea 2: creamos una caja llamada 'edad' con el numero 15 (sin comillas, porque es un numero).\nLinea 3: Python hace la resta 100 - 15 y guarda el resultado (85) en una nueva caja llamada 'anios_para_100'.\nLineas 5-7: 'print' simplemente muestra en pantalla lo que hay dentro de cada caja."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion llamada calcular_imc(peso, altura) que reciba el peso en kg y la altura en metros, y retorne el Indice de Masa Corporal (peso / altura**2) redondeado a 2 decimales.",
         "starter_code": "def calcular_imc(peso, altura):\n    # tu codigo aqui\n    pass\n",
         "tests": [
-          {"call": "calcular_imc(70, 1.75)", "expected": 22.86},
-          {"call": "calcular_imc(60, 1.60)", "expected": 23.44}
+          {
+            "call": "calcular_imc(70, 1.75)",
+            "expected": 22.86
+          },
+          {
+            "call": "calcular_imc(60, 1.60)",
+            "expected": 23.44
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def calcular_imc(peso, altura):\n    return round(peso / altura**2, 2)",
+        "explicacion": "**Paso 1 - la firma de la funcion:** `def calcular_imc(peso, altura):` -- 'def' le dice a Python 'voy a definir una funcion nueva'. El nombre debe coincidir EXACTO con lo que pide el enunciado. Entre parentesis van los parametros, separados por coma. El ':' final es obligatorio, marca donde empieza el cuerpo.\n\n**Paso 2 - la operacion matematica:** `peso / altura**2` -- '/' es division normal. '**' es el operador de POTENCIA en Python (altura**2 = altura al cuadrado). Se calcula primero la potencia, y luego se divide peso entre ese resultado (por precedencia de operadores).\n\n**Paso 3 - redondear:** `round(..., 2)` redondea a 2 decimales, tal como pide el enunciado.\n\n**Paso 4 - el return:** 'return' es la palabra que le dice a la funcion 'aqui termina, y ESTO es lo que devuelves'. Sin return, la funcion devolveria None y el ejercicio fallaria.\n\n**La indentacion:** la linea con 'return' tiene 4 espacios de sangria respecto a 'def' -- eso es OBLIGATORIO en Python, indica que pertenece al cuerpo de la funcion."
       }
     },
     {
@@ -23,14 +41,35 @@
       "concept": "control_flujo",
       "difficulty": 1,
       "theory": "if/elif/else controlan el flujo segun condiciones. for itera sobre secuencias, while repite mientras una condicion sea verdadera. Python usa indentacion (no llaves) para definir bloques.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es hacer que la computadora elija un camino segun si algo es cierto o falso, o que repita algo varias veces.\n\nPiensa en un semaforo: si esta en rojo, te detienes; si esta en verde, avanzas; si esta en amarillo, te preparas. Tu decision cambia segun lo que veas. Eso es exactamente lo que hace 'if' (si) en programacion: 'SI se cumple esta condicion, haz esto; SI NO, haz esto otro'.\n\nEn Python se escribe asi: 'if condicion:' seguido de lo que quieres que pase, con SANGRIA (unos espacios al inicio de la linea). Esa sangria es obligatoria en Python -- le dice a la computadora 'esto pertenece a ese if'. 'elif' (abreviatura de 'else if') te deja revisar otra condicion si la primera no se cumplio. 'else' es el 'de lo contrario', para cuando ninguna condicion anterior se cumplio.\n\nAhora, 'for' y 'while' son formas de REPETIR algo. 'for' es como decir 'para cada galleta en esta caja de galletas, comete una' -- repites una accion por cada elemento de un grupo conocido. 'while' es como decir 'sigue corriendo mientras tengas energia' -- repites mientras una condicion siga siendo verdadera, sin saber de antemano cuantas veces sera.",
+        "ejemplo_resuelto": {
+          "descripcion": "Revisemos si un numero es par o impar, y contemos del 1 al 5 usando un for.",
+          "codigo": "numero = 7\n\nif numero % 2 == 0:\n    print(\"Es par\")\nelse:\n    print(\"Es impar\")\n\nfor i in range(1, 6):\n    print(\"Contando:\", i)",
+          "explicacion_paso_a_paso": "'numero % 2' calcula el RESIDUO de dividir numero entre 2 (el % se llama 'modulo'). Si el residuo es 0, el numero es par.\nComo 7 % 2 es 1 (no 0), entra al 'else' y muestra \"Es impar\".\n'range(1, 6)' genera los numeros 1, 2, 3, 4, 5 (el 6 NO se incluye, Python siempre para uno antes del limite).\nEl 'for' toma cada uno de esos numeros, lo guarda temporalmente en 'i', y ejecuta el print una vez por cada uno -- osea 5 veces en total."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion clasificar_triangulo(a, b, c) que reciba los 3 lados de un triangulo y retorne 'equilatero', 'isosceles' o 'escaleno'.",
         "starter_code": "def clasificar_triangulo(a, b, c):\n    # tu codigo aqui\n    pass\n",
         "tests": [
-          {"call": "clasificar_triangulo(3, 3, 3)", "expected": "equilatero"},
-          {"call": "clasificar_triangulo(3, 3, 4)", "expected": "isosceles"},
-          {"call": "clasificar_triangulo(3, 4, 5)", "expected": "escaleno"}
+          {
+            "call": "clasificar_triangulo(3, 3, 3)",
+            "expected": "equilatero"
+          },
+          {
+            "call": "clasificar_triangulo(3, 3, 4)",
+            "expected": "isosceles"
+          },
+          {
+            "call": "clasificar_triangulo(3, 4, 5)",
+            "expected": "escaleno"
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def clasificar_triangulo(a, b, c):\n    if a == b == c:\n        return 'equilatero'\n    elif a == b or b == c or a == c:\n        return 'isosceles'\n    else:\n        return 'escaleno'",
+        "explicacion": "**Paso 1 - la firma:** recibe los 3 lados como parametros a, b, c.\n\n**Paso 2 - primera condicion:** `if a == b == c:` en Python puedes encadenar comparaciones -- revisa que a sea igual a b Y que b sea igual a c, en una sola linea. El doble '==' COMPARA (un solo '=' ASIGNA, son cosas distintas).\n\n**Paso 3 - elif:** si la primera no se cumplio, revisa `a == b or b == c or a == c` -- el 'or' (o) dice que basta con que UNA de esas tres comparaciones sea verdadera (al menos dos lados iguales, pero no los tres, ya descartado arriba).\n\n**Paso 4 - else:** si ninguna se cumplio, ningun lado es igual a otro.\n\n**Sobre los return:** cada rama tiene su propio return -- la funcion se detiene apenas encuentra la primera condicion verdadera, sin revisar el resto."
       }
     },
     {
@@ -39,14 +78,35 @@
       "concept": "funciones_recursion",
       "difficulty": 2,
       "theory": "Las funciones encapsulan logica reutilizable. Una funcion recursiva se llama a si misma con un caso base que detiene la recursion. El alcance (scope) determina donde una variable es visible: local vs global.",
+      "lesson": {
+        "explicacion_simple": "En una frase: una funcion es una receta con nombre que puedes usar cuantas veces quieras, y la recursion es una receta que se usa a si misma.\n\nUna funcion es como una receta de cocina con nombre propio: la escribes una vez, y despues solo dices 'hazme la receta de la pizza' (llamas a la funcion) cada vez que la necesites, sin volver a escribir todos los pasos. 'def nombre_funcion(ingredientes):' es donde escribes la receta, y 'nombre_funcion(cosas_reales)' es donde la usas.\n\nLa RECURSION es una idea especial: es cuando una funcion se llama A SI MISMA dentro de su propia receta. Suena raro, pero imagina unas munecas rusas (matrioshkas): cada muneca tiene adentro una copia mas pequenia de si misma, hasta llegar a la muneca mas chiquita que ya no tiene nada adentro -- esa ultima es el 'caso base', el punto donde la repeticion se DETIENE. Si no hay caso base, la funcion se llamaria a si misma para siempre y el programa se rompe (esto se llama 'stack overflow').\n\nPor ejemplo, para calcular 5! (factorial de 5 = 5x4x3x2x1), puedes pensarlo como: 5! = 5 x 4!, y 4! = 4 x 3!, y asi hasta llegar a 1! = 1 (el caso base, donde ya no hace falta seguir multiplicando).",
+        "ejemplo_resuelto": {
+          "descripcion": "Calculemos el factorial de un numero usando recursion.",
+          "codigo": "def factorial(n):\n    if n == 0 or n == 1:\n        return 1  # caso base\n    return n * factorial(n - 1)  # llamada recursiva\n\nprint(factorial(5))",
+          "explicacion_paso_a_paso": "Si n es 0 o 1, retornamos 1 directo -- ese es el 'fondo' de las munecas rusas, donde paramos de abrir mas.\nSi n es mayor, retornamos n multiplicado por factorial(n-1) -- es decir, le pedimos a la funcion que se resuelva a si misma pero con un numero mas pequenio.\nPara factorial(5): 5 * factorial(4) -> 5 * (4 * factorial(3)) -> ... -> 5 * 4 * 3 * 2 * 1 = 120.\nCada llamada 'espera' a que la siguiente termine antes de multiplicar, como una fila de fichas de domino cayendo y luego reconstruyendose al reves."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion fibonacci(n) que retorne el n-esimo numero de Fibonacci usando recursion (fibonacci(0)=0, fibonacci(1)=1).",
         "starter_code": "def fibonacci(n):\n    # tu codigo aqui (usa recursion)\n    pass\n",
         "tests": [
-          {"call": "fibonacci(0)", "expected": 0},
-          {"call": "fibonacci(6)", "expected": 8},
-          {"call": "fibonacci(10)", "expected": 55}
+          {
+            "call": "fibonacci(0)",
+            "expected": 0
+          },
+          {
+            "call": "fibonacci(6)",
+            "expected": 8
+          },
+          {
+            "call": "fibonacci(10)",
+            "expected": 55
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def fibonacci(n):\n    if n < 2:\n        return n\n    return fibonacci(n - 1) + fibonacci(n - 2)",
+        "explicacion": "**Paso 1 - el caso base:** `if n < 2: return n` -- si n es 0, retorna 0; si n es 1, retorna 1 (coincide con la definicion). Sin este caso base, la recursion nunca pararia.\n\n**Paso 2 - la llamada recursiva:** `fibonacci(n - 1) + fibonacci(n - 2)` -- la funcion se llama A SI MISMA dos veces, con numeros mas pequenios, y SUMA los resultados, siguiendo la definicion matematica exacta.\n\n**Por que funciona:** cada llamada reduce n hasta que todas las ramas llegan al caso base, y desde ahi los resultados se suman 'hacia atras' hasta completar el calculo."
       }
     },
     {
@@ -55,12 +115,31 @@
       "concept": "estructuras_datos",
       "difficulty": 2,
       "theory": "Listas, tuplas, diccionarios y sets son las estructuras de datos base de Python. Cada una tiene un caso de uso: listas para secuencias ordenadas mutables, tuplas para datos fijos, diccionarios para mapeo clave-valor, sets para unicidad.",
+      "lesson": {
+        "explicacion_simple": "En una frase: son distintas formas de guardar varias cosas juntas, segun si te importa el orden, buscarlas por nombre, o que no se repitan.\n\nHasta ahora guardaste UNA cosa por variable. Pero normalmente quieres guardar VARIAS cosas juntas, y para eso existen distintos 'contenedores' segun lo que necesites:\n\nUna LISTA (list) es como una lista de compras escrita en un papel: tiene orden (primero, segundo, tercero...), puedes agregar o quitar cosas, y puede repetirse un mismo articulo. Se escribe con corchetes: [\"pan\", \"leche\", \"pan\"].\n\nUn DICCIONARIO (dict) es como una agenda telefonica: no buscas por posicion (primero, segundo), buscas por NOMBRE. Le dices 'dame el telefono de Juan' y te lo da, sin importar en que orden esta guardado. Cada entrada tiene una 'clave' (Juan) y un 'valor' (su telefono). Se escribe con llaves: {\"Juan\": \"555-1234\"}.\n\nUna TUPLA (tuple) es como una lista pero SELLADA -- una vez que la creas, no puedes cambiarla. Sirve para datos que no deberian modificarse, como una coordenada (x, y).\n\nUn SET (conjunto) es como una bolsa de canicas donde no importa el orden y NO puede haber dos canicas iguales -- automaticamente elimina duplicados.",
+        "ejemplo_resuelto": {
+          "descripcion": "Guardemos frutas favoritas en una lista, y sus colores en un diccionario.",
+          "codigo": "frutas = [\"manzana\", \"platano\", \"manzana\", \"uva\"]\ncolores = {\"manzana\": \"rojo\", \"platano\": \"amarillo\", \"uva\": \"morado\"}\n\nprint(len(frutas))\nprint(colores[\"platano\"])\n\nfor fruta in frutas:\n    print(fruta, \"es\", colores[fruta])",
+          "explicacion_paso_a_paso": "'frutas' es una lista con 4 elementos (si, 'manzana' aparece dos veces, las listas lo permiten).\n'len(frutas)' cuenta cuantos elementos tiene la lista -> 4.\n'colores[\"platano\"]' busca la clave \"platano\" en el diccionario y devuelve su valor -> \"amarillo\".\nEl 'for' recorre cada fruta de la lista, y usa esa fruta como clave para buscar su color en el diccionario."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion contar_frecuencias(palabras) que reciba una lista de strings y retorne un diccionario con la frecuencia de cada palabra.",
         "starter_code": "def contar_frecuencias(palabras):\n    # tu codigo aqui\n    pass\n",
         "tests": [
-          {"call": "contar_frecuencias(['a','b','a','c','b','a'])", "expected": {"a": 3, "b": 2, "c": 1}}
+          {
+            "call": "contar_frecuencias(['a','b','a','c','b','a'])",
+            "expected": {
+              "a": 3,
+              "b": 2,
+              "c": 1
+            }
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def contar_frecuencias(palabras):\n    resultado = {}\n    for palabra in palabras:\n        resultado[palabra] = resultado.get(palabra, 0) + 1\n    return resultado",
+        "explicacion": "**Paso 1 - diccionario vacio:** `resultado = {}` crea el lugar donde iremos guardando 'palabra -> conteo'.\n\n**Paso 2 - el for:** recorre cada elemento de la lista recibida, uno por uno.\n\n**Paso 3 - el conteo con .get():** `resultado.get(palabra, 0)` busca la palabra en el diccionario; si YA existe, da su conteo actual; si NO existe, da 0 (el valor por defecto), evitando un error. Se le suma 1 y se vuelve a guardar.\n\n**Paso 4 - return:** al terminar de recorrer toda la lista, se retorna el diccionario completo."
       }
     },
     {
@@ -69,13 +148,31 @@
       "concept": "manejo_errores",
       "difficulty": 3,
       "theory": "try/except captura errores en tiempo de ejecucion sin detener el programa. except TipoError: captura un tipo especifico (mejor practica que un except generico). Esto es clave para escribir codigo robusto que no truene ante entradas inesperadas.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es preparar un plan B para cuando algo sale mal, en vez de que todo el programa se rompa.\n\nCuando programas, tarde o temprano algo va a salir mal: alguien escribe texto donde esperabas un numero, divides entre cero, o buscas algo que no existe. Sin proteccion, tu programa se ROMPE por completo (se 'crashea') en ese instante.\n\n'try/except' es como usar cinturon de seguridad: 'try' (intenta) esto que podria fallar, y si algo sale mal, en vez de romperse todo, salta al 'except' (excepto) que tu preparaste como plan B. Es literalmente decirle a Python: 'intenta hacer esto, y si truena, no te asustes, haz esto otro en su lugar'.\n\nPuedes ser especifico sobre QUE tipo de error esperas (por ejemplo 'ZeroDivisionError' para division entre cero, o 'ValueError' cuando alguien te da un tipo de dato incorrecto). Ser especifico es mejor practica que capturar 'cualquier error', porque asi solo atrapas los errores que realmente esperabas y entendiste, y no escondes por accidente otros errores que si necesitas ver.",
+        "ejemplo_resuelto": {
+          "descripcion": "Intentemos convertir texto a numero, protegiendonos si el texto no es un numero valido.",
+          "codigo": "def texto_a_numero(texto):\n    try:\n        return int(texto)\n    except ValueError:\n        return \"Eso no es un numero valido\"\n\nprint(texto_a_numero(\"42\"))\nprint(texto_a_numero(\"hola\"))",
+          "explicacion_paso_a_paso": "'int(texto)' intenta convertir el texto a un numero entero.\nCon \"42\", funciona perfecto y retorna 42.\nCon \"hola\", Python NO puede convertirlo a numero, asi que lanza un 'ValueError' -- pero como estaba dentro de un 'try', en vez de romper el programa, salta directo al 'except ValueError' y retorna el mensaje de aviso."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion dividir_seguro(a, b) que retorne a/b, o el string 'Error: division por cero' si b es 0, usando try/except (sin usar un if para revisar b antes).",
         "starter_code": "def dividir_seguro(a, b):\n    # tu codigo aqui (usa try/except)\n    pass\n",
         "tests": [
-          {"call": "dividir_seguro(10, 2)", "expected": 5.0},
-          {"call": "dividir_seguro(5, 0)", "expected": "Error: division por cero"}
+          {
+            "call": "dividir_seguro(10, 2)",
+            "expected": 5.0
+          },
+          {
+            "call": "dividir_seguro(5, 0)",
+            "expected": "Error: division por cero"
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def dividir_seguro(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return \"Error: division por cero\"",
+        "explicacion": "**Paso 1 - el try:** marca el bloque que se va a INTENTAR ejecutar.\n\n**Paso 2 - la operacion riesgosa:** `return a / b` se intenta directo. Si b no es 0, funciona y termina aqui.\n\n**Paso 3 - el except especifico:** `except ZeroDivisionError:` solo se activa si Python lanzo ESE error especifico (division entre cero). Si b es 0, salta aqui en vez de romper el programa.\n\n**Paso 4 - el mensaje exacto:** el texto debe coincidir EXACTO con lo que pide el enunciado (misma capitalizacion, mismos espacios), porque los tests comparan texto literal."
       }
     },
     {
@@ -84,12 +181,33 @@
       "concept": "comprensiones_generadores",
       "difficulty": 3,
       "theory": "Las comprensiones de listas ([expr for x in iterable if condicion]) transforman y filtran colecciones en una sola linea legible, evitando loops explicitos con append. Son idiomaticas en Python: codigo mas corto y frecuentemente mas rapido.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es una forma corta de transformar una lista completa de un solo intento, en vez de una por una.\n\nImagina una fabrica con una banda transportadora: entran manzanas por un lado, una maquina las pela automaticamente, y salen manzanas peladas por el otro lado -- todo en un solo paso, sin que alguien tenga que pelarlas una por una a mano.\n\nUna 'comprension de lista' hace exactamente eso con datos: en vez de escribir un 'for' que va agregando elementos uno por uno a una lista vacia (el metodo 'a mano'), describes en UNA sola linea la 'receta' de transformacion: '[lo que quiero hacer con cada cosa, for cada cosa in la lista original]'.\n\nPor ejemplo, si tienes numeros del 1 al 5 y quieres sus cuadrados, el metodo largo seria crear una lista vacia, hacer un for, y usar append() en cada vuelta. El metodo con comprension es: '[x**2 for x in numeros]' -- se lee casi como ingles: 'x al cuadrado, para cada x en numeros'. Tambien puedes agregar un filtro con 'if' al final, para quedarte solo con lo que cumple cierta condicion.",
+        "ejemplo_resuelto": {
+          "descripcion": "Convirtamos una lista de nombres a mayusculas, solo los que tienen mas de 3 letras.",
+          "codigo": "nombres = [\"Ana\", \"Roberto\", \"Luis\", \"Fernanda\"]\n\nnombres_largos_mayus = [nombre.upper() for nombre in nombres if len(nombre) > 3]\n\nprint(nombres_largos_mayus)",
+          "explicacion_paso_a_paso": "Se lee de derecha a izquierda casi: 'para cada nombre en nombres, SI su longitud es mayor a 3, ponlo en mayusculas'.\n'Ana' tiene 3 letras -> no cumple 'len > 3' -> se descarta.\n'Roberto', 'Luis' (4 letras) y 'Fernanda' si cumplen -> se convierten a mayusculas.\nResultado: ['ROBERTO', 'LUIS', 'FERNANDA']. Todo eso en una sola linea, sin loop explicito ni .append()."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion cuadrados_pares(n) que retorne una lista con los cuadrados de todos los numeros pares del 1 al n (inclusive), usando UNA sola comprension de lista.",
         "starter_code": "def cuadrados_pares(n):\n    # tu codigo aqui (usa comprension de lista)\n    pass\n",
         "tests": [
-          {"call": "cuadrados_pares(10)", "expected": [4, 16, 36, 64, 100]}
+          {
+            "call": "cuadrados_pares(10)",
+            "expected": [
+              4,
+              16,
+              36,
+              64,
+              100
+            ]
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def cuadrados_pares(n):\n    return [x**2 for x in range(1, n + 1) if x % 2 == 0]",
+        "explicacion": "**Paso 1 - range:** `range(1, n + 1)` genera del 1 al n INCLUIDO (range siempre para uno antes del segundo numero, por eso n+1).\n\n**Paso 2 - el filtro if:** `if x % 2 == 0` se evalua por cada numero -- solo deja pasar los pares.\n\n**Paso 3 - la transformacion:** `x**2` se calcula para cada x que SI paso el filtro.\n\n**Como leerlo:** se lee 'dame x al cuadrado, para cada x en el rango, pero solo si x es par' -- reemplaza lo que serian varias lineas con for + if + append."
       }
     },
     {
@@ -98,12 +216,27 @@
       "concept": "poo",
       "difficulty": 4,
       "theory": "La Programacion Orientada a Objetos organiza datos y comportamiento en clases. __init__ inicializa, self referencia la instancia, y la herencia permite reutilizar y extender clases.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es organizar tu codigo como si fueran objetos del mundo real, cada uno con sus propios datos y acciones.\n\nImagina un molde para hacer galletas con forma de estrella. El molde en si NO es una galleta -- es el PLANO de como hacerla. Cada vez que presionas el molde en la masa, sale una galleta nueva, real, que puedes comer. Todas las galletas comparten la misma forma (vienen del mismo molde), pero cada una puede tener su propio glaseado o decoracion.\n\nEn programacion, una CLASE es el molde, y un OBJETO es cada galleta individual hecha con ese molde. La clase define que datos va a tener cada objeto (como el 'sabor' o el 'color') y que puede HACER (como 'ser comida'). 'class NombreClase:' define el molde.\n\nDentro de la clase, '__init__' es una funcion especial que se ejecuta automaticamente cada vez que creas un objeto nuevo -- es como el momento exacto en que presionas el molde en la masa, donde defines los detalles de ESA galleta en particular. 'self' es como decir 'esta galleta especifica que estoy creando ahora mismo' (para diferenciarla de las demas galletas del mismo molde).",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos una clase Perro con nombre y raza, y un metodo para que ladre.",
+          "codigo": "class Perro:\n    def __init__(self, nombre, raza):\n        self.nombre = nombre\n        self.raza = raza\n\n    def ladrar(self):\n        return f\"{self.nombre} dice: Guau!\"\n\nmi_perro = Perro(\"Rex\", \"Labrador\")\nprint(mi_perro.ladrar())",
+          "explicacion_paso_a_paso": "'class Perro:' crea el molde llamado Perro.\n'__init__(self, nombre, raza)' se ejecuta cuando creamos un perro nuevo, y guarda el nombre y raza EN ESE perro especifico ('self.nombre = nombre').\n'Perro(\"Rex\", \"Labrador\")' presiona el molde: crea un objeto real, un perro llamado Rex.\n'mi_perro.ladrar()' le pide a ESE perro especifico que ejecute su metodo ladrar, y usa su propio nombre guardado (self.nombre) para armar el mensaje."
+        }
+      },
       "exercise": {
         "prompt": "Crea una clase CuentaBancaria con saldo inicial, metodo depositar(monto) y retirar(monto) que lance ValueError si el retiro excede el saldo. Incluye un metodo consultar_saldo().",
         "starter_code": "class CuentaBancaria:\n    def __init__(self, saldo_inicial=0):\n        # tu codigo aqui\n        pass\n",
         "tests": [
-          {"call": "CuentaBancaria(100).consultar_saldo()", "expected": 100}
+          {
+            "call": "CuentaBancaria(100).consultar_saldo()",
+            "expected": 100
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "class CuentaBancaria:\n    def __init__(self, saldo_inicial=0):\n        self.saldo = saldo_inicial\n\n    def depositar(self, monto):\n        self.saldo += monto\n\n    def retirar(self, monto):\n        if monto > self.saldo:\n            raise ValueError(\"fondos insuficientes\")\n        self.saldo -= monto\n\n    def consultar_saldo(self):\n        return self.saldo",
+        "explicacion": "**Paso 1 - el constructor:** `__init__(self, saldo_inicial=0)` se ejecuta automatico al crear una cuenta. `saldo_inicial=0` es un valor POR DEFECTO. `self.saldo = saldo_inicial` guarda ese valor como parte de ESTA cuenta (el 'self.' es lo que lo hace parte del objeto).\n\n**Paso 2 - depositar:** `self.saldo += monto` es la forma corta de `self.saldo = self.saldo + monto`.\n\n**Paso 3 - retirar con validacion:** primero revisa si el monto supera el saldo -- si es asi, `raise ValueError(...)` LANZA un error a proposito (como pide el enunciado). Si pasa la validacion, resta el monto.\n\n**Paso 4 - consultar_saldo:** retorna el valor actual, sin modificar nada."
       }
     },
     {
@@ -112,13 +245,37 @@
       "concept": "funcional_decoradores",
       "difficulty": 5,
       "theory": "Las funciones son ciudadanos de primera clase: pueden pasarse como argumentos y retornarse desde otras funciones. Un decorador es una funcion que envuelve a otra para modificar o extender su comportamiento sin cambiar su codigo -- la base de frameworks como Flask.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es agregarle un 'extra' a una funcion ya existente, sin tener que cambiar su codigo original.\n\nImagina que tienes un regalo ya envuelto en una caja simple. Le agregas papel de regalo bonito, un moño, y una tarjeta -- el REGALO en si (lo que hay adentro) no cambio en nada, pero ahora tiene algo EXTRA alrededor que lo hace mas especial, sin tener que abrir la caja y modificar el regalo original.\n\nUn DECORADOR en Python hace exactamente eso, pero con funciones: toma una funcion que ya existe (el regalo) y la 'envuelve' con codigo extra (el papel de regalo), sin tener que tocar ni una linea de la funcion original. Puede agregar cosas ANTES de que la funcion original se ejecute, DESPUES, o ambas -- como imprimir un mensaje, medir cuanto tiempo tarda, o verificar permisos.\n\nPara lograr esto, primero necesitas entender algo importante: en Python las funciones son 'ciudadanos de primera clase', lo que significa que puedes tratarlas como cualquier otro dato -- guardarlas en variables, pasarlas como argumento a otra funcion, o hacer que una funcion RETORNE otra funcion. Un decorador es, literalmente, una funcion que recibe otra funcion como argumento, y retorna una nueva funcion 'envuelta' (llamada normalmente 'wrapper') que hace algo extra y despues llama a la original.",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos un decorador que imprime un mensaje antes y despues de ejecutar cualquier funcion.",
+          "codigo": "def anunciar(func):\n    def wrapper(*args, **kwargs):\n        print(\"Empezando...\")\n        resultado = func(*args, **kwargs)\n        print(\"Terminado.\")\n        return resultado\n    return wrapper\n\n@anunciar\ndef saludar(nombre):\n    return f\"Hola, {nombre}!\"\n\nprint(saludar(\"Sofia\"))",
+          "explicacion_paso_a_paso": "'anunciar' es el decorador: recibe una funcion 'func' y retorna 'wrapper', una nueva funcion que envuelve a la original.\n'@anunciar' encima de 'def saludar' es la forma corta de decir 'saludar = anunciar(saludar)' -- reemplaza saludar por su version envuelta.\nCuando llamas 'saludar(\"Sofia\")', en realidad estas llamando a 'wrapper', que primero imprime \"Empezando...\", LUEGO ejecuta la funcion original (saludar de verdad), y despues imprime \"Terminado.\" -- todo eso sin haber tocado el codigo original de saludar."
+        }
+      },
       "exercise": {
         "prompt": "Escribe un decorador repetir(n) que, aplicado a una funcion sin argumentos, ejecute esa funcion n veces y retorne una lista con los n resultados.",
         "starter_code": "def repetir(n):\n    def decorador(func):\n        def wrapper(*args, **kwargs):\n            # tu codigo aqui\n            pass\n        return wrapper\n    return decorador\n",
         "tests": [
-          {"call": "repetir(3)(lambda: 7)()", "expected": [7, 7, 7]},
-          {"call": "repetir(1)(lambda: 'hola')()", "expected": ["hola"]}
+          {
+            "call": "repetir(3)(lambda: 7)()",
+            "expected": [
+              7,
+              7,
+              7
+            ]
+          },
+          {
+            "call": "repetir(1)(lambda: 'hola')()",
+            "expected": [
+              "hola"
+            ]
+          }
         ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "def repetir(n):\n    def decorador(func):\n        def wrapper(*args, **kwargs):\n            return [func(*args, **kwargs) for _ in range(n)]\n        return wrapper\n    return decorador",
+        "explicacion": "**Paso 1 - la funcion externa:** `repetir(n)` recibe cuantas veces repetir, y va a retornar el decorador real. Se necesitan tres niveles anidados porque nuestro decorador necesita un PARAMETRO extra (n).\n\n**Paso 2 - el decorador:** `decorador(func)` recibe la funcion original que se va a envolver.\n\n**Paso 3 - el wrapper:** `wrapper(*args, **kwargs)` reemplaza a la original. '*args' y '**kwargs' dejan que wrapper acepte CUALQUIER cantidad de argumentos y se los pase tal cual a la funcion original.\n\n**Paso 4 - la repeticion:** la comprension de lista llama a la funcion original n veces (el '_' significa 'no me importa el valor, solo repetir') y junta los resultados.\n\n**Paso 5 - los tres return:** wrapper retorna la lista; decorador retorna wrapper; repetir retorna decorador -- estos tres niveles permiten que '@repetir(3)' funcione con un parametro."
       }
     }
   ]

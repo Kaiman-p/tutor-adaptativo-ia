@@ -109,6 +109,75 @@ def _call_llm(system: str, user: str) -> str:
     return _call_anthropic(system, user)
 
 
+REEXPLAIN_SYSTEM_PROMPT = """Eres un profesor paciente que explica fundamentos de programacion a \
+alguien que nunca ha programado antes (puede ser un adolescente o un adulto sin ningun \
+conocimiento tecnico previo). Se te dara un concepto y su explicacion actual, que la persona \
+NO entendio. Tu trabajo es explicarlo de nuevo, de una forma COMPLETAMENTE DISTINTA a la \
+explicacion original -- usa una analogia diferente, un ejemplo de la vida cotidiana distinto, \
+y un lenguaje todavia mas simple. Evita jerga tecnica sin explicarla. Maximo 3 parrafos cortos. \
+Responde en espanol, en texto plano (sin JSON, sin markdown)."""
+
+
+def reexplain_concept(language: str, concept: str, explicacion_actual: str) -> dict:
+    """
+    Genera una explicacion ALTERNATIVA del concepto de un nivel, para el
+    boton "no entendi, explicamelo diferente" en la interfaz. Esto refuerza
+    el criterio de Personalizacion: el contenido se adapta en vivo a lo que
+    el estudiante necesita, en vez de ser siempre el mismo texto estatico.
+    """
+    user_prompt = json.dumps({
+        "lenguaje": language,
+        "concepto": concept,
+        "explicacion_que_no_entendio": explicacion_actual,
+    }, ensure_ascii=False)
+    try:
+        texto = _call_llm(REEXPLAIN_SYSTEM_PROMPT, user_prompt)
+        return {"texto": texto.strip(), "_source": "llm"}
+    except Exception as e:
+        return {
+            "texto": "No se pudo generar una nueva explicacion en este momento "
+                     "(revisa tu conexion o API key). Mientras tanto, relee el "
+                     "ejemplo resuelto con calma, o pregunta a un companero.",
+            "_source": "fallback",
+            "_error": str(e),
+        }
+
+
+HINT_SYSTEM_PROMPT = """Eres un tutor de programacion ayudando a un estudiante principiante que \
+esta atascado en un ejercicio. Te daran el enunciado del ejercicio y el codigo base (sin resolver). \
+
+Tu tarea es dar una PISTA en pasos de razonamiento -- NUNCA escribas el codigo completo de la \
+solucion ni la linea exacta que hay que escribir. Divide el problema en 3 a 5 pasos de pensamiento \
+(que revisar primero, que estructura de control conviene usar, que caso especial no hay que \
+olvidar), en lenguaje simple para alguien sin experiencia previa. El objetivo es que la persona \
+piense y termine escribiendo el codigo por si misma, no que se lo copies.
+
+Responde en espanol, en texto plano, con los pasos numerados, sin codigo completo."""
+
+
+def generate_hint(level: dict, language: str) -> dict:
+    """
+    Genera una pista de razonamiento (sin la solucion completa) para el
+    ejercicio actual, para el boton "necesito una pista" en la interfaz.
+    """
+    user_prompt = json.dumps({
+        "lenguaje": language,
+        "ejercicio": level["exercise"]["prompt"],
+        "codigo_base": level["exercise"]["starter_code"],
+    }, ensure_ascii=False)
+    try:
+        texto = _call_llm(HINT_SYSTEM_PROMPT, user_prompt)
+        return {"texto": texto.strip(), "_source": "llm"}
+    except Exception as e:
+        return {
+            "texto": "No se pudo generar una pista en este momento. Mientras tanto: "
+                     "relee el ejemplo resuelto de la leccion, e identifica que parte "
+                     "de ese ejemplo se parece a lo que te estan pidiendo aqui.",
+            "_source": "fallback",
+            "_error": str(e),
+        }
+
+
 def judge_submission(level: dict, student_code: str, test_result: dict) -> dict:
     """
     Devuelve algo como:

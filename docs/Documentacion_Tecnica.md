@@ -36,15 +36,19 @@ durante semestres.
 
 Un **tutor adaptativo tipo videojuego (RPG)** que:
 1. Presenta ejercicios organizados por "mundos" (lenguajes) y "niveles"
-   (conceptos, de básico a avanzado).
+   (conceptos, de básico a avanzado), cada uno con una **lección completa
+   escrita para cero conocimiento previo** (analogía + ejemplo resuelto
+   aparte del ejercicio a resolver).
 2. Usa un **LLM como núcleo computacional** para analizar el código que
    el estudiante escribe —no solo si el resultado es correcto, sino si
    el código *demuestra* comprensión del concepto evaluado.
 3. Mantiene un **modelo probabilístico de dominio por concepto**
    (Bayesian Knowledge Tracing) que se actualiza con cada intento.
 4. **Decide y genera contenido de forma autónoma**: avanza al estudiante,
-   lo hace repetir, o genera dinámicamente un ejercicio remedial más
-   simple enfocado en su punto débil.
+   lo hace repetir, genera dinámicamente un ejercicio remedial, o
+   **re-explica la lección de una forma distinta en vivo** si el
+   estudiante no entendió la explicación original (botón "No entendí,
+   explícamelo diferente").
 
 ### 1.4 Alcance del prototipo (justificación de viabilidad)
 

@@ -10,11 +10,36 @@
       "concept": "select_where",
       "difficulty": 1,
       "theory": "SQL es declarativo: describes QUE datos quieres, no COMO obtenerlos (a diferencia de Python/C/Java que son imperativos). SELECT columnas FROM tabla WHERE condicion filtra filas.",
+      "lesson": {
+        "explicacion_simple": "En una frase: le describes a la base de datos que datos quieres ver, sin explicarle como buscarlos.\n\nTodo lo que viste antes (Python, C, Java) son lenguajes IMPERATIVOS: le dices a la computadora, paso a paso, COMO hacer algo ('primero crea una caja, luego repite esto, luego suma aquello'). SQL es diferente: es DECLARATIVO. En vez de explicar el 'como', simplemente DESCRIBES el resultado que quieres, y la base de datos se encarga de descubrir la mejor forma de conseguirtelo. Es como pedir en un restaurante: le dices al mesero 'quiero una pizza sin cebolla', no le explicas paso a paso como cocinarla -- eso es trabajo de la cocina.\n\n'SELECT columna1, columna2 FROM tabla' es tu forma de decir 'muestrame estas columnas de esta tabla'. Si quieres TODAS las columnas, usas un asterisco: 'SELECT * FROM tabla'.\n\n'WHERE condicion' es tu filtro: 'de todas las filas de la tabla, dame solo las que cumplan esto'. Es como tener una caja llena de dulces de colores mezclados, y decir 'dame solo los rojos' -- WHERE revisa cada dulce (cada fila) y solo te entrega los que cumplen la condicion que pediste. Puedes comparar con =, >, <, o combinar condiciones con AND (Y) / OR (O).",
+        "ejemplo_resuelto": {
+          "descripcion": "Selecciona el nombre de los clientes de Guayaquil.",
+          "codigo": "SELECT nombre FROM clientes WHERE ciudad = 'Guayaquil';",
+          "explicacion_paso_a_paso": "'SELECT nombre' dice 'quiero ver solo la columna nombre' (no todas las columnas).\n'FROM clientes' dice 'de la tabla clientes'.\n'WHERE ciudad = 'Guayaquil'' filtra: de todas las filas, solo quedate con las que tengan 'Guayaquil' exactamente en la columna ciudad.\nEl resultado seria una sola fila: 'Luis Vega' (el unico cliente de Guayaquil en la tabla)."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el nombre y la ciudad de todos los clientes que viven en 'Quito'.",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": false,
-        "expected_result": [["Ana Torres", "Quito"], ["Marta Ruiz", "Quito"], ["Sofia Leon", "Quito"]]
+        "expected_result": [
+          [
+            "Ana Torres",
+            "Quito"
+          ],
+          [
+            "Marta Ruiz",
+            "Quito"
+          ],
+          [
+            "Sofia Leon",
+            "Quito"
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT nombre, ciudad FROM clientes WHERE ciudad = 'Quito';",
+        "explicacion": "**SELECT:** dice exactamente que columnas queremos ver, en ese orden.\n\n**FROM:** indica de que tabla vienen los datos.\n\n**WHERE:** filtra -- solo las filas donde ciudad sea EXACTAMENTE 'Quito' (las comillas simples son obligatorias para texto; sin ellas, SQL pensaria que Quito es el nombre de una columna).\n\n**El ';' final:** marca el fin de la consulta."
       }
     },
     {
@@ -23,11 +48,36 @@
       "concept": "orderby_limit",
       "difficulty": 1,
       "theory": "ORDER BY columna DESC/ASC ordena resultados. LIMIT n restringe cuantas filas se retornan. Son de las pocas clausulas donde el orden de escritura en SQL es fijo: SELECT...FROM...WHERE...ORDER BY...LIMIT.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es ordenar los resultados y quedarte solo con los primeros que te interesan.\n\nPor defecto, cuando haces un SELECT, la base de datos te devuelve las filas SIN ORDEN GARANTIZADO -- pueden salir en cualquier orden, dependiendo de como esten guardadas internamente. Si te importa el orden (por ejemplo, quieres ver primero los mas caros), necesitas pedirlo explicitamente con 'ORDER BY'.\n\n'ORDER BY columna' es como ordenar un estante de libros por altura: le dices segun QUE caracteristica ordenar. 'ASC' (ascendente, de menor a mayor) es el orden por defecto si no dices nada. 'DESC' (descendente) va de mayor a menor -- por ejemplo, 'ORDER BY monto DESC' pone primero los pedidos mas caros.\n\n'LIMIT n' simplemente dice 'dame solo las primeras n filas del resultado, y descarta el resto' -- es como pedir 'solo el top 3', util para cosas como 'los 5 productos mas vendidos' o 'el cliente que mas gasto'. Cuando combinas ORDER BY con LIMIT, primero se ordena TODO el resultado, y despues se recorta a las primeras n filas -- por eso 'ORDER BY monto DESC LIMIT 3' te da exactamente los 3 pedidos con el monto mas alto.",
+        "ejemplo_resuelto": {
+          "descripcion": "Muestra los 2 clientes cuyo nombre viene primero en orden alfabetico.",
+          "codigo": "SELECT nombre FROM clientes ORDER BY nombre ASC LIMIT 2;",
+          "explicacion_paso_a_paso": "'ORDER BY nombre ASC' ordena todos los nombres alfabeticamente, de la A a la Z.\n'LIMIT 2' se queda solo con las primeras 2 filas de ese resultado ya ordenado.\nEntre 'Ana Torres', 'Luis Vega', 'Marta Ruiz', 'Pedro Sanchez', 'Sofia Leon', los dos primeros alfabeticamente son 'Ana Torres' y 'Luis Vega'."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el producto y monto de los 3 pedidos con mayor monto, ordenados de mayor a menor.",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": true,
-        "expected_result": [["Laptop", 900.0], ["Laptop", 870.0], ["Laptop", 850.0]]
+        "expected_result": [
+          [
+            "Laptop",
+            900.0
+          ],
+          [
+            "Laptop",
+            870.0
+          ],
+          [
+            "Laptop",
+            850.0
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT producto, monto FROM pedidos ORDER BY monto DESC LIMIT 3;",
+        "explicacion": "**ORDER BY monto DESC:** ordena todas las filas segun monto, de mayor a menor ('DESC'; 'ASC' seria de menor a mayor, y es el default si no escribes nada).\n\n**LIMIT 3:** una vez ordenado TODO, se queda solo con las primeras 3 filas -- el orden de escritura importa: primero se ordena, despues se recorta."
       }
     },
     {
@@ -36,11 +86,40 @@
       "concept": "agregacion_groupby",
       "difficulty": 2,
       "theory": "Funciones de agregacion (COUNT, SUM, AVG, MAX, MIN) resumen multiples filas en un solo valor. GROUP BY agrupa filas que comparten un valor antes de agregar -- sin GROUP BY, la agregacion aplica a toda la tabla.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es resumir muchas filas en un solo numero, separando primero en grupos si hace falta.\n\nHasta ahora viste cada fila como un dato individual. Pero muchas veces quieres un RESUMEN: no 'cada pedido por separado', sino 'cuantos pedidos en total', o 'cual es el monto promedio'. Para eso existen las funciones de AGREGACION: COUNT (contar cuantas filas hay), SUM (sumar los valores), AVG (promedio), MAX (el mayor), MIN (el menor).\n\nUsadas solas, resumen TODA la tabla en un solo numero: 'SELECT COUNT(*) FROM pedidos' te dice cuantos pedidos hay en total, sin importar de quien sean.\n\nAhora, si quieres un resumen POR GRUPOS (por ejemplo, 'cuantos pedidos hizo CADA cliente', no el total general), necesitas 'GROUP BY columna'. Es como tener una pila de examenes mezclados de varios salones, y antes de contar cuantos examenes hay, primero los separas en montoncitos por salon -- GROUP BY hace esa separacion en montoncitos (grupos) segun el valor de una columna, y LUEGO la funcion de agregacion (como COUNT) se aplica a CADA montoncito por separado, dandote un resultado por grupo en vez de un solo numero general.",
+        "ejemplo_resuelto": {
+          "descripcion": "Cuenta cuantos clientes hay en cada ciudad.",
+          "codigo": "SELECT ciudad, COUNT(*) FROM clientes GROUP BY ciudad;",
+          "explicacion_paso_a_paso": "'GROUP BY ciudad' separa a los clientes en montoncitos: uno para Quito, uno para Guayaquil, uno para Cuenca.\n'COUNT(*)' cuenta cuantas filas hay en CADA montoncito por separado (no el total de toda la tabla).\nResultado: Quito tiene 3 clientes (Ana, Marta, Sofia), Guayaquil tiene 1 (Luis), Cuenca tiene 1 (Pedro) -- una fila de resultado POR CADA grupo distinto."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne cliente_id y cuantos pedidos ha hecho cada cliente.",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": false,
-        "expected_result": [[1, 3], [2, 2], [3, 2], [5, 1]]
+        "expected_result": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            1
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT cliente_id, COUNT(*) FROM pedidos GROUP BY cliente_id;",
+        "explicacion": "**SELECT con agregacion:** pedimos el id del cliente y un conteo.\n\n**GROUP BY cliente_id:** separa todas las filas en montoncitos, uno por cada cliente_id distinto.\n\n**COUNT(*):** cuenta cuantas filas hay DENTRO de cada montoncito -- el resultado tiene una fila POR GRUPO, no por pedido individual."
       }
     },
     {
@@ -49,11 +128,56 @@
       "concept": "inner_join",
       "difficulty": 2,
       "theory": "INNER JOIN combina filas de dos tablas donde una condicion coincide (tipicamente una clave foranea con una primaria). Sin JOIN, los datos relacionales quedan fragmentados en tablas separadas.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es conectar dos tablas relacionadas usando un dato que comparten, como un numero de cliente.\n\nEn este proyecto tienes DOS tablas separadas: 'clientes' y 'pedidos'. La tabla de pedidos no guarda el NOMBRE del cliente, solo guarda su 'cliente_id' (un numero que apunta a la tabla clientes) -- esto evita repetir el nombre completo del cliente en cada uno de sus pedidos, ahorrando espacio y evitando errores de escritura repetida.\n\nPero si quieres un reporte que muestre el NOMBRE del cliente junto al producto que compro, necesitas UNIR (JOIN) las dos tablas usando ese numero compartido como 'puente'. Es como tener una libreta con nombres y numeros de socio de una biblioteca, y otra libreta separada con 'numero de socio -> libros prestados' -- para saber QUIEN presto QUE libro, necesitas cruzar ambas libretas usando el numero de socio como conexion.\n\n'JOIN otra_tabla ON condicion_de_conexion' hace exactamente eso: 'SELECT clientes.nombre, pedidos.producto FROM pedidos JOIN clientes ON pedidos.cliente_id = clientes.id' dice 'conecta cada pedido con SU cliente, donde el cliente_id del pedido coincida con el id del cliente'. Por cada coincidencia encontrada, obtienes una fila combinada con datos de ambas tablas.",
+        "ejemplo_resuelto": {
+          "descripcion": "Muestra el nombre del cliente y la ciudad, junto al producto de cada uno de sus pedidos.",
+          "codigo": "SELECT clientes.nombre, clientes.ciudad, pedidos.producto\nFROM pedidos\nJOIN clientes ON pedidos.cliente_id = clientes.id\nWHERE clientes.ciudad = 'Quito';",
+          "explicacion_paso_a_paso": "Primero se conectan pedidos con clientes usando 'pedidos.cliente_id = clientes.id' -- cada pedido queda emparejado con los datos de su cliente correspondiente.\nDespues del JOIN, ya se puede usar WHERE para filtrar sobre columnas de CUALQUIERA de las dos tablas, en este caso la ciudad (que solo existe en la tabla clientes).\nResultado: todas las filas de pedidos hechos por clientes de Quito, mostrando su nombre, ciudad y que compraron."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el nombre del cliente y el producto de cada pedido, uniendo clientes y pedidos.",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": false,
-        "expected_result": [["Ana Torres","Laptop"],["Ana Torres","Mouse"],["Luis Vega","Teclado"],["Marta Ruiz","Monitor"],["Marta Ruiz","Laptop"],["Sofia Leon","Silla"],["Ana Torres","Monitor"],["Luis Vega","Laptop"]]
+        "expected_result": [
+          [
+            "Ana Torres",
+            "Laptop"
+          ],
+          [
+            "Ana Torres",
+            "Mouse"
+          ],
+          [
+            "Luis Vega",
+            "Teclado"
+          ],
+          [
+            "Marta Ruiz",
+            "Monitor"
+          ],
+          [
+            "Marta Ruiz",
+            "Laptop"
+          ],
+          [
+            "Sofia Leon",
+            "Silla"
+          ],
+          [
+            "Ana Torres",
+            "Monitor"
+          ],
+          [
+            "Luis Vega",
+            "Laptop"
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT clientes.nombre, pedidos.producto\nFROM pedidos\nJOIN clientes ON pedidos.cliente_id = clientes.id;",
+        "explicacion": "**El prefijo de tabla:** 'clientes.nombre' especifica de que tabla viene cada columna -- buena practica (y a veces obligatorio) cuando trabajas con dos tablas.\n\n**JOIN ... ON:** conecta cada fila de pedidos con la fila de clientes donde el cliente_id del pedido coincide con el id del cliente. Por cada coincidencia, se genera una fila combinada."
       }
     },
     {
@@ -62,11 +186,44 @@
       "concept": "left_join",
       "difficulty": 3,
       "theory": "LEFT JOIN conserva TODAS las filas de la tabla izquierda aunque no haya coincidencia en la derecha (rellenando con NULL). Es clave para no perder registros 'sin actividad', como clientes que nunca compraron.",
+      "lesson": {
+        "explicacion_simple": "En una frase: como un JOIN normal, pero sin perder los datos que no tienen pareja en la otra tabla.\n\nEl JOIN normal (INNER JOIN) del nivel anterior tiene un 'defecto' segun lo que quieras lograr: SOLO muestra filas donde HAY coincidencia en ambas tablas. Si un cliente nunca hizo NINGUN pedido, simplemente DESAPARECE del resultado -- como si no existiera. Eso puede ser un problema si justamente quieres saber 'que clientes NO han comprado nada'.\n\n'LEFT JOIN' resuelve esto: conserva TODAS las filas de la tabla de la IZQUIERDA (la que escribiste primero, despues de FROM), tenga o no coincidencia en la tabla de la derecha. Si un cliente no tiene ningun pedido, igual aparece en el resultado, pero las columnas que vendrian de la tabla de pedidos apareceran vacias (NULL, que significa 'no hay dato aqui').\n\nEs como una lista de asistencia de un salon de clases: quieres ver a TODOS los estudiantes inscritos, incluso a los que faltaron ese dia (mostrando 'ausente' o vacio en vez de simplemente borrarlos de la lista). Si usaras un JOIN normal, los estudiantes ausentes desaparecerian de tu lista por completo -- con LEFT JOIN, se quedan, solo que sin datos de asistencia ese dia.",
+        "ejemplo_resuelto": {
+          "descripcion": "Muestra TODOS los clientes y el producto de su primer pedido (si tienen alguno).",
+          "codigo": "SELECT clientes.nombre, pedidos.producto\nFROM clientes\nLEFT JOIN pedidos ON clientes.id = pedidos.cliente_id\nGROUP BY clientes.id;",
+          "explicacion_paso_a_paso": "'clientes' es la tabla de la izquierda (va primero, en el FROM) -- TODOS sus clientes van a aparecer en el resultado, tengan pedidos o no.\n'LEFT JOIN pedidos ON ...' intenta conectar cada cliente con sus pedidos, pero si un cliente no tiene ninguno, sus columnas de pedidos.producto simplemente salen vacias (NULL) en vez de que el cliente desaparezca.\nEn este caso, 'Pedro Sanchez' (que no tiene pedidos en la tabla) SI aparece en el resultado, con producto en NULL/vacio -- algo que un JOIN normal jamas mostraria."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el nombre de cada cliente y cuantos pedidos tiene, incluyendo clientes con 0 pedidos.",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": false,
-        "expected_result": [["Ana Torres",3],["Luis Vega",2],["Marta Ruiz",2],["Pedro Sanchez",0],["Sofia Leon",1]]
+        "expected_result": [
+          [
+            "Ana Torres",
+            3
+          ],
+          [
+            "Luis Vega",
+            2
+          ],
+          [
+            "Marta Ruiz",
+            2
+          ],
+          [
+            "Pedro Sanchez",
+            0
+          ],
+          [
+            "Sofia Leon",
+            1
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT clientes.nombre, COUNT(pedidos.id)\nFROM clientes\nLEFT JOIN pedidos ON clientes.id = pedidos.cliente_id\nGROUP BY clientes.id;",
+        "explicacion": "**LEFT JOIN:** clientes es la tabla de la izquierda -- TODOS los clientes apareceran, tengan pedidos o no.\n\n**COUNT(pedidos.id):** cuenta ids de pedidos por cliente; si un cliente no tiene ninguno (columnas vacias por el LEFT JOIN), COUNT da 0 para el, en vez de error.\n\n**GROUP BY clientes.id:** agrupa para que el conteo sea por cliente."
       }
     },
     {
@@ -75,11 +232,36 @@
       "concept": "having",
       "difficulty": 3,
       "theory": "WHERE filtra filas ANTES de agrupar; HAVING filtra grupos DESPUES de agregar (no puedes usar WHERE con SUM/COUNT directamente). Confundir WHERE con HAVING es el error mas comun al aprender SQL.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es un filtro que se aplica DESPUES de agrupar y resumir, no antes.\n\nEsto suele confundir a todo el mundo al principio, asi que vamos con calma: WHERE y HAVING ambos 'filtran', pero en momentos DISTINTOS del proceso.\n\nWHERE filtra FILAS INDIVIDUALES, ANTES de que se formen los grupos (GROUP BY) o se calculen las agregaciones (SUM, COUNT). Es como revisar cada estudiante UNO POR UNO antes de organizarlos en salones -- por ejemplo, 'solo estudiantes mayores de 15 anios' se decide viendo a cada estudiante individualmente.\n\nHAVING filtra GRUPOS COMPLETOS, DESPUES de que ya se agruparon y se calculo el resumen de cada grupo. Es como, una vez que ya organizaste a los estudiantes en salones y calculaste el promedio de calificaciones de CADA salon, decir 'ahora quedate solo con los salones cuyo promedio sea mayor a 8' -- esa decision no se puede tomar mirando UN estudiante a la vez, necesitas el RESULTADO ya calculado de todo el grupo primero.\n\nPor eso, si quieres filtrar usando el RESULTADO de SUM(), COUNT(), AVG(), etc. (algo que solo existe DESPUES de agrupar), tienes que usar HAVING, no WHERE -- SQL literalmente no te deja escribir 'WHERE SUM(monto) > 500', porque en el momento en que WHERE actua, esa suma todavia ni siquiera se ha calculado.",
+        "ejemplo_resuelto": {
+          "descripcion": "Cuenta pedidos por cliente, pero quedate solo con los clientes que tienen MAS DE 1 pedido.",
+          "codigo": "SELECT cliente_id, COUNT(*) as cantidad\nFROM pedidos\nGROUP BY cliente_id\nHAVING cantidad > 1;",
+          "explicacion_paso_a_paso": "Primero se agrupan los pedidos por cliente_id, y se cuenta cuantos tiene cada uno.\n'HAVING cantidad > 1' se aplica DESPUES de ese conteo, descartando los grupos (clientes) que tengan 1 o menos pedidos.\nSi intentaras 'WHERE COUNT(*) > 1' en vez de HAVING, SQL te daria un error -- en el momento del WHERE, el conteo por grupo todavia no existe."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne cliente_id y su gasto total (SUM de monto), pero solo para clientes cuyo gasto total supera 500.",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": false,
-        "expected_result": [[1, 1155.0], [2, 915.0], [3, 1200.0]]
+        "expected_result": [
+          [
+            1,
+            1155.0
+          ],
+          [
+            2,
+            915.0
+          ],
+          [
+            3,
+            1200.0
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT cliente_id, SUM(monto) as total\nFROM pedidos\nGROUP BY cliente_id\nHAVING total > 500;",
+        "explicacion": "**SUM(monto) as total:** suma los montos de cada grupo, con un ALIAS ('as total') para referirnos a ese calculo mas adelante.\n\n**GROUP BY antes que HAVING:** primero se agrupa y se calcula la suma por cliente.\n\n**HAVING total > 500:** DESPUES de calcular, filtra los GRUPOS que superen 500 -- por eso HAVING y no WHERE, ya que 'total' recien existe como resultado calculado en este punto."
       }
     },
     {
@@ -88,11 +270,36 @@
       "concept": "subconsultas",
       "difficulty": 4,
       "theory": "Una subconsulta es un SELECT dentro de otro SELECT. Permite comparar contra un valor calculado dinamicamente (como un promedio) en vez de un numero fijo, haciendo la consulta reutilizable sin importar los datos.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es resolver una pregunta pequenia adentro de otra pregunta mas grande.\n\nImagina que te preguntan '¿quienes en tu salon miden mas que el promedio de estatura del salon?'. Para responder, primero necesitas resolver una pregunta MAS PEQUENIA escondida adentro: '¿cual es el promedio de estatura?'. Solo una vez que sabes ese numero, puedes comparar a cada estudiante contra el.\n\nUna SUBCONSULTA es exactamente eso: un SELECT completo escrito DENTRO de otro SELECT, entre parentesis, que resuelve esa 'pregunta pequenia' primero. La consulta de 'afuera' usa el resultado de la de 'adentro' como si fuera un valor cualquiera.\n\nLa gran ventaja frente a escribir un numero fijo (como 'WHERE monto > 500') es que la subconsulta se RECALCULA automaticamente segun los datos actuales -- si mañana cambian los precios, tu consulta 'clientes que gastaron mas que el promedio' sigue funcionando correctamente sin que tengas que ir a cambiar ningun numero a mano, porque el promedio se vuelve a calcular solo cada vez que ejecutas la consulta.",
+        "ejemplo_resuelto": {
+          "descripcion": "Encuentra los pedidos cuyo monto es mayor al monto promedio de TODOS los pedidos.",
+          "codigo": "SELECT producto, monto\nFROM pedidos\nWHERE monto > (SELECT AVG(monto) FROM pedidos);",
+          "explicacion_paso_a_paso": "La parte entre parentesis, '(SELECT AVG(monto) FROM pedidos)', es la subconsulta -- se ejecuta PRIMERO y calcula un solo numero: el promedio de todos los montos.\nLa consulta de afuera usa ese numero calculado como si fuera un valor fijo, comparando cada pedido individual contra el.\nSi agregaras mas pedidos a la tabla manana, el promedio cambiaria automaticamente, y esta misma consulta seguiria dando el resultado correcto sin que tengas que tocarla."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una consulta que retorne cliente_id y gasto total, solo para clientes cuyo gasto total supera el PROMEDIO del gasto total de todos los clientes (calculado con una subconsulta, no con un numero fijo).",
         "starter_code": "-- tu consulta aqui\n",
         "order_matters": false,
-        "expected_result": [[1, 1155.0], [2, 915.0], [3, 1200.0]]
+        "expected_result": [
+          [
+            1,
+            1155.0
+          ],
+          [
+            2,
+            915.0
+          ],
+          [
+            3,
+            1200.0
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "SELECT cliente_id, SUM(monto) as total\nFROM pedidos\nGROUP BY cliente_id\nHAVING total > (\n    SELECT AVG(total) FROM (\n        SELECT SUM(monto) as total FROM pedidos GROUP BY cliente_id\n    )\n);",
+        "explicacion": "**La subconsulta mas interna:** calcula el gasto total de CADA cliente por separado -- una tabla temporal con una fila por cliente.\n\n**La subconsulta del promedio:** calcula el PROMEDIO de esos totales -- un solo numero.\n\n**La consulta de afuera:** vuelve a calcular el total por cliente, y con HAVING se queda solo con los que superan ese promedio calculado dinamicamente."
       }
     },
     {
@@ -101,11 +308,36 @@
       "concept": "cte",
       "difficulty": 5,
       "theory": "Un CTE (Common Table Expression, WITH nombre AS (...)) define una tabla temporal nombrada dentro de la consulta. Hace las subconsultas complejas legibles: en vez de anidar SELECTs, les das nombre y las usas como si fueran tablas normales.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es ponerle nombre a un calculo intermedio, para no tener que escribir todo enredado en una sola consulta.\n\nCuando en matematicas resuelves un problema largo, a veces defines una variable intermedia con nombre ('sea x = el resultado de este calculo') para no tener que repetir toda la formula larga cada vez que la necesitas despues. Un CTE hace lo mismo, pero con consultas SQL.\n\nUn CTE (se pronuncia 'Common Table Expression', o simplemente 'WITH') es una forma de decir: 'primero calcula ESTO y ponle un nombre temporal, y despues usalo como si fuera una tabla normal en el resto de la consulta'. Se escribe: 'WITH nombre_temporal AS (SELECT ...) SELECT ... FROM nombre_temporal'.\n\nLa gran ventaja frente a meter subconsultas anidadas dentro de otras subconsultas (lo cual se vuelve ilegible rapidamente, como munecas rusas dentro de munecas rusas) es que el CTE le da un NOMBRE CLARO a cada paso intermedio, y puedes leer la consulta de arriba a abajo, paso por paso, en vez de tener que descifrar parentesis anidados de adentro hacia afuera. Es la diferencia entre una receta de cocina que dice 'PRIMERO haz esto (llamalo la salsa), LUEGO usa la salsa para esto otro', contra una receta escrita toda en una sola oracion gigante y confusa.",
+        "ejemplo_resuelto": {
+          "descripcion": "Usa un CTE para calcular cuantos pedidos tiene cada cliente, y luego muestra solo los que tienen mas de 1.",
+          "codigo": "WITH conteos AS (\n    SELECT cliente_id, COUNT(*) as cantidad\n    FROM pedidos\n    GROUP BY cliente_id\n)\nSELECT cliente_id, cantidad\nFROM conteos\nWHERE cantidad > 1;",
+          "explicacion_paso_a_paso": "'WITH conteos AS (...)' calcula primero la tabla temporal 'conteos', con el conteo de pedidos por cliente -- este paso queda guardado con nombre, listo para usarse.\nLa consulta principal, despues, trata a 'conteos' como si fuera una tabla real: 'SELECT ... FROM conteos WHERE cantidad > 1'.\nNota que aqui SI podemos usar WHERE (no HAVING) sobre 'cantidad', porque para cuando llegamos a esa parte, 'conteos' ya es una tabla normal con una columna llamada cantidad -- el CTE ya hizo el trabajo pesado de agregacion antes."
+        }
+      },
       "exercise": {
         "prompt": "Usando un CTE (WITH), calcula el gasto total por cliente y muestra solo cliente_id y total para los clientes cuyo gasto total supera 900.",
         "starter_code": "-- tu consulta aqui (usa WITH)\n",
         "order_matters": false,
-        "expected_result": [[1, 1155.0], [2, 915.0], [3, 1200.0]]
+        "expected_result": [
+          [
+            1,
+            1155.0
+          ],
+          [
+            2,
+            915.0
+          ],
+          [
+            3,
+            1200.0
+          ]
+        ]
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "WITH gastos AS (\n    SELECT cliente_id, SUM(monto) as total FROM pedidos GROUP BY cliente_id\n)\nSELECT cliente_id, total FROM gastos WHERE total > 900;",
+        "explicacion": "**El CTE:** calcula el gasto total por cliente UNA sola vez, y le pone el nombre 'gastos' -- como una tabla temporal ya calculada.\n\n**La consulta principal:** usa 'gastos' como si fuera una tabla normal -- por eso se puede usar WHERE directo sobre 'total' (no HAVING), ya que 'total' es ahora una columna comun de una tabla ya calculada.\n\n**Por que es mas legible:** compara con el nivel anterior (subconsultas anidadas) -- el CTE separa el calculo intermedio del uso final, leyendose de arriba a abajo en vez de de adentro hacia afuera."
       }
     }
   ]

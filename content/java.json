@@ -8,11 +8,23 @@
       "concept": "variables_tipos",
       "difficulty": 1,
       "theory": "Java es de tipado estatico como C: cada variable declara su tipo (int, double, boolean, String) y el compilador lo verifica antes de ejecutar. A diferencia de C, Java gestiona memoria automaticamente (garbage collector).",
+      "lesson": {
+        "explicacion_simple": "En una frase: cada caja tiene un tipo fijo, igual que en C, pero Java limpia la memoria por ti automaticamente.\n\nAl igual que en C, en Java cada 'caja' (variable) tiene una etiqueta de tipo fija: 'int edad;' solo puede guardar numeros enteros, 'double precio;' solo numeros con decimales, 'String nombre;' solo texto, 'boolean activo;' solo verdadero/falso. El compilador revisa esto ANTES de que el programa corra, y si intentas meter el tipo equivocado, te avisa con un error apenas escribes el codigo -- no cuando ya esta corriendo.\n\nLa gran diferencia con C es lo que pasa DESPUES de crear algo en memoria: en C, tu tenias que 'limpiar' manualmente con free() cuando ya no necesitabas algo (si no, quedaba una fuga de memoria para siempre). En Java existe el 'garbage collector' (recolector de basura): un proceso automatico que anda de fondo detectando que datos ya nadie esta usando, y los limpia por ti solo. Es como tener un servicio de limpieza de hotel: tu solo usas la habitacion, y cuando te vas, alguien mas se encarga de dejarla lista para el siguiente huesped, sin que tu tengas que hacerlo.\n\nEsto hace a Java mas seguro para principiantes (menos errores de memoria como los de C), a cambio de un poco menos de control directo sobre como se maneja la memoria.",
+        "ejemplo_resuelto": {
+          "descripcion": "Declaremos variables de distintos tipos e imprimamos sus valores.",
+          "codigo": "public class Main {\n    public static void main(String[] args) {\n        int edad = 15;\n        double estatura = 1.65;\n        String nombre = \"Sofia\";\n        boolean esEstudiante = true;\n\n        System.out.println(nombre + \" tiene \" + edad + \" anios.\");\n        System.out.println(\"Estatura: \" + estatura);\n        System.out.println(\"Es estudiante: \" + esEstudiante);\n    }\n}",
+          "explicacion_paso_a_paso": "Cada variable declara su tipo antes del nombre: 'int edad', 'double estatura', 'String nombre' (con S mayuscula, porque en Java String es una clase, no un tipo primitivo como int).\n'System.out.println(...)' es como el 'print' de Python, pero con este nombre mas largo (System = el sistema, out = salida, println = imprimir linea).\nEl simbolo '+' entre texto y variables las UNE (concatena) en un solo mensaje -- Java convierte automaticamente los numeros a texto para poder pegarlos."
+        }
+      },
       "exercise": {
         "prompt": "Escribe un metodo static double calcularIMC(double peso, double altura) que retorne el Indice de Masa Corporal.",
         "starter_code": "public static double calcularIMC(double peso, double altura) {\n    // tu codigo aqui\n}",
         "harness_main": "System.out.println(calcularIMC(70, 1.75));\nSystem.out.println(calcularIMC(60, 1.60));",
         "expected_stdout": "22.857142857142858\n23.437499999999996"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "public static double calcularIMC(double peso, double altura) {\n    return peso / (altura * altura);\n}",
+        "explicacion": "**Los modificadores 'public static':** 'public' permite llamarlo desde cualquier parte. 'static' significa que pertenece a la CLASE, no a un objeto -- se llama directo, sin crear un objeto primero.\n\n**El tipo de retorno:** 'double' antes del nombre indica que retorna un decimal de alta precision.\n\n**Los parametros:** ambos double, coincidiendo con el enunciado.\n\n**La operacion:** igual que en C, Java no tiene operador de potencia simple, asi que se multiplica altura por si misma.\n\n**El ';' final:** Java hereda de C esta sintaxis -- cada instruccion termina en punto y coma."
       }
     },
     {
@@ -21,11 +33,23 @@
       "concept": "control_flujo",
       "difficulty": 1,
       "theory": "if/else, for, while y switch controlan el flujo, con sintaxis casi identica a C. Java exige llaves y tipos explicitos en cada declaracion, sin inferencia dinamica como Python.",
+      "lesson": {
+        "explicacion_simple": "En una frase: elegir caminos o repetir acciones, escrito casi igual que en C.\n\nEl semaforo de siempre: 'if' revisa una condicion y decide que camino tomar, 'for' y 'while' repiten acciones. La escritura en Java es practicamente identica a la de C: llaves { } para agrupar bloques, punto y coma ; al final de cada instruccion, y doble igual == para comparar (un solo = es para asignar valores).\n\nUna diferencia con Python que vale la pena remarcar: en Java, DENTRO del for tienes que declarar el tipo de la variable contador explicitamente: 'for (int i = 0; i < 5; i++)' -- el 'int' ahi es obligatorio, Java no puede 'adivinar' que tipo quieres usar como en Python.\n\n'switch' es una alternativa a escribir muchos 'else if' seguidos, cuando estas comparando UNA misma variable contra varios valores posibles -- como elegir un dia de la semana y decidir que actividad toca segun cual dia sea, en vez de escribir 7 'if' distintos.",
+        "ejemplo_resuelto": {
+          "descripcion": "Revisemos si un numero es par o impar, y contemos del 1 al 5.",
+          "codigo": "public class Main {\n    public static void main(String[] args) {\n        int numero = 7;\n\n        if (numero % 2 == 0) {\n            System.out.println(\"Es par\");\n        } else {\n            System.out.println(\"Es impar\");\n        }\n\n        for (int i = 1; i <= 5; i++) {\n            System.out.println(\"Contando: \" + i);\n        }\n    }\n}",
+          "explicacion_paso_a_paso": "'numero % 2 == 0' revisa si el residuo de dividir entre 2 es cero (par). Como 7 % 2 es 1, entra al 'else' y muestra 'Es impar'.\nEl for declara 'int i = 0' (con tipo explicito), sigue mientras i sea menor o igual a 5, y aumenta i en 1 cada vuelta -- imprime 5 lineas, del 1 al 5."
+        }
+      },
       "exercise": {
         "prompt": "Escribe un metodo static boolean esPrimo(int n) que retorne true si n es primo.",
         "starter_code": "public static boolean esPrimo(int n) {\n    // tu codigo aqui\n}",
         "harness_main": "System.out.println(esPrimo(7));\nSystem.out.println(esPrimo(8));",
         "expected_stdout": "true\nfalse"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "public static boolean esPrimo(int n) {\n    if (n < 2) return false;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return false;\n    }\n    return true;\n}",
+        "explicacion": "**El tipo boolean:** a diferencia de C, Java SI tiene un tipo dedicado para verdadero/falso -- se retorna 'true' o 'false' directo, sin convencion de 1 y 0.\n\n**El resto de la logica:** identica a C -- se descartan numeros menores a 2, se prueban divisores desde 2 hasta la raiz cuadrada de n, y si se encuentra un divisor exacto se retorna false de inmediato. Si el for termina sin encontrar ninguno, es primo."
       }
     },
     {
@@ -34,11 +58,23 @@
       "concept": "metodos_sobrecarga",
       "difficulty": 2,
       "theory": "La sobrecarga (overloading) permite tener varios metodos con el mismo nombre pero distinta firma (numero o tipo de parametros). El compilador elige cual usar segun los argumentos -- esto no existe en Python, donde solo puede haber una funcion por nombre.",
+      "lesson": {
+        "explicacion_simple": "En una frase: puedes tener varios metodos con el mismo nombre, y Java elige cual usar segun lo que le mandes.\n\nImagina un mesero en un restaurante que sabe interpretar el mismo pedido de distintas formas segun como se lo digas: si dices 'una limonada', te trae una normal; si dices 'una limonada grande', te trae una version mas grande. Es la MISMA palabra clave ('limonada'), pero el mesero (el compilador) usa el CONTEXTO (cuantas palabras dijiste, que tipo de palabras) para saber exactamente que traer.\n\nEso es la SOBRECARGA de metodos: puedes tener varios metodos con el MISMO NOMBRE, siempre y cuando reciban una cantidad o tipo de parametros DIFERENTE entre si (a esa combinacion se le llama 'firma' del metodo). Por ejemplo, puedes tener 'sumar(int a, int b)' para sumar dos enteros, y otro 'sumar(double a, double b)' para sumar dos decimales -- mismo nombre, distinta firma. Cuando llamas a 'sumar(2, 3)', Java automaticamente elige la version de enteros; si llamas 'sumar(2.5, 3.5)', elige la de decimales.\n\nEn Python esto NO existe: si defines dos funciones con el mismo nombre, la segunda simplemente REEMPLAZA a la primera, porque Python no distingue por tipo de argumentos. La sobrecarga es una herramienta que te da Java (y muchos lenguajes con tipado estatico) para hacer tu codigo mas legible cuando la misma 'accion' tiene sentido con distintos tipos de datos.",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos dos versiones de un metodo 'describir', una para texto y otra para numeros.",
+          "codigo": "public class Main {\n    public static void describir(String texto) {\n        System.out.println(\"Texto: \" + texto);\n    }\n\n    public static void describir(int numero) {\n        System.out.println(\"Numero: \" + numero);\n    }\n\n    public static void main(String[] args) {\n        describir(\"Hola\");\n        describir(42);\n    }\n}",
+          "explicacion_paso_a_paso": "Hay DOS metodos llamados 'describir', pero uno recibe un String y el otro un int -- firmas distintas.\n'describir(\"Hola\")' -- como \"Hola\" es texto, Java usa automaticamente la version que recibe String.\n'describir(42)' -- como 42 es un numero, usa la version que recibe int.\nJava decide cual usar SOLO mirando el tipo del argumento que le mandaste, sin que tu tengas que especificarlo."
+        }
+      },
       "exercise": {
         "prompt": "Escribe dos metodos sobrecargados llamados sumar: uno que reciba dos int y otro que reciba dos double, ambos retornando la suma.",
         "starter_code": "public static int sumar(int a, int b) {\n    // tu codigo aqui\n}\n\npublic static double sumar(double a, double b) {\n    // tu codigo aqui\n}",
         "harness_main": "System.out.println(sumar(2, 3));\nSystem.out.println(sumar(2.5, 3.5));",
         "expected_stdout": "5\n6.0"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "public static int sumar(int a, int b) {\n    return a + b;\n}\n\npublic static double sumar(double a, double b) {\n    return a + b;\n}",
+        "explicacion": "**Dos metodos, mismo nombre:** uno recibe dos int y retorna int, el otro recibe dos double y retorna double -- firmas distintas, permitidas por la sobrecarga.\n\n**Como Java elige:** al llamar sumar(2, 3) (enteros), Java usa la primera version automaticamente. Al llamar sumar(2.5, 3.5) (decimales), usa la segunda -- decide segun el TIPO de los argumentos que le mandas."
       }
     },
     {
@@ -47,11 +83,23 @@
       "concept": "arrays_colecciones",
       "difficulty": 2,
       "theory": "Los arrays en Java tienen tamano fijo y tipo declarado (int[]). Para colecciones dinamicas se usa ArrayList<T> del paquete java.util, mas flexible pero con algo mas de overhead que un array primitivo.",
+      "lesson": {
+        "explicacion_simple": "En una frase: un array es de tamanio fijo, mientras que un ArrayList es como una mochila que crece sola.\n\nUn array en Java es igual de rigido que en C: un edificio de casilleros de TAMANIO FIJO, numerados desde 0. 'int[] numeros = new int[5];' crea 5 casilleros para enteros, y ese numero NUNCA cambia -- si necesitas un casillero mas, no se puede simplemente 'agregar uno', tendrias que crear un edificio nuevo mas grande y copiar todo.\n\nPara cuando SI necesitas que la cantidad de elementos pueda crecer o achicarse sobre la marcha, Java te da 'ArrayList' -- imaginalo como una mochila magica que se estira o encoge automaticamente segun lo que le vayas metiendo o sacando, sin que tu tengas que preocuparte por el tamanio. 'ArrayList<Integer> lista = new ArrayList<>();' crea una mochila vacia, y 'lista.add(5)' mete un elemento, agrandando la mochila si hace falta.\n\nLa desventaja de la mochila magica es que tiene un poco mas de 'peso extra' (overhead) comparado con un array fijo, porque internamente esta haciendo mas trabajo para poder crecer dinamicamente. Por eso, si SABES de antemano cuantos elementos vas a necesitar y ese numero no va a cambiar, un array normal es mas eficiente; si no lo sabes, ArrayList es mas practico.",
+        "ejemplo_resuelto": {
+          "descripcion": "Comparemos un array fijo con un ArrayList que crece dinamicamente.",
+          "codigo": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        int[] fijos = new int[3];\n        fijos[0] = 10;\n        fijos[1] = 20;\n        fijos[2] = 30;\n\n        ArrayList<Integer> dinamica = new ArrayList<>();\n        dinamica.add(10);\n        dinamica.add(20);\n        dinamica.add(30);\n        dinamica.add(40);  // el array fijo no podria crecer asi\n\n        System.out.println(\"Array fijo, tamanio: \" + fijos.length);\n        System.out.println(\"ArrayList, tamanio: \" + dinamica.size());\n    }\n}",
+          "explicacion_paso_a_paso": "'fijos' se creo con espacio para exactamente 3 enteros -- no podriamos agregar un cuarto sin crear un array nuevo.\n'dinamica' empieza vacia y crece con cada '.add()' -- pudimos meter un cuarto elemento sin ningun problema.\n'.length' (sin parentesis) da el tamanio de un array normal. '.size()' (con parentesis, porque es un metodo) da el tamanio de un ArrayList -- son formas distintas de preguntar 'cuantos elementos hay', porque son estructuras distintas."
+        }
+      },
       "exercise": {
         "prompt": "Escribe un metodo static int sumarArreglo(int[] arr) que retorne la suma de todos los elementos.",
         "starter_code": "public static int sumarArreglo(int[] arr) {\n    // tu codigo aqui\n}",
         "harness_main": "System.out.println(sumarArreglo(new int[]{1,2,3,4,5}));",
         "expected_stdout": "15"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "public static int sumarArreglo(int[] arr) {\n    int suma = 0;\n    for (int i = 0; i < arr.length; i++) {\n        suma += arr[i];\n    }\n    return suma;\n}",
+        "explicacion": "**La declaracion del arreglo:** `int[] arr` -- en Java los corchetes van pegados al tipo, diferente al estilo mas comun en C.\n\n**Ventaja sobre C:** `arr.length` -- en Java el arreglo SI sabe su propio tamanio, no necesitas pasar 'n' aparte como en C.\n\n**El resto:** igual que en C, se recorre con un for desde 0 hasta el tamanio (sin incluirlo), acumulando la suma."
       }
     },
     {
@@ -60,11 +108,23 @@
       "concept": "poo_clases",
       "difficulty": 3,
       "theory": "Una clase agrupa estado (campos) y comportamiento (metodos). El constructor inicializa un objeto nuevo. A diferencia de Python (self explicito), Java usa 'this' de forma implicita en la mayoria de los casos.",
+      "lesson": {
+        "explicacion_simple": "En una frase: una clase es un molde, y un objeto es cada cosa real creada con ese molde.\n\nMismo molde de galletas que en Python: una CLASE es el plano/molde, y un OBJETO es cada galleta real hecha con ese molde. 'class Perro { }' define el molde; 'new Perro()' presiona el molde y crea un perro real en memoria.\n\nEl CONSTRUCTOR es un metodo especial (con el mismo nombre que la clase) que se ejecuta automaticamente al crear un objeto nuevo, para dejarlo listo con sus datos iniciales -- es el momento exacto de presionar el molde. 'public Perro(String nombre) { this.nombre = nombre; }' recibe un nombre y lo guarda en el objeto que se esta creando.\n\n'this' es la palabra que usa Java para decir 'YO, este objeto especifico que se esta creando o usando ahora mismo' -- es el equivalente al 'self' de Python, pero en Java muchas veces puedes OMITIRLO cuando no hay ambiguedad (si no hay otra variable con el mismo nombre cerca). Se usa explicitamente sobre todo cuando el parametro y el campo se llaman igual, como en el ejemplo del constructor, para distinguir 'el nombre que me pasaron' de 'el nombre de este objeto'.",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos una clase Perro con nombre, y un metodo para que ladre.",
+          "codigo": "public class Main {\n    static class Perro {\n        String nombre;\n\n        public Perro(String nombre) {\n            this.nombre = nombre;\n        }\n\n        public String ladrar() {\n            return nombre + \" dice: Guau!\";\n        }\n    }\n\n    public static void main(String[] args) {\n        Perro miPerro = new Perro(\"Rex\");\n        System.out.println(miPerro.ladrar());\n    }\n}",
+          "explicacion_paso_a_paso": "'class Perro { String nombre; ... }' define el molde con un campo (nombre) y dos metodos (el constructor y ladrar).\n'public Perro(String nombre)' es el constructor -- se llama automaticamente con 'new Perro(\"Rex\")'.\n'this.nombre = nombre;' significa 'el campo nombre DE ESTE objeto = el parametro que me pasaron' -- sin el 'this', Java se confundiria entre las dos cosas que se llaman igual.\n'miPerro.ladrar()' le pide a ESE perro especifico que ejecute su metodo, usando su propio nombre guardado."
+        }
+      },
       "exercise": {
         "prompt": "Crea una clase CuentaBancaria con un campo saldo, un constructor CuentaBancaria(double saldoInicial), y un metodo double consultarSaldo().",
         "starter_code": "class CuentaBancaria {\n    // tu codigo aqui\n}",
         "harness_main": "CuentaBancaria c = new CuentaBancaria(100.0);\nSystem.out.println(c.consultarSaldo());",
         "expected_stdout": "100.0"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "class CuentaBancaria {\n    double saldo;\n\n    public CuentaBancaria(double saldoInicial) {\n        this.saldo = saldoInicial;\n    }\n\n    public double consultarSaldo() {\n        return saldo;\n    }\n}",
+        "explicacion": "**El campo:** declara que cada CuentaBancaria va a tener un saldo tipo double.\n\n**El constructor:** tiene el MISMO nombre que la clase, sin tipo de retorno. `this.saldo` se refiere al campo de ESTE objeto; `saldoInicial` (sin this) es el parametro recibido -- como se llaman parecido, 'this.' distingue cual es cual.\n\n**consultarSaldo:** retorna el valor actual del campo, sin modificar nada."
       }
     },
     {
@@ -73,11 +133,23 @@
       "concept": "herencia_polimorfismo",
       "difficulty": 3,
       "theory": "extends permite que una clase herede campos y metodos de otra. El polimorfismo permite que una subclase sobreescriba (@Override) un metodo del padre, y que el metodo correcto se ejecute segun el tipo real del objeto en tiempo de ejecucion.",
+      "lesson": {
+        "explicacion_simple": "En una frase: una clase puede heredar de otra y darle su propio toque a lo que ya sabia hacer.\n\nImagina un plano general para 'Vehiculo' que dice que todo vehiculo tiene ruedas y puede moverse. Ahora, un plano de 'Auto' y otro de 'Motocicleta' pueden PARTIR de ese plano general y agregar sus propios detalles especificos (el auto tiene 4 puertas, la moto no) -- sin tener que volver a escribir desde cero 'tiene ruedas' en cada uno. Eso es HERENCIA: 'class Auto extends Vehiculo' significa 'Auto hereda todo lo que ya tenia Vehiculo, y puede agregar mas cosas propias'.\n\nAhora, el POLIMORFISMO es cuando una clase hija puede REDEFINIR como hace algo que el padre ya sabia hacer, dandole su propio toque. Por ejemplo, si 'Vehiculo' tiene un metodo 'hacerSonido()' generico, 'Auto' puede sobreescribirlo (usando '@Override') para que suene como bocina, y 'Motocicleta' para que suene como motor -- cada uno responde a su manera, aunque a todos les preguntes lo mismo.\n\nLo interesante es que puedes tratar a un Auto como si fuera un Vehiculo generico ('Vehiculo v = new Auto();'), y cuando le pidas 'hacerSonido()', Java automaticamente usa la version de Auto (la real), no la generica del padre -- como si tuvieras una caja de juguetes de animales, presionas el mismo boton en todos, pero cada uno hace SU propio sonido porque 'sabe' que animal es de verdad.",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos una clase Vehiculo y una subclase Auto que sobreescribe el sonido.",
+          "codigo": "public class Main {\n    static class Vehiculo {\n        String hacerSonido() {\n            return \"Sonido generico de vehiculo\";\n        }\n    }\n\n    static class Auto extends Vehiculo {\n        @Override\n        String hacerSonido() {\n            return \"Bip bip!\";\n        }\n    }\n\n    public static void main(String[] args) {\n        Vehiculo v = new Auto();\n        System.out.println(v.hacerSonido());\n    }\n}",
+          "explicacion_paso_a_paso": "'Auto extends Vehiculo' hace que Auto herede de Vehiculo.\n'@Override' avisa que 'hacerSonido()' en Auto reemplaza intencionalmente al de Vehiculo (buena practica, ayuda a detectar errores de tipeo).\nAunque la variable 'v' esta declarada como tipo 'Vehiculo', el objeto REAL guardado adentro es un Auto -- por eso, al llamar 'v.hacerSonido()', se ejecuta la version de Auto (\"Bip bip!\"), no la generica del padre. Java decide esto mirando el tipo REAL del objeto, no el tipo de la variable."
+        }
+      },
       "exercise": {
         "prompt": "Crea una clase Animal con metodo String hacerSonido() que retorne 'Sonido generico'. Crea una subclase Perro que sobreescriba hacerSonido() para retornar 'Guau'.",
         "starter_code": "class Animal {\n    // tu codigo aqui\n}\n\nclass Perro extends Animal {\n    // tu codigo aqui\n}",
         "harness_main": "Animal a = new Perro();\nSystem.out.println(a.hacerSonido());",
         "expected_stdout": "Guau"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "class Animal {\n    String hacerSonido() {\n        return \"Sonido generico\";\n    }\n}\n\nclass Perro extends Animal {\n    @Override\n    String hacerSonido() {\n        return \"Guau\";\n    }\n}",
+        "explicacion": "**La clase padre:** Animal define el comportamiento generico.\n\n**extends:** Perro hereda todo lo que tiene Animal, y puede cambiarlo.\n\n**@Override:** avisa al compilador que a proposito se esta reemplazando un metodo del padre -- si te equivocas al escribir el nombre, el compilador avisa del error.\n\n**El resultado:** al pedirle a un Perro que haga sonido, usa la version de Perro (\"Guau\"), no la generica -- eso es polimorfismo: el metodo que se ejecuta depende del tipo REAL del objeto."
       }
     },
     {
@@ -86,11 +158,23 @@
       "concept": "interfaces_abstraccion",
       "difficulty": 4,
       "theory": "Una interface define un contrato (metodos sin implementacion) que las clases deben cumplir con 'implements'. Permite que objetos de clases distintas se traten de forma uniforme si comparten la misma interface -- clave para arquitecturas desacopladas.",
+      "lesson": {
+        "explicacion_simple": "En una frase: una interface es un contrato que dice que debe poder hacer una clase, sin decir como.\n\nImagina una convocatoria de trabajo que dice 'buscamos a alguien que sepa cocinar, limpiar y atender clientes' -- no dice COMO debe hacer cada cosa, solo que DEBE poder hacerlas. Cualquier persona (cocinero profesional, ama de casa, quien sea) puede postularse y 'firmar el contrato' de cumplir esos requisitos, cada uno a su manera.\n\nUna INTERFACE en Java es exactamente esa convocatoria: define QUE metodos debe tener una clase, pero NO dice como implementarlos -- solo la 'firma' del metodo (su nombre y que recibe/retorna), sin cuerpo. 'interface Figura { double area(); }' dice 'cualquier clase que quiera ser una Figura, DEBE tener un metodo area() que retorne un double'.\n\nUna clase 'firma el contrato' con la palabra 'implements': 'class Circulo implements Figura { ... }' significa que Circulo PROMETE tener un metodo area() (y si se le olvida escribirlo, el compilador le va a avisar del incumplimiento). La gran ventaja: puedes tener un Circulo, un Cuadrado y un Triangulo, todos MUY distintos por dentro, pero si todos implementan Figura, puedes tratarlos a todos por igual cuando solo te importa que tengan un area() -- como calcular el area total de una lista de figuras mezcladas, sin que te importe de que forma es cada una.",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos una interface Figura, y dos clases distintas que la implementan.",
+          "codigo": "public class Main {\n    interface Figura {\n        double area();\n    }\n\n    static class Cuadrado implements Figura {\n        double lado;\n        Cuadrado(double lado) { this.lado = lado; }\n        public double area() { return lado * lado; }\n    }\n\n    static class Circulo implements Figura {\n        double radio;\n        Circulo(double radio) { this.radio = radio; }\n        public double area() { return Math.PI * radio * radio; }\n    }\n\n    public static void main(String[] args) {\n        Figura[] figuras = { new Cuadrado(4), new Circulo(2) };\n        for (Figura f : figuras) {\n            System.out.printf(\"%.2f%n\", f.area());\n        }\n    }\n}",
+          "explicacion_paso_a_paso": "'interface Figura { double area(); }' declara el contrato: cualquier Figura debe tener area().\nCuadrado y Circulo son MUY distintos internamente (uno usa lado, otro radio), pero ambos 'firman' Figura implementando su propia version de area().\n'Figura[] figuras = { new Cuadrado(4), new Circulo(2) };' crea un arreglo que mezcla ambos tipos, tratados uniformemente como Figura.\nEl for recorre el arreglo y llama 'f.area()' en cada uno -- Java ejecuta automaticamente la version correcta segun el tipo REAL de cada objeto (16.00 para el cuadrado, 12.57 para el circulo)."
+        }
+      },
       "exercise": {
         "prompt": "Crea una interface Figura con el metodo double area(). Crea una clase Circulo que implemente Figura, con constructor Circulo(double radio) y area() = PI * radio^2.",
         "starter_code": "interface Figura {\n    double area();\n}\n\nclass Circulo implements Figura {\n    // tu codigo aqui\n}",
         "harness_main": "Figura f = new Circulo(2.0);\nSystem.out.printf(\"%.2f%n\", f.area());",
         "expected_stdout": "12.57"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "interface Figura {\n    double area();\n}\n\nclass Circulo implements Figura {\n    double radio;\n\n    Circulo(double radio) {\n        this.radio = radio;\n    }\n\n    public double area() {\n        return Math.PI * radio * radio;\n    }\n}",
+        "explicacion": "**La interface:** solo declara la FIRMA del metodo (nombre, que retorna), sin implementacion -- es el contrato.\n\n**implements:** Circulo promete cumplir el contrato de Figura -- debe tener un metodo area() con esa firma, o el compilador da error.\n\n**El constructor:** guarda el radio recibido en el campo de la instancia.\n\n**Math.PI:** Java trae la constante PI ya calculada -- no hace falta escribirla a mano. 'radio * radio' eleva al cuadrado."
       }
     },
     {
@@ -99,11 +183,23 @@
       "concept": "manejo_excepciones",
       "difficulty": 5,
       "theory": "try/catch captura errores en tiempo de ejecucion sin detener el programa. Java distingue excepciones checked (deben declararse o manejarse, ej. IOException) de unchecked (ej. ArithmeticException). Un buen manejo de excepciones evita que un error trivial tumbe toda la aplicacion.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es preparar un plan B para cuando algo falla, para que el programa no se rompa por completo.\n\nIgual que en Python, 'try/catch' (en vez de 'try/except') es tu cinturon de seguridad: intentas hacer algo que podria fallar, y si falla, en vez de que todo el programa se rompa, saltas a un plan B que tu mismo preparaste. 'try { codigo_riesgoso(); } catch (TipoDeError e) { plan_b(); }'.\n\nJava tiene una particularidad que Python no tiene: distingue entre excepciones 'checked' (verificadas) y 'unchecked' (no verificadas). Las 'checked' (como IOException, que ocurre al leer archivos) son tan probables y esperadas que el COMPILADOR te OBLIGA a manejarlas explicitamente con try/catch, o tu codigo ni siquiera compila -- es como si el compilador te dijera 'esto casi seguro va a fallar alguna vez, ¡mejor prepárate ahora!'. Las 'unchecked' (como ArithmeticException, division entre cero, o ArrayIndexOutOfBoundsException) son errores de logica que en teoria podrias evitar programando bien, asi que el compilador no te obliga a atraparlas, aunque igual puedes hacerlo.\n\nUn buen manejo de excepciones es la diferencia entre una app que 'se cae' por completo cuando algo sale mal (mala experiencia para quien la usa), y una app que avisa amablemente 'algo salio mal, intenta de nuevo' y sigue funcionando.",
+        "ejemplo_resuelto": {
+          "descripcion": "Protejamos una division para que no rompa el programa si el divisor es cero.",
+          "codigo": "public class Main {\n    static String dividir(int a, int b) {\n        try {\n            int resultado = a / b;\n            return \"Resultado: \" + resultado;\n        } catch (ArithmeticException e) {\n            return \"Error: no se puede dividir entre cero\";\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(dividir(10, 2));\n        System.out.println(dividir(5, 0));\n    }\n}",
+          "explicacion_paso_a_paso": "'a / b' con enteros, cuando b es 0, lanza una 'ArithmeticException' en Java (a diferencia de los decimales, donde daria 'Infinity').\nCon (10, 2), la division funciona normal y retorna 'Resultado: 5'.\nCon (5, 0), Java lanza la excepcion DENTRO del try, asi que salta inmediatamente al catch, que atrapa especificamente 'ArithmeticException' y retorna el mensaje de error -- el programa NO se rompe, sigue corriendo normalmente despues."
+        }
+      },
       "exercise": {
         "prompt": "Escribe un metodo static String dividirSeguro(int a, int b) que retorne el resultado de a/b como String, o 'Error: division por cero' si b es 0, usando try/catch con ArithmeticException.",
         "starter_code": "public static String dividirSeguro(int a, int b) {\n    // tu codigo aqui\n}",
         "harness_main": "System.out.println(dividirSeguro(10, 2));\nSystem.out.println(dividirSeguro(5, 0));",
         "expected_stdout": "5\nError: division por cero"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "public static String dividirSeguro(int a, int b) {\n    try {\n        int resultado = a / b;\n        return String.valueOf(resultado);\n    } catch (ArithmeticException e) {\n        return \"Error: division por cero\";\n    }\n}",
+        "explicacion": "**El try:** intenta hacer la division entera y guardarla en 'resultado'.\n\n**String.valueOf:** como el metodo debe retornar String pero 'resultado' es int, se convierte a texto con String.valueOf antes de retornarlo.\n\n**El catch especifico:** dividir un int entre 0 en Java lanza especificamente ArithmeticException. Se atrapa ese tipo especifico, y se retorna el mensaje de error en su lugar."
       }
     }
   ]

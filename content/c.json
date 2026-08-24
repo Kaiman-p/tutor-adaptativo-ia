@@ -8,11 +8,23 @@
       "concept": "variables_tipos",
       "difficulty": 1,
       "theory": "C es de tipado estatico: cada variable declara su tipo (int, float, char, double) y no cambia. El tamano en memoria de cada tipo es fijo y depende de la arquitectura.",
+      "lesson": {
+        "explicacion_simple": "En una frase: cada caja en C viene con una etiqueta fija que dice que tipo de cosa puede guardar, y eso nunca cambia.\n\nEn Python, una 'caja' (variable) puede cambiar de contenido libremente: primero un numero, despues texto, sin avisar. En C es diferente: cada caja viene con una ETIQUETA FIJA de fabrica que dice exactamente que tipo de cosa puede contener, y esa etiqueta nunca cambia. Es como comprar un cartón de huevos: SOLO caben huevos ahi, nunca vas a poder meter leche en su lugar, porque el molde esta hecho especificamente para huevos.\n\nPor eso en C tienes que declarar el tipo ANTES de usar la variable: 'int edad;' crea una caja que SOLO puede guardar numeros enteros. 'float peso;' crea una caja para numeros con decimales. 'char letra;' guarda un solo caracter (una letra). Si intentas meter el tipo equivocado, el compilador (el programa que traduce tu codigo a algo que la computadora entiende) te va a avisar con un error, o en el peor caso, va a hacer algo raro sin avisarte.\n\nEsto que parece una limitacion en realidad ayuda a la computadora: como ya sabe exactamente que tipo de dato es y cuanto espacio en memoria ocupa (un int siempre ocupa el mismo tamanio fijo), puede reservar ese espacio de forma mas eficiente y rapida que un lenguaje que tiene que estar adivinando el tipo en cada momento.",
+        "ejemplo_resuelto": {
+          "descripcion": "Declaremos variables de distintos tipos y mostremos sus valores.",
+          "codigo": "#include <stdio.h>\n\nint main() {\n    int edad = 15;\n    float estatura = 1.65;\n    char inicial = 'S';\n\n    printf(\"Edad: %d\\n\", edad);\n    printf(\"Estatura: %.2f\\n\", estatura);\n    printf(\"Inicial: %c\\n\", inicial);\n    return 0;\n}",
+          "explicacion_paso_a_paso": "'int edad = 15;' crea una caja de tipo entero llamada edad, con 15 adentro.\n'float estatura = 1.65;' crea una caja para decimales.\n'char inicial = 'S';' guarda UN SOLO caracter (con comillas simples, no dobles -- las dobles son para texto/strings, que en C son mas complejos, los veremos despues).\n'printf' es como el 'print' de Python pero mas estricto: tienes que decirle el FORMATO de lo que vas a imprimir. '%d' es para enteros, '%.2f' es para decimales con 2 posiciones despues del punto, '%c' es para un caracter. '\\n' al final significa 'salto de linea'."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion float calcular_imc(float peso, float altura) que retorne el Indice de Masa Corporal (peso / altura^2).",
         "starter_code": "float calcular_imc(float peso, float altura) {\n    // tu codigo aqui\n}",
         "harness_main": "printf(\"%.2f\\n\", calcular_imc(70, 1.75));\nprintf(\"%.2f\\n\", calcular_imc(60, 1.60));",
         "expected_stdout": "22.86\n23.44"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "#include <stdio.h>\n\nfloat calcular_imc(float peso, float altura) {\n    return peso / (altura * altura);\n}",
+        "explicacion": "**El #include:** `#include <stdio.h>` le dice al compilador que vas a usar funciones de entrada/salida (como printf). Sin esto, printf no existiria.\n\n**La firma:** `float calcular_imc(float peso, float altura) {` -- el PRIMER 'float' dice que tipo RETORNA la funcion. Los 'float' dentro de parentesis son el tipo de CADA parametro. La '{' abre el cuerpo.\n\n**La operacion:** `peso / (altura * altura)` -- multiplicamos altura por si misma (C no tiene operador de potencia simple), y dividimos peso entre eso. Los parentesis dejan explicito el orden.\n\n**El return y el ';':** el ';' al final es OBLIGATORIO -- marca donde termina la instruccion. Olvidarlo es de los errores mas comunes al empezar.\n\n**La '}' de cierre:** cierra el cuerpo de la funcion -- debe haber una '}' por cada '{'."
       }
     },
     {
@@ -21,11 +33,23 @@
       "concept": "control_flujo",
       "difficulty": 1,
       "theory": "if/else, for, while y switch controlan el flujo. A diferencia de Python, C usa llaves {} para bloques y punto y coma para terminar sentencias.",
+      "lesson": {
+        "explicacion_simple": "En una frase: igual que en cualquier lenguaje, es elegir caminos o repetir acciones, pero escrito con llaves { } en vez de espacios.\n\nLa idea de 'si pasa esto, haz esto otro' es identica a Python (el semaforo de antes sigue aplicando), pero la ESCRITURA en C es distinta en dos cosas importantes:\n\nPrimero, en vez de usar sangria (espacios) para saber que pertenece a que bloque, C usa LLAVES { }. Todo lo que este entre '{' y '}' pertenece a ese bloque -- puedes tener el codigo desordenado visualmente y aun asi funcionaria (aunque no es buena practica), porque lo que manda son las llaves, no los espacios.\n\nSegundo, cada instruccion individual DEBE terminar con punto y coma ';' -- es como el punto final de una oracion. Si se te olvida, el compilador se confunde y no sabe donde termina una instruccion y empieza la siguiente, y te va a dar un error.\n\n'for' en C tambien se ve distinto: 'for (inicio; condicion; despues_de_cada_vuelta)'. Por ejemplo 'for (int i = 0; i < 5; i++)' significa: empieza con i en 0; sigue repitiendo MIENTRAS i sea menor que 5; y despues de cada vuelta, aumenta i en 1 (eso es lo que hace 'i++'). Son las tres partes del 'for' de Python (el range, el limite, y el paso) pero escritas explicitamente en una sola linea.",
+        "ejemplo_resuelto": {
+          "descripcion": "Revisemos si un numero es par o impar, y contemos del 1 al 5 con un for.",
+          "codigo": "#include <stdio.h>\n\nint main() {\n    int numero = 7;\n\n    if (numero % 2 == 0) {\n        printf(\"Es par\\n\");\n    } else {\n        printf(\"Es impar\\n\");\n    }\n\n    for (int i = 1; i <= 5; i++) {\n        printf(\"Contando: %d\\n\", i);\n    }\n    return 0;\n}",
+          "explicacion_paso_a_paso": "'numero % 2' calcula el residuo, igual que en Python.\n'== 0' compara si es igual a 0 (doble igual, NO uno solo -- un solo '=' en C es para ASIGNAR un valor, doble '==' es para COMPARAR, confundirlos es un error comun).\nEl for empieza con i=1, sigue mientras i<=5 (osea hasta 5 incluido), y suma 1 a i en cada vuelta -- imprime 'Contando: 1' hasta 'Contando: 5'."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion int es_primo(int n) que retorne 1 si n es primo, 0 si no.",
         "starter_code": "int es_primo(int n) {\n    // tu codigo aqui\n}",
         "harness_main": "printf(\"%d\\n\", es_primo(7));\nprintf(\"%d\\n\", es_primo(8));",
         "expected_stdout": "1\n0"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "int es_primo(int n) {\n    if (n < 2) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;\n    }\n    return 1;\n}",
+        "explicacion": "**El tipo de retorno:** C clasico no tiene bool nativo -- por convencion 0 es 'falso' y 1 es 'verdadero'.\n\n**El caso rapido:** `if (n < 2) return 0;` sin llaves, porque es una sola instruccion (en C las llaves son opcionales para un if de una linea).\n\n**El for con condicion inteligente:** `for (int i = 2; i * i <= n; i++)` -- solo hace falta probar divisores hasta la raiz cuadrada de n (optimizacion: si hay un divisor mayor, tambien hay uno menor que ya se habria encontrado).\n\n**La revision:** `if (n % i == 0) return 0;` -- '%' calcula el residuo; si es 0, i divide exacto a n, entonces no es primo.\n\n**El return final:** si el for termino sin encontrar divisores, n es primo."
       }
     },
     {
@@ -34,11 +58,23 @@
       "concept": "funciones_arrays",
       "difficulty": 2,
       "theory": "Un arreglo en C es un bloque contiguo de memoria. Al pasarlo a una funcion, en realidad se pasa un puntero al primer elemento (no una copia) -- por eso las funciones que reciben arreglos tambien necesitan el tamano como parametro aparte.",
+      "lesson": {
+        "explicacion_simple": "En una frase: un arreglo es una fila de casilleros numerados, y las funciones necesitan que les digas cuantos casilleros hay.\n\nImagina un edificio de casilleros numerados en fila, todos pegados uno al lado del otro, sin espacios entre ellos: casillero 0, casillero 1, casillero 2... Eso es un ARREGLO (array) en C -- un bloque de memoria donde todos los elementos estan literalmente uno junto al otro, en orden, y accedes a cada uno por su NUMERO (empezando desde 0, no desde 1).\n\n'int numeros[5];' crea 5 casilleros seguidos, todos para guardar enteros. 'numeros[0]' es el primer casillero, 'numeros[4]' es el ultimo (5 casilleros van del 0 al 4, no del 1 al 5 -- este es un error MUY comun al empezar).\n\nAhora, algo importante: en C, un arreglo NO 'sabe' cuantos elementos tiene una vez que lo pasas a otra funcion -- solo sabe DONDE EMPIEZA en memoria. Por eso, cuando escribes una funcion que recibe un arreglo, SIEMPRE tienes que pasarle tambien el tamanio como un parametro aparte (por ejemplo 'int arr[], int n'), porque la funcion no tiene forma de adivinar donde termina el edificio de casilleros por si sola.",
+        "ejemplo_resuelto": {
+          "descripcion": "Encontremos el numero mas grande en un arreglo.",
+          "codigo": "#include <stdio.h>\n\nint encontrar_maximo(int arr[], int n) {\n    int maximo = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > maximo) {\n            maximo = arr[i];\n        }\n    }\n    return maximo;\n}\n\nint main() {\n    int numeros[] = {3, 7, 2, 9, 4};\n    printf(\"%d\\n\", encontrar_maximo(numeros, 5));\n    return 0;\n}",
+          "explicacion_paso_a_paso": "Empezamos suponiendo que el primer casillero (arr[0], que es 3) es el maximo.\nRecorremos desde el casillero 1 en adelante, comparando cada uno contra el maximo actual.\nCada vez que encontramos algo mas grande, actualizamos 'maximo'.\nAl final, 'maximo' termina siendo 9 -- el numero mas grande del arreglo.\nNota que en main() le pasamos 'numeros' Y '5' (el tamanio) por separado -- la funcion no podria saber que hay 5 elementos solo con el arreglo."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion int suma_arreglo(int arr[], int n) que retorne la suma de los n elementos del arreglo.",
         "starter_code": "int suma_arreglo(int arr[], int n) {\n    // tu codigo aqui\n}",
         "harness_main": "int arr[] = {1,2,3,4,5};\nprintf(\"%d\\n\", suma_arreglo(arr, 5));",
         "expected_stdout": "15"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "int suma_arreglo(int arr[], int n) {\n    int suma = 0;\n    for (int i = 0; i < n; i++) {\n        suma += arr[i];\n    }\n    return suma;\n}",
+        "explicacion": "**El parametro arreglo:** `int arr[]` (corchetes vacios) significa 'este parametro es un arreglo de enteros'. Como el arreglo no sabe su tamanio, SIEMPRE viene con 'int n' aparte.\n\n**La acumuladora:** `int suma = 0;` arranca en 0 antes del loop.\n\n**El recorrido:** `for (int i = 0; i < n; i++)` recorre las posiciones 0 a n-1 (n NO se incluye) -- exactamente los n elementos.\n\n**La suma:** `suma += arr[i];` -- arr[i] accede a la posicion i; '+=' es la forma corta de sumar y reasignar.\n\n**El return:** despues de recorrer todo el arreglo, retorna el total."
       }
     },
     {
@@ -47,11 +83,23 @@
       "concept": "punteros_memoria",
       "difficulty": 3,
       "theory": "Un puntero almacena la direccion de memoria de otra variable. * desreferencia (accede al valor apuntado), & obtiene la direccion. Esto permite que una funcion modifique variables del que la llamo -- algo que Python/Java no permiten con tipos primitivos.",
+      "lesson": {
+        "explicacion_simple": "En una frase: un puntero es un papelito con una direccion escrita, no la cosa en si -- te dice DONDE encontrar algo.\n\nEste es EL concepto que hace famoso (y temido) a C, pero la idea de fondo es simple: imagina que en vez de darle a un amigo tu casa entera, le das un papelito con tu DIRECCION escrita. El papelito no es tu casa -- es solo la informacion de DONDE ESTA tu casa. Con ese papelito, tu amigo puede ir hasta alla y entrar (o incluso cambiarle el color a la puerta).\n\nUn PUNTERO es exactamente ese papelito: una variable que en vez de guardar un dato directo (como un numero), guarda la DIRECCION DE MEMORIA donde esta guardado ese dato. '&variable' te da 'la direccion de esa variable' (como escribir el papelito). '*puntero' significa 've a esa direccion y dame (o cambia) lo que hay ahi' (como usar el papelito para llegar a la casa) -- esto se llama 'desreferenciar'.\n\n¿Para que sirve esto? En C, cuando le pasas una variable normal a una funcion, la funcion recibe una COPIA -- si la funcion la cambia, el original no se entera, como fotocopiar un documento y rayar la copia. Pero si le pasas un PUNTERO (la direccion), la funcion puede ir hasta el original y modificarlo de verdad, porque tiene el 'mapa' para llegar hasta ahi.",
+        "ejemplo_resuelto": {
+          "descripcion": "Veamos la diferencia entre pasar una variable normal (no cambia el original) y pasar un puntero (si cambia).",
+          "codigo": "#include <stdio.h>\n\nvoid no_funciona(int x) {\n    x = 100;  // solo cambia la copia local\n}\n\nvoid si_funciona(int *x) {\n    *x = 100;  // cambia el valor real, siguiendo el puntero\n}\n\nint main() {\n    int numero = 5;\n\n    no_funciona(numero);\n    printf(\"Despues de no_funciona: %d\\n\", numero);\n\n    si_funciona(&numero);\n    printf(\"Despues de si_funciona: %d\\n\", numero);\n    return 0;\n}",
+          "explicacion_paso_a_paso": "'no_funciona(numero)' le pasa una COPIA del 5. Adentro de la funcion, x se vuelve 100, pero es la copia -- el 'numero' original en main() sigue siendo 5.\n'si_funciona(&numero)' le pasa la DIRECCION de numero (el '&'). Adentro, 'x' es un puntero que apunta a esa direccion. '*x = 100' dice 've a esa direccion y pon 100 ahi' -- esta vez si modifica el numero original.\nPor eso el primer printf muestra 5, y el segundo muestra 100."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion void intercambiar(int *a, int *b) que intercambie los valores apuntados por a y b usando punteros.",
         "starter_code": "void intercambiar(int *a, int *b) {\n    // tu codigo aqui\n}",
         "harness_main": "int x = 3, y = 5;\nintercambiar(&x, &y);\nprintf(\"%d\\n%d\\n\", x, y);",
         "expected_stdout": "5\n3"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "void intercambiar(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}",
+        "explicacion": "**El tipo void:** no retorna ningun valor, solo modifica cosas por su efecto secundario.\n\n**Los parametros con asterisco:** `int *a, int *b` -- aqui el '*' significa 'a y b son PUNTEROS a enteros', no enteros directos. Necesario para poder modificar los originales de verdad.\n\n**Guardar temporalmente:** `int temp = *a;` -- el '*' aqui significa DESREFERENCIAR: 've a la direccion de a, trae el valor'. Se guarda antes de sobreescribirlo.\n\n**El intercambio:** `*a = *b;` pone en la direccion de a el valor de b. `*b = temp;` pone en la direccion de b el valor original de a.\n\n**Por que funciona:** a y b son las DIRECCIONES reales de las variables de quien llamo la funcion (gracias al & usado al llamarla), asi que los cambios afectan a los originales, no a una copia."
       }
     },
     {
@@ -60,11 +108,23 @@
       "concept": "estructuras_datos",
       "difficulty": 3,
       "theory": "struct agrupa datos relacionados bajo un solo tipo compuesto, similar a una clase sin metodos. Es la base para construir estructuras de datos mas complejas como listas enlazadas y arboles.",
+      "lesson": {
+        "explicacion_simple": "En una frase: un struct es como una ficha de contacto que agrupa varios datos relacionados bajo un solo nombre.\n\nImagina una ficha de contacto en tu telefono: tiene un nombre, un numero, y un correo, todo agrupado bajo UNA sola ficha (un solo contacto), no como tres cosas sueltas y desconectadas. Un 'struct' en C hace eso: agrupa varios datos relacionados bajo un solo nombre.\n\nSin struct, si quisieras guardar la posicion (x, y) de un punto, tendrias que usar dos variables sueltas 'x' e 'y', sin ninguna conexion formal entre ellas -- si tuvieras 10 puntos, seria un caos de 20 variables sueltas. Con 'struct Punto { int x; int y; };' defines un nuevo TIPO llamado Punto, que siempre viene con esos dos campos juntos. Ahora puedes crear 'struct Punto p1;' y acceder a sus partes con un punto: 'p1.x' y 'p1.y'.\n\nEsto es parecido a lo que en Python o Java se logra con una clase, pero mas simple: un struct solo agrupa DATOS, no tiene funciones/metodos propios como una clase completa (en C, las 'funciones que trabajan sobre el struct' se escriben aparte, recibiendo el struct como parametro).",
+        "ejemplo_resuelto": {
+          "descripcion": "Creemos un struct Persona con nombre y edad, y calculemos si es mayor de edad.",
+          "codigo": "#include <stdio.h>\n\nstruct Persona {\n    char nombre[50];\n    int edad;\n};\n\nint es_mayor_de_edad(struct Persona p) {\n    return p.edad >= 18;\n}\n\nint main() {\n    struct Persona alguien = {\"Carlos\", 20};\n    printf(\"%s tiene %d anios. Mayor de edad: %d\\n\",\n           alguien.nombre, alguien.edad, es_mayor_de_edad(alguien));\n    return 0;\n}",
+          "explicacion_paso_a_paso": "'struct Persona { char nombre[50]; int edad; };' define el molde: cada Persona tiene un nombre (un arreglo de hasta 50 caracteres) y una edad.\n'struct Persona alguien = {\"Carlos\", 20};' crea una Persona real, llenando sus campos en orden.\n'alguien.nombre' y 'alguien.edad' acceden a cada campo con un punto.\n'es_mayor_de_edad(alguien)' recibe una COPIA completa del struct (nombre y edad juntos) y revisa el campo edad."
+        }
+      },
       "exercise": {
         "prompt": "Define un struct Punto {int x; int y;} e implementa float distancia(struct Punto a, struct Punto b) que calcule la distancia euclidiana (usa sqrt y pow de math.h).",
         "starter_code": "struct Punto { int x; int y; };\n\nfloat distancia(struct Punto a, struct Punto b) {\n    // tu codigo aqui\n}",
         "harness_main": "struct Punto a = {0,0};\nstruct Punto b = {3,4};\nprintf(\"%.2f\\n\", distancia(a, b));",
         "expected_stdout": "5.00"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "struct Punto {\n    int x;\n    int y;\n};\n\nfloat distancia(struct Punto a, struct Punto b) {\n    return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));\n}",
+        "explicacion": "**La definicion del struct:** agrupa dos enteros bajo un nuevo tipo llamado Punto. Nota el ';' DESPUES de la ultima llave -- se olvida facil y da error.\n\n**Recibir structs como parametros:** la funcion recibe DOS puntos completos, como copias.\n\n**Acceder a los campos:** `a.x`, `b.y`, etc -- el punto '.' accede a un campo cuando tienes el struct directo (no un puntero; con puntero seria '->').\n\n**La formula:** `pow(a.x - b.x, 2)` calcula (a.x-b.x) al cuadrado (pow = potencia, de math.h). Se suma con el mismo calculo en y, y `sqrt(...)` saca la raiz -- exactamente la formula de distancia euclidiana.\n\n**Sobre librerias:** sqrt y pow requieren '#include <math.h>' y el flag '-lm' al compilar (el motor del proyecto ya lo maneja por ti)."
       }
     },
     {
@@ -73,11 +133,23 @@
       "concept": "cadenas_strings",
       "difficulty": 3,
       "theory": "En C un string es un arreglo de char terminado en el caracter nulo '\\0'. No existe un tipo string nativo como en Python/Java -- todo el manejo de texto se hace recorriendo el arreglo manualmente o con funciones de string.h.",
+      "lesson": {
+        "explicacion_simple": "En una frase: el texto en C es una fila de letras que termina con una senial invisible de 'aqui se acaba'.\n\nEn Python, el texto (\"hola\") es un tipo de dato propio (str), facil de usar. En C, no existe ese lujo: un texto es simplemente un ARREGLO de caracteres individuales, uno detras de otro, como fichas de Scrabble puestas en fila: 'h', 'o', 'l', 'a'.\n\nPero hay un problema: si solo tienes el arreglo de letras, ¿como sabe la computadora DONDE termina la palabra? Ahi es donde entra el caracter especial '\\0' (se llama 'caracter nulo', y NO es lo mismo que el numero 0 o el caracter '0'). Cada string en C termina con ese caracter invisible como una señal de 'STOP, aqui se acaba el texto'. Cuando escribes \"hola\" entre comillas dobles, C automaticamente le agrega el '\\0' al final por ti.\n\nComo no hay un tipo 'string' de verdad, todas las operaciones que darias por sentadas en Python (saber el largo, unir dos textos, comparar si son iguales) hay que hacerlas con funciones especiales de la libreria 'string.h', como strlen() (largo), strcpy() (copiar), strcmp() (comparar) -- o, como en este nivel, recorriendo letra por letra tu mismo hasta encontrar el '\\0'.",
+        "ejemplo_resuelto": {
+          "descripcion": "Contemos cuantas letras tiene un texto, recorriendolo manualmente hasta el caracter nulo.",
+          "codigo": "#include <stdio.h>\n\nint mi_longitud(char *s) {\n    int contador = 0;\n    while (s[contador] != '\\0') {\n        contador++;\n    }\n    return contador;\n}\n\nint main() {\n    printf(\"%d\\n\", mi_longitud(\"hola\"));\n    return 0;\n}",
+          "explicacion_paso_a_paso": "Empezamos con contador en 0.\nEl 'while' sigue avanzando MIENTRAS la letra en la posicion actual NO sea el caracter nulo.\nCada vuelta, aumentamos el contador Y avanzamos una posicion en el string (s[0], s[1], s[2]...).\nCuando llegamos a la posicion donde esta el '\\0' invisible (justo despues de la 'a' en \"hola\"), el while se detiene.\nEl contador termino en 4 -- la cantidad de letras reales, sin contar el '\\0'."
+        }
+      },
       "exercise": {
         "prompt": "Escribe una funcion int contar_vocales(char *s) que retorne cuantas vocales (a,e,i,o,u, mayus o minus) contiene el string.",
         "starter_code": "int contar_vocales(char *s) {\n    // tu codigo aqui\n}",
         "harness_main": "printf(\"%d\\n\", contar_vocales(\"Hola Mundo\"));",
         "expected_stdout": "4"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "int contar_vocales(char *s) {\n    int contador = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c=='a'||c=='e'||c=='i'||c=='o'||c=='u'||c=='A'||c=='E'||c=='I'||c=='O'||c=='U') {\n            contador++;\n        }\n    }\n    return contador;\n}",
+        "explicacion": "**El parametro string:** `char *s` -- un string en C ES un puntero al primer caracter. No hace falta pasar el tamanio, porque el string trae su propia senial de fin.\n\n**El for sin limite fijo:** `s[i] != '\\0'` -- seguimos mientras la posicion actual NO sea el caracter nulo invisible del final. Distinto a recorrer numeros, donde si necesitas el tamanio de antemano.\n\n**La comparacion con OR:** `c=='a'||c=='e'||...` -- '||' significa O; basta con que UNA de esas 10 comparaciones sea verdadera para contar como vocal.\n\n**Contar y retornar:** `contador++;` suma 1 en cada vocal encontrada ('++' es la forma corta de sumar 1). Al final, retorna el total."
       }
     },
     {
@@ -86,11 +158,23 @@
       "concept": "memoria_dinamica",
       "difficulty": 4,
       "theory": "malloc reserva memoria en el heap en tiempo de ejecucion, free la libera. No liberar memoria causa fugas (memory leaks); usarla despues de liberar causa comportamiento indefinido (dangling pointers). Este manejo manual es la diferencia mas grande frente a Python/Java, que tienen garbage collector.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es pedir espacio de guardado justo cuando lo necesitas, y tu mismo tienes que devolverlo despues.\n\nHasta ahora, cuando declarabas 'int numeros[5];', tenias que saber DE ANTEMANO cuantos casilleros necesitabas, y ese numero quedaba fijo para siempre. Pero, ¿que pasa si no sabes cuantos vas a necesitar hasta que el programa ya este corriendo (por ejemplo, depende de lo que escriba el usuario)?\n\nAhi entra 'malloc' (memory allocate, 'reservar memoria'): es como ir a rentar una bodega de guardado justo del tamanio que necesitas, EN EL MOMENTO en que lo necesitas, sin saberlo de antemano. 'malloc(5 * sizeof(int))' le pide a la computadora 'dame espacio para 5 enteros, ahora mismo', y te devuelve un PUNTERO a esa bodega recien rentada.\n\nLo importante -- y lo que hace famoso a C por ser 'peligroso' -- es que TU eres responsable de devolver esa bodega cuando ya no la necesites, llamando a 'free()'. Si te olvidas de hacer free(), la bodega sigue 'rentada' para siempre aunque ya no la uses -- eso se llama 'fuga de memoria' (memory leak), y si tu programa hace esto muchas veces, se va quedando sin espacio disponible poco a poco. Python y Java tienen un 'recolector de basura' automatico que hace este trabajo por ti; en C, es 100% tu responsabilidad.",
+        "ejemplo_resuelto": {
+          "descripcion": "Reservemos memoria dinamicamente para guardar la edad de N personas, sin saber N de antemano.",
+          "codigo": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n = 3;\n    int *edades = malloc(n * sizeof(int));\n\n    edades[0] = 15;\n    edades[1] = 22;\n    edades[2] = 40;\n\n    for (int i = 0; i < n; i++) {\n        printf(\"Persona %d: %d anios\\n\", i, edades[i]);\n    }\n\n    free(edades);\n    return 0;\n}",
+          "explicacion_paso_a_paso": "'malloc(n * sizeof(int))' pide espacio para 3 enteros (sizeof(int) nos dice cuantos bytes ocupa un entero en esta computadora).\n'edades' es un puntero al inicio de ese espacio recien reservado -- lo podemos usar casi como un arreglo normal: edades[0], edades[1], etc.\nLlenamos y leemos los valores normalmente.\n'free(edades)' devuelve esa memoria al sistema quen ya no la necesitamos -- si olvidaramos esta linea, esos 3 enteros de espacio quedarian 'perdidos' hasta que el programa termine."
+        }
+      },
       "exercise": {
         "prompt": "Escribe int* crear_arreglo_dinamico(int n) que reserve memoria con malloc para n enteros inicializados en 0, y void liberar_arreglo(int *arr) que la libere con free.",
         "starter_code": "int* crear_arreglo_dinamico(int n) {\n    // tu codigo aqui\n}\n\nvoid liberar_arreglo(int *arr) {\n    // tu codigo aqui\n}",
         "harness_main": "int *arr = crear_arreglo_dinamico(5);\nfor (int i = 0; i < 5; i++) printf(\"%d \", arr[i]);\nprintf(\"\\n\");\nliberar_arreglo(arr);",
         "expected_stdout": "0 0 0 0 0"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "int* crear_arreglo_dinamico(int n) {\n    int *arr = malloc(n * sizeof(int));\n    for (int i = 0; i < n; i++) {\n        arr[i] = 0;\n    }\n    return arr;\n}\n\nvoid liberar_arreglo(int *arr) {\n    free(arr);\n}",
+        "explicacion": "**El tipo de retorno con asterisco:** `int* crear_arreglo_dinamico(int n)` -- retorna un PUNTERO a int (la direccion del arreglo recien creado).\n\n**malloc:** `malloc(n * sizeof(int))` -- 'sizeof(int)' pregunta cuantos bytes ocupa un entero aqui. Multiplicado por n, pedimos espacio exacto para n enteros seguidos. malloc retorna la direccion de ese espacio.\n\n**Inicializar en 0:** malloc NO garantiza que el espacio venga limpio -- por eso el for pone 0 en cada posicion explicitamente.\n\n**El return:** retorna 'arr', la direccion del bloque reservado.\n\n**free:** recibe el mismo puntero que devolvio malloc, y le dice al sistema que ya puede reutilizar ese espacio. Olvidarlo causa fugas de memoria."
       }
     },
     {
@@ -99,11 +183,23 @@
       "concept": "listas_enlazadas",
       "difficulty": 5,
       "theory": "Una lista enlazada es una cadena de nodos (struct con un valor y un puntero al siguiente nodo), construida con malloc dinamicamente. A diferencia de un arreglo, no requiere memoria contigua ni tamano fijo -- combina structs, punteros y memoria dinamica, los tres conceptos previos.",
+      "lesson": {
+        "explicacion_simple": "En una frase: es una cadena de pistas donde cada una te dice donde encontrar la siguiente, sin estar todas juntas fisicamente.\n\nUn arreglo es como un edificio de casilleros TODOS PEGADOS uno al lado del otro -- si quieres agregar un casillero mas al final, necesitarias reconstruir todo el edificio en un lugar con mas espacio. Una LISTA ENLAZADA resuelve esto de otra forma: en vez de estar todos pegados, cada 'casillero' (llamado NODO) puede estar en cualquier parte de la memoria, y simplemente guarda la DIRECCION de donde esta el siguiente casillero -- como una busqueda del tesoro, donde cada pista te dice donde encontrar la siguiente pista, sin que las pistas tengan que estar fisicamente juntas.\n\nCada nodo es un struct con DOS partes: el dato que quieres guardar (el 'valor'), y un puntero al siguiente nodo ('struct Nodo *siguiente'). El ultimo nodo de la lista apunta a NULL (una direccion especial que significa 'aqui no hay nada mas, se acabo el camino').\n\nEsto une los tres conceptos anteriores: usas STRUCT para definir el nodo, PUNTEROS para conectar un nodo con el siguiente, y MEMORIA DINAMICA (malloc) para crear cada nodo nuevo en el momento en que lo necesitas, sin saber de antemano cuantos nodos vas a tener en total -- a diferencia del arreglo, la lista puede crecer indefinidamente sin necesidad de reservar todo el espacio desde el principio.",
+        "ejemplo_resuelto": {
+          "descripcion": "Construyamos una lista enlazada de 3 numeros y la imprimamos recorriendola.",
+          "codigo": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Nodo {\n    int valor;\n    struct Nodo *siguiente;\n};\n\nint main() {\n    struct Nodo *n3 = malloc(sizeof(struct Nodo));\n    n3->valor = 30;\n    n3->siguiente = NULL;\n\n    struct Nodo *n2 = malloc(sizeof(struct Nodo));\n    n2->valor = 20;\n    n2->siguiente = n3;\n\n    struct Nodo *n1 = malloc(sizeof(struct Nodo));\n    n1->valor = 10;\n    n1->siguiente = n2;\n\n    struct Nodo *actual = n1;\n    while (actual != NULL) {\n        printf(\"%d -> \", actual->valor);\n        actual = actual->siguiente;\n    }\n    printf(\"NULL\\n\");\n    return 0;\n}",
+          "explicacion_paso_a_paso": "Creamos 3 nodos por separado con malloc, cada uno en un lugar distinto de la memoria (no estan pegados como un arreglo).\n'n3->siguiente = NULL' marca a n3 como el ULTIMO nodo (el flecha '->' se usa para acceder a los campos de un struct cuando tienes un PUNTERO al struct, en vez de un punto normal).\n'n2->siguiente = n3' conecta n2 con n3 -- n2 'sabe' donde esta n3 aunque no esten juntos en memoria.\nLo mismo con n1 apuntando a n2. Ahora n1 es la 'entrada' de toda la cadena: 10 -> 20 -> 30 -> NULL.\nEl while recorre la cadena siguiendo cada 'siguiente' hasta llegar a NULL, que marca el final."
+        }
+      },
       "exercise": {
         "prompt": "Define struct Nodo {int valor; struct Nodo *siguiente;}. Implementa struct Nodo* insertar_al_inicio(struct Nodo *cabeza, int valor) que inserte un nodo nuevo al inicio de la lista, y int sumar_lista(struct Nodo *cabeza) que retorne la suma de todos los valores.",
         "starter_code": "struct Nodo { int valor; struct Nodo *siguiente; };\n\nstruct Nodo* insertar_al_inicio(struct Nodo *cabeza, int valor) {\n    // tu codigo aqui\n}\n\nint sumar_lista(struct Nodo *cabeza) {\n    // tu codigo aqui\n}",
         "harness_main": "struct Nodo *lista = NULL;\nlista = insertar_al_inicio(lista, 10);\nlista = insertar_al_inicio(lista, 20);\nlista = insertar_al_inicio(lista, 30);\nprintf(\"%d\\n\", sumar_lista(lista));",
         "expected_stdout": "60"
+      },
+      "solucion_paso_a_paso": {
+        "codigo": "struct Nodo {\n    int valor;\n    struct Nodo *siguiente;\n};\n\nstruct Nodo* insertar_al_inicio(struct Nodo *cabeza, int valor) {\n    struct Nodo *nuevo = malloc(sizeof(struct Nodo));\n    nuevo->valor = valor;\n    nuevo->siguiente = cabeza;\n    return nuevo;\n}\n\nint sumar_lista(struct Nodo *cabeza) {\n    int suma = 0;\n    while (cabeza != NULL) {\n        suma += cabeza->valor;\n        cabeza = cabeza->siguiente;\n    }\n    return suma;\n}",
+        "explicacion": "**El struct autorreferenciado:** dentro de Nodo hay un PUNTERO a otro Nodo -- valido porque es una direccion, no un Nodo completo (que seria un tamanio infinito imposible).\n\n**Crear un nodo nuevo:** `malloc(sizeof(struct Nodo))` reserva espacio para un nodo completo y guarda su direccion en 'nuevo'.\n\n**La flecha ->:** cuando tienes un PUNTERO a un struct, usas '->' en vez de '.' para acceder a sus campos -- es un atajo de '(*nuevo).valor'.\n\n**Conectar con el resto:** `nuevo->siguiente = cabeza;` -- el nuevo nodo apunta a lo que antes era el primero (se inserta ANTES de todos).\n\n**Retornar la nueva cabeza:** como se inserto al inicio, el nodo nuevo pasa a ser la nueva entrada de la lista.\n\n**Recorrer con while:** `while (cabeza != NULL)` avanza mientras no llegue al final. Suma el valor actual, y avanza con `cabeza = cabeza->siguiente;` -- moviendo la variable nodo por nodo."
       }
     }
   ]

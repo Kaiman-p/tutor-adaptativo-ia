@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from mastery import StudentModel
 from sandbox import run_level
-from llm_judge import judge_submission
+from llm_judge import judge_submission, reexplain_concept, generate_hint
 from recommender import decide_next_action, pick_next_level
 from exercise_generator import generate_remedial_exercise
 
@@ -173,7 +173,45 @@ else:
     is_current = selected_level["id"] == next_level_id
     st.header(selected_level["title"])
     st.markdown(f"**Teoría:** {selected_level['theory']}")
+
+    lesson = selected_level.get("lesson")
+    if lesson:
+        with st.expander("📖 Lección completa (explicado desde cero, sin conocimientos previos)"):
+            st.markdown(lesson["explicacion_simple"])
+            st.markdown("---")
+            st.markdown(f"**Ejemplo resuelto:** {lesson['ejemplo_resuelto']['descripcion']}")
+            code_lang = "sql" if selected_lang == "sql" else selected_lang
+            st.code(lesson["ejemplo_resuelto"]["codigo"], language=code_lang)
+            st.markdown(lesson["ejemplo_resuelto"]["explicacion_paso_a_paso"])
+
+        reexplain_key = f"reexplain_{selected_level['id']}"
+        if st.button("🤔 No entendí, explícamelo diferente", key=f"btn_reexplain_{selected_level['id']}"):
+            with st.spinner("Pensando en otra forma de explicarlo..."):
+                st.session_state[reexplain_key] = reexplain_concept(
+                    selected_lang, selected_level["concept"], lesson["explicacion_simple"]
+                )
+        if reexplain_key in st.session_state:
+            r = st.session_state[reexplain_key]
+            st.info(r["texto"])
+            if r.get("_source") == "fallback":
+                st.caption("(No se pudo consultar la IA en este momento, ver mensaje arriba)")
+
     st.info(selected_level["exercise"]["prompt"])
+
+    hint_key = f"hint_{selected_level['id']}"
+    if st.button("💡 Pista paso a paso", key=f"btn_hint_{selected_level['id']}"):
+        with st.spinner("Pensando en una pista..."):
+            st.session_state[hint_key] = generate_hint(selected_level, selected_lang)
+    if hint_key in st.session_state:
+        st.warning(st.session_state[hint_key]["texto"])
+
+    solucion = selected_level.get("solucion_paso_a_paso")
+    if solucion:
+        with st.expander("🔓 Ver solución paso a paso (revela la respuesta completa)"):
+            st.caption("Ábrelo solo si ya lo intentaste y sigues atascado, o para revisar tu código línea por línea buscando un detalle pequeño (un `;`, un `&`, una comilla...).")
+            code_lang_sol = "sql" if selected_lang == "sql" else selected_lang
+            st.code(solucion["codigo"], language=code_lang_sol)
+            st.markdown(solucion["explicacion"])
 
     if selected_lang == "sql":
         with st.expander("Ver esquema de la base de datos"):
