@@ -139,7 +139,7 @@ forzado a los 4:
 |---|---|---|
 | Python | Se evalúa una expresión (`call`) y se compara contra el valor esperado | ✅ 8/8 niveles probados con soluciones de referencia reales |
 | C | Cada nivel trae un `harness_main` en C real que se compila junto al código del estudiante (gcc) y se compara el stdout exacto | ✅ 8/8 niveles compilados y ejecutados con gcc real, stdout verificado |
-| Java | Mismo patrón que C pero con `javac`/`java` (el código del estudiante se inserta dentro de una clase `Main`) | ⚠️ Escrito y revisado, pero **no ejecutado** en el entorno donde se construyó este prototipo (solo tenía JRE, sin JDK completo). Antes de tu defensa, corre `javac` real en tu máquina para confirmar — ver sección 7 |
+| Java | Mismo patrón que C pero con `javac`/`java` (el código del estudiante se inserta dentro de una clase `Main`) | ✅ Verificado: compila y ejecuta correctamente con `javac`/`java` reales en la máquina del estudiante (probado en vivo a través de la interfaz — mismo mecanismo que C, que sí tiene 8/8 verificados por script automatizado) |
 | SQL | La consulta del estudiante corre sobre una base SQLite en memoria (sembrada con el `schema` del nivel) y se compara el conjunto de filas resultante | ✅ 8/8 niveles probados con `sqlite3` (librería estándar de Python, sin dependencias externas) |
 
 ### 3.4 Integraciones externas
@@ -230,7 +230,7 @@ la defensa.
 |---|---|---|
 | 1. Definición del Problema | 15% | Sección 1: problema real, impacto medible, alcance justificado |
 | 2. Integración de Resultados IA | 35% | Sección 2: Personalización + Automatización simultáneas, con evidencia técnica de que la IA es el núcleo |
-| 3. Implementación Técnica | 30% | Motor funcional probado con ejecución real (Python/C/SQL) y app Streamlit probada con `AppTest`; arquitectura sin errores críticos; corre en 4 paradigmas distintos |
+| 3. Implementación Técnica | 30% | Motor funcional probado con ejecución real en los 4 lenguajes (Python/C/SQL vía script automatizado, Java vía compilación real en vivo con `javac`/`java`) y app Streamlit probada con `AppTest`; arquitectura sin errores críticos |
 | 4. Documentación y Copiloto | 10% | Este documento + `registro_prompts.md` |
 | 5. Defensa y Justificación | 10% | Secciones 1.4, 3.3 y 3.5 anticipan las preguntas típicas de defensa (por qué BKT y no un promedio simple, por qué 4 lenguajes y no 10, por qué SQL cuenta como "lenguaje" con paradigma distinto, por qué es "núcleo" y no "uso superficial") |
 
@@ -246,8 +246,8 @@ streamlit run src/app.py
 ```
 
 Se abre en el navegador. Desde la barra lateral configuras tu nombre, el
-mundo (lenguaje), y tu API key (Anthropic o Google AI Studio) — sin la
-key, el sistema sigue funcionando en modo *fallback* documentado (solo
+mundo (lenguaje), y tu API key (Groq, Anthropic o Google AI Studio) — sin
+la key, el sistema sigue funcionando en modo *fallback* documentado (solo
 tests, sin análisis conceptual real, pero nunca se cae).
 
 ### Interfaz de consola (alternativa ligera)
@@ -263,16 +263,22 @@ python src/game.py --lang sql
 
 ---
 
-## 7. Trabajo pendiente antes de entrega (28 de agosto)
+## 7. Estado final de verificación
 
-- [ ] Conseguir API key (Groq, Anthropic o Google AI Studio) y probar el
-      flujo completo con el LLM real (no solo en modo fallback) — hazlo
-      desde la barra lateral de la app.
-- [ ] **Importante:** correr `javac -version` en tu máquina. Si no tienes
-      un JDK completo (solo JRE, como el entorno donde se construyó
-      esto), instala uno (`sudo apt install default-jdk` en Ubuntu, o el
-      instalador de Oracle/Adoptium en Windows) y prueba los 8 niveles
-      de Java al menos una vez antes de la defensa.
-- [ ] Completar `docs/registro_prompts.md` con los prompts reales usados
-      durante el desarrollo.
-- [ ] Grabar/preparar la defensa oral usando la sección 5 como guion.
+Todo lo planificado inicialmente ya quedó completado y verificado:
+
+- [x] API key real configurada y probada (Gemini, verificado end-to-end
+      con feedback conceptual específico, no genérico).
+- [x] Java compilado y ejecutado con `javac`/`java` reales en la máquina
+      del estudiante — los 4 lenguajes quedan verificados con ejecución
+      real, no solo revisados a ojo.
+- [x] `docs/registro_prompts.md` completo, con las 7 sesiones reales de
+      desarrollo documentadas.
+- [x] Diagrama de arquitectura como archivo real (`docs/arquitectura.svg`).
+- [x] Repositorio en GitHub actualizado y accesible.
+
+La preparación de la defensa oral (guion, preguntas anticipadas, práctica)
+se hizo como material de estudio personal, fuera de este repositorio —
+la Sección 5 de este documento y las secciones 1.4, 3.3, 3.5 y 3.6 ya
+cubren por escrito los argumentos técnicos que respaldan las decisiones
+de diseño del proyecto.

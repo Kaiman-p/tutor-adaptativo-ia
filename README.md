@@ -18,7 +18,8 @@ declarativo).
 proyecto_ia/
 ├── docs/
 │   ├── Documentacion_Tecnica.md   <- documento principal para entrega
-│   └── registro_prompts.md        <- llena esto mientras desarrollas
+│   ├── registro_prompts.md        <- registro completo de las 7 sesiones de desarrollo con IA
+│   └── arquitectura.svg            <- diagrama de integración
 ├── content/
 │   ├── python.json   <- 8 niveles: variables -> decoradores
 │   ├── c.json         <- 8 niveles: variables -> listas enlazadas
@@ -50,6 +51,7 @@ demostrable — ver `src/llm_judge.py`.
 ## Empieza aquí
 
 Lee `docs/Documentacion_Tecnica.md` — tiene la definición del problema,
-la arquitectura completa, qué está verificado con ejecución real (Python,
-C, SQL) y qué falta verificar en tu máquina (Java, requiere JDK completo),
-y el mapeo directo a cada criterio de la rúbrica del Summer Camp.
+la arquitectura completa, el estado final de verificación (los 4
+lenguajes probados con ejecución real, incluyendo Java compilado y
+ejecutado en vivo), y el mapeo directo a cada criterio de la rúbrica
+del Summer Camp.
