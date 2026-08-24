@@ -113,7 +113,9 @@ Estudiante (código o consulta SQL)
         └──────────── vuelve al Estudiante con el siguiente nivel
 ```
 
-*(Diagrama visual entregado por separado junto con este documento.)*
+*(Diagrama visual entregado por separado junto con este documento, ver `docs/arquitectura.svg`.)*
+
+![Arquitectura del motor de IA](arquitectura.svg)
 
 ### 3.2 Componentes técnicos
 
