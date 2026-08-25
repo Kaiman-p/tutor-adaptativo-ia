@@ -199,6 +199,36 @@ Esto es una ventaja de haber diseñado el sistema con proveedor
 intercambiable (`LLM_PROVIDER`) desde el inicio: un fallo de conectividad
 con un proveedor no bloquea el proyecto.
 
+### 3.7 Los tres prompts de sistema (el núcleo de IA en detalle)
+
+El comportamiento de la IA está definido por tres *prompts de sistema*
+—mensajes fijos que se envían al LLM antes de los datos del
+estudiante—, cada uno con un propósito distinto. Estos son el corazón
+del núcleo computacional: cambiarlos cambia cómo se comporta todo el
+sistema.
+
+**1. Prompt del evaluador** (`JUDGE_SYSTEM_PROMPT` en `llm_judge.py`).
+Es el más importante: obliga al LLM a analizar el código del estudiante
+y devolver un JSON estructurado con puntajes de dominio por concepto.
+Ese JSON es lo que alimenta al modelo BKT. La instrucción clave es que
+debe analizar *el código en sí* (no solo si el resultado es correcto) y
+responder *únicamente* en JSON, sin texto adicional.
+
+**2. Prompt de la pista** (`HINT_SYSTEM_PROMPT`). Genera una pista de
+razonamiento en 3-5 pasos cuando el estudiante está atascado, con la
+regla explícita de *nunca* escribir el código de la solución. Guía el
+pensamiento sin dar la respuesta.
+
+**3. Prompt de re-explicación** (`REEXPLAIN_SYSTEM_PROMPT`). Cuando el
+estudiante no entendió la lección, re-explica el concepto de una forma
+*completamente distinta*: otra analogía, otro ejemplo cotidiano, y un
+lenguaje aún más simple.
+
+Los tres refuerzan los criterios de la rúbrica: el primero es el núcleo
+de evaluación (Integración de IA), y los otros dos añaden
+Personalización en tiempo real. El texto completo de cada prompt está
+en `src/llm_judge.py`.
+
 ---
 
 ## 4. Uso de la IA como Copiloto (registro de desarrollo)
@@ -282,3 +312,23 @@ se hizo como material de estudio personal, fuera de este repositorio —
 la Sección 5 de este documento y las secciones 1.4, 3.3, 3.5 y 3.6 ya
 cubren por escrito los argumentos técnicos que respaldan las decisiones
 de diseño del proyecto.
+
+---
+
+## 8. Referencias bibliográficas
+
+La currícula de cada lenguaje se apoya en textos de referencia
+reconocidos:
+
+- **C:** Kernighan, B. W. & Ritchie, D. M. (1988). *The C Programming
+  Language* (2ª ed.). Prentice Hall. ISBN 978-0131103627.
+  Disponible en: https://seriouscomputerist.atariverse.com/media/pdf/book/C%20Programming%20Language%20-%202nd%20Edition%20(OCR).pdf
+- **Python:** Sweigart, A. (2020). *Automate the Boring Stuff with
+  Python* (2ª ed.). No Starch Press. Disponible en línea:
+  https://automatetheboringstuff.com/
+- **Java:** Sierra, K. & Bates, B. (2005). *Head First Java* (2ª ed.).
+  O'Reilly Media. ISBN 978-0596009205.
+  Disponible en: https://archive.org/details/HeadFirstJava2ndEdition_201511
+- **SQL:** Beaulieu, A. (2020). *Learning SQL* (3ª ed.). O'Reilly
+  Media. ISBN 978-1492057611.
+  Disponible en: https://archive.org/details/learningsql0000beau_s2h5

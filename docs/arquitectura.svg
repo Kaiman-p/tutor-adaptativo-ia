@@ -1,43 +1,81 @@
-<svg width="680" height="640" viewBox="0 0 680 640" xmlns="http://www.w3.org/2000/svg">
-  <rect width="680" height="640" fill="#ffffff"/>
+<svg width="760" height="880" viewBox="0 0 760 880" xmlns="http://www.w3.org/2000/svg">
+  <rect width="760" height="880" fill="#ffffff"/>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M2 1L8 5L2 9" fill="none" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
+    <marker id="arrowloop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#9b1c28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
   </defs>
 
-  <text x="340" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222">Arquitectura del motor de IA - Tutor Adaptativo</text>
+  <text x="380" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#222222">Flujo de datos del Tutor Adaptativo</text>
+  <text x="380" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666666">La zona sombreada es el nucleo computacional de IA (LLM + modelo BKT)</text>
 
-  <rect x="180" y="40" width="320" height="56" rx="8" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
-  <text x="340" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222">Estudiante</text>
-  <text x="340" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555555">Envia codigo del ejercicio</text>
-  <line x1="340" y1="96" x2="340" y2="156" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="250" y="72" width="260" height="52" rx="8" fill="#f2f2f2" stroke="#999999" stroke-width="1.2"/>
+  <text x="380" y="94" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222">1. Estudiante</text>
+  <text x="380" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555555">Escribe y envia el codigo de un ejercicio</text>
+  <line x1="380" y1="124" x2="380" y2="160" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <rect x="180" y="156" width="320" height="56" rx="8" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
-  <text x="340" y="178" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222">Sandbox</text>
-  <text x="340" y="196" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555555">Verifica correccion funcional (Python/C/Java/SQL)</text>
-  <line x1="340" y1="212" x2="340" y2="272" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="250" y="160" width="260" height="52" rx="8" fill="#f2f2f2" stroke="#999999" stroke-width="1.2"/>
+  <text x="380" y="182" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#222222">2. Sandbox</text>
+  <text x="380" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#555555">Compila/ejecuta el codigo real (gcc, javac, sqlite)</text>
+  <line x1="380" y1="212" x2="380" y2="252" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <rect x="180" y="272" width="320" height="56" rx="8" fill="#ede4fb" stroke="#8a5fd1" stroke-width="1"/>
-  <text x="340" y="294" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4b2a8a">LLM (nucleo de IA)</text>
-  <text x="340" y="312" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">Groq / Anthropic / Gemini -- clasifica dominio conceptual</text>
-  <line x1="340" y1="328" x2="340" y2="388" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="70" y="252" width="620" height="286" rx="14" fill="#f5eefb" stroke="#8a5fd1" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="90" y="275" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#5c3d99">NUCLEO COMPUTACIONAL DE IA (el "cerebro" del sistema)</text>
 
-  <rect x="180" y="388" width="320" height="56" rx="8" fill="#ede4fb" stroke="#8a5fd1" stroke-width="1"/>
-  <text x="340" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4b2a8a">Modelo BKT</text>
-  <text x="340" y="428" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">Actualiza probabilidad de dominio (Bayesian Knowledge Tracing)</text>
-  <line x1="340" y1="444" x2="340" y2="504" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="250" y="292" width="260" height="66" rx="8" fill="#ede4fb" stroke="#8a5fd1" stroke-width="1.5"/>
+  <text x="380" y="314" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4b2a8a">3. LLM (Groq / Anthropic / Gemini)</text>
+  <text x="380" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">Analiza el codigo y clasifica el dominio</text>
+  <text x="380" y="348" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">conceptual, devolviendo JSON estructurado</text>
 
-  <rect x="180" y="504" width="320" height="56" rx="8" fill="#dcf3ea" stroke="#2f9e6e" stroke-width="1"/>
-  <text x="340" y="526" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1d6b48">Recomendador</text>
-  <text x="340" y="544" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2c7a53">Decide: avanzar / repetir / remedial / refuerzo</text>
+  <rect x="536" y="298" width="150" height="54" rx="6" fill="#ffffff" stroke="#8a5fd1" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="611" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#5c3d99">Prompt 1: Evaluador</text>
+  <text x="611" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#777777">fuerza salida JSON</text>
+  <text x="611" y="344" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#777777">del analisis</text>
+  <line x1="536" y1="325" x2="512" y2="325" stroke="#8a5fd1" stroke-width="1.2" stroke-dasharray="3 2" marker-end="url(#arrow)"/>
 
-  <text x="340" y="590" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#444444">vuelve a Estudiante con el siguiente nivel o ejercicio remedial generado por IA</text>
+  <line x1="380" y1="358" x2="380" y2="398" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="392" y="382" font-family="Arial, sans-serif" font-size="10" fill="#5c3d99" font-style="italic">JSON: concept_scores</text>
 
-  <rect x="150" y="612" width="14" height="14" fill="#f2f2f2" stroke="#999999"/>
-  <text x="170" y="623" font-family="Arial, sans-serif" font-size="11" fill="#444444">Entrada / verificacion</text>
-  <rect x="320" y="612" width="14" height="14" fill="#ede4fb" stroke="#8a5fd1"/>
-  <text x="340" y="623" font-family="Arial, sans-serif" font-size="11" fill="#444444">Nucleo de IA</text>
-  <rect x="450" y="612" width="14" height="14" fill="#dcf3ea" stroke="#2f9e6e"/>
-  <text x="470" y="623" font-family="Arial, sans-serif" font-size="11" fill="#444444">Decision</text>
+  <rect x="250" y="398" width="260" height="66" rx="8" fill="#ede4fb" stroke="#8a5fd1" stroke-width="1.5"/>
+  <text x="380" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4b2a8a">4. Modelo BKT</text>
+  <text x="380" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">Actualiza P(dominio) de cada concepto</text>
+  <text x="380" y="454" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">con inferencia bayesiana</text>
+
+  <line x1="380" y1="464" x2="380" y2="500" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="250" y="500" width="260" height="26" rx="6" fill="#e5d6f7" stroke="#8a5fd1" stroke-width="1"/>
+  <text x="380" y="518" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5c3d99">(usa P(dominio) para decidir la siguiente accion)</text>
+
+  <line x1="380" y1="538" x2="380" y2="574" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="230" y="574" width="300" height="66" rx="8" fill="#dcf3ea" stroke="#2f9e6e" stroke-width="1.5"/>
+  <text x="380" y="596" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1d6b48">5. Recomendador (decision autonoma)</text>
+  <text x="380" y="614" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2c7a53">avanzar / repetir / generar remedial / reforzar</text>
+  <text x="380" y="630" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2c7a53">(Automatizacion)</text>
+
+  <path d="M530 607 H710 V98 H510" fill="none" stroke="#9b1c28" stroke-width="1.5" marker-end="url(#arrowloop)"/>
+  <text x="726" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9b1c28" font-style="italic" transform="rotate(90 726 360)">retroalimentacion: siguiente nivel o remedial</text>
+
+  <rect x="40" y="700" width="680" height="120" rx="10" fill="#fbf7ee" stroke="#c9a23a" stroke-width="1.2"/>
+  <text x="60" y="723" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#8a6d1f">Ayudas pedagogicas con IA en tiempo real (a peticion del estudiante)</text>
+
+  <rect x="60" y="738" width="300" height="66" rx="8" fill="#fff" stroke="#c9a23a" stroke-width="1"/>
+  <text x="210" y="760" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#8a6d1f">Prompt 2: Pista paso a paso</text>
+  <text x="210" y="778" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7a6320">Guia el razonamiento sin dar</text>
+  <text x="210" y="792" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7a6320">el codigo de la solucion</text>
+
+  <rect x="400" y="738" width="300" height="66" rx="8" fill="#fff" stroke="#c9a23a" stroke-width="1"/>
+  <text x="550" y="760" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#8a6d1f">Prompt 3: Re-explicacion</text>
+  <text x="550" y="778" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7a6320">Explica el concepto de otra forma</text>
+  <text x="550" y="792" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#7a6320">si el estudiante no entendio</text>
+
+  <rect x="40" y="840" width="14" height="14" fill="#ede4fb" stroke="#8a5fd1"/>
+  <text x="60" y="851" font-family="Arial, sans-serif" font-size="11" fill="#444444">Nucleo de IA</text>
+  <rect x="180" y="840" width="14" height="14" fill="#dcf3ea" stroke="#2f9e6e"/>
+  <text x="200" y="851" font-family="Arial, sans-serif" font-size="11" fill="#444444">Decision autonoma</text>
+  <rect x="360" y="840" width="14" height="14" fill="#fff" stroke="#c9a23a"/>
+  <text x="380" y="851" font-family="Arial, sans-serif" font-size="11" fill="#444444">Prompts de IA (los 3 en total)</text>
 </svg>

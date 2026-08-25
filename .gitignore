@@ -3,3 +3,5 @@ __pycache__/
 saves/*.json
 .streamlit/
 docs/guion_defensa.md
+docs/guion_defensa_expandido.md
+docs/explicaciones_tecnicas_completas.md

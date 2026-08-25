@@ -1,0 +1,644 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+%  INFORME PREVIO - Proyecto AIE Summer Camp 2026
+%  Tutor Adaptativo de Fundamentos de Programacion
+%  Autor: Cesar Oswaldo Yunga Nieves
+% ============================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{float}
+
+% ---- Colores ----
+\definecolor{rojoepn}{RGB}{155,28,40}
+\definecolor{grispromt}{RGB}{240,240,240}
+\definecolor{codecomment}{RGB}{100,100,100}
+\definecolor{codekeyword}{RGB}{30,90,160}
+\definecolor{codestring}{RGB}{40,120,70}
+
+% ---- Enlaces ----
+\hypersetup{
+  colorlinks=true,
+  linkcolor=rojoepn,
+  urlcolor=rojoepn,
+  citecolor=rojoepn
+}
+
+% ---- Encabezado / pie ----
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Proyecto AIE --- Summer Camp 2026}
+\rhead{\small Tutor Adaptativo}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---- Estilo de titulos ----
+\titleformat{\section}{\Large\bfseries\color{rojoepn}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
+
+% ---- Estilo de codigo ----
+\lstdefinestyle{codigo}{
+  backgroundcolor=\color{grispromt},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{codecomment}\itshape,
+  keywordstyle=\color{codekeyword}\bfseries,
+  stringstyle=\color{codestring},
+  frame=single,
+  rulecolor=\color{gray},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  tabsize=2,
+  xleftmargin=1.5em
+}
+\lstset{style=codigo}
+
+% ---- Caja para instrucciones de captura (borrar al insertar imagen real) ----
+\newcommand{\capturaplaceholder}[1]{%
+  \begin{figure}[H]
+  \centering
+  \fbox{\parbox{0.85\textwidth}{\centering \vspace{1.5cm}
+  \textbf{\color{rojoepn}[ INSERTAR CAPTURA AQUI ]}\\[0.3cm]
+  \textit{#1}\vspace{1.5cm}}}
+  \end{figure}
+}
+
+% ---- Comando para insertar una captura real con pie de foto ----
+\newcommand{\captura}[2]{%
+  \begin{figure}[H]
+  \centering
+  \fbox{\includegraphics[width=0.95\textwidth]{#1}}
+  \caption{#2}
+  \end{figure}
+}
+
+\begin{document}
+
+% ============================================================
+%  PORTADA
+% ============================================================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\Huge\bfseries\color{rojoepn} Tutor Adaptativo de\\ Fundamentos de Programación\par}
+\vspace{0.5cm}
+{\Large Informe del Proyecto\par}
+\vspace{1.5cm}
+
+{\large\textbf{Fundamentos de Inteligencia Artificial}\par}
+{\large Summer Camp 2026 --- CyberMinds EPN\par}
+\vspace{2cm}
+
+\begin{tabular}{rl}
+\textbf{Autor:} & César Oswaldo Yunga Nieves \\[0.3cm]
+\textbf{Modalidad:} & Individual \\[0.3cm]
+\textbf{Repositorio:} & \url{https://github.com/Kaiman-p/tutor-adaptativo-ia} \\[0.3cm]
+\textbf{Fecha:} & Agosto 2026 \\
+\end{tabular}
+
+\vfill
+{\small Documento de informe previo --- Versión 1.0\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================
+%  1. DEFINICION DEL PROBLEMA
+% ============================================================
+\section{Definición del Problema}
+
+\subsection{Contexto}
+Cualquiera que haya empezado a aprender a programar conoce esta
+sensación: escribes tu código, le das a ``ejecutar'', y lo único que
+recibes de vuelta es un ``correcto'' o un ``incorrecto''. Nada más. Si
+falló, no sabes por qué; y si funcionó, tampoco sabes si de verdad
+entendiste lo que hiciste o simplemente tuviste suerte copiando la
+estructura de un ejemplo anterior.
+
+Ese vacío es un problema real. Los libros de referencia de cada
+lenguaje insisten, cada uno a su manera, en que aprender a programar
+no se trata solo de que el programa ``corra'', sino de comprender los
+mecanismos que hay debajo. Kernighan y Ritchie, en su clásico sobre C,
+son famosos por enfocarse en que el estudiante entienda de verdad cómo
+funcionan los punteros y la memoria, no solo en que el código
+compile~\cite{kr}. Esa misma idea --- comprender, no memorizar --- es
+la que motiva este proyecto.
+
+El problema, entonces, es que las herramientas típicas de práctica te
+dicen \textit{si} acertaste, pero no \textit{qué tan bien} entendiste
+el concepto que estabas practicando. Y sin esa información, es fácil
+caer en una práctica poco eficiente.
+
+\subsection{Impacto}
+¿Por qué importa esto? Porque los fundamentos son, precisamente, los
+cimientos. Un estudiante que arrastra un hueco en, digamos, cómo
+funcionan las funciones o la recursión, va a tropezar una y otra vez
+más adelante, sin saber muy bien por qué. Sweigart, en su libro de
+Python para principiantes, dedica capítulos enteros a construir estos
+fundamentos paso a paso justamente porque son la base de todo lo que
+viene después~\cite{sweigart}.
+
+Cuando la única señal que recibes es ``pasó / no pasó'', terminas
+repitiendo lo que ya dominas (porque te da confianza) y evitando, sin
+darte cuenta, lo que no entiendes bien. El resultado es una falsa
+sensación de progreso.
+
+\subsection{La solución que propongo}
+La idea es un tutor con forma de videojuego (un RPG por niveles) que no
+se limite a decir ``correcto''. En vez de eso, que \textbf{analice tu
+código} y te diga qué tan bien estás demostrando entender cada
+concepto. En concreto, el sistema:
+
+\begin{enumerate}[leftmargin=*]
+  \item Organiza el aprendizaje en ``mundos'' (un lenguaje cada uno) y
+  ``niveles'' (un concepto cada uno), y a cada nivel le acompaña una
+  lección pensada para alguien que parte de cero.
+  \item Usa un modelo de inteligencia artificial (un LLM) como cerebro
+  del sistema: lee tu código y evalúa si \textit{demuestra}
+  comprensión, no solo si da el resultado correcto.
+  \item Lleva la cuenta, con un modelo probabilístico, de qué tan bien
+  dominas cada concepto, y va ajustando esa estimación con cada
+  intento.
+  \item Decide solo qué hacer contigo: avanzarte, hacerte repetir,
+  generarte un ejercicio de refuerzo, o explicarte el concepto de otra
+  forma si ves que no lo captaste.
+\end{enumerate}
+
+% ============================================================
+%  2. RESULTADO DE IA
+% ============================================================
+\newpage
+\section{Qué hace la IA en este proyecto}
+
+Según el alcance del Summer Camp, la IA tenía que ser el motor real de
+la solución, no un adorno. En este proyecto la IA cumple, de hecho, con
+\textbf{dos} de los resultados válidos al mismo tiempo:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Personalización:} el contenido y el ritmo se adaptan a
+  cada persona. Si dominas algo, avanzas; si te cuesta, el sistema se
+  detiene, te refuerza, o te explica el concepto de otra manera.
+  \item \textbf{Automatización:} después de cada intento, el sistema
+  decide solo qué sigue --- sin que nadie tenga que revisarlo a mano ---
+  y hasta genera ejercicios nuevos cuando hace falta.
+\end{itemize}
+
+Vale la pena aclarar por qué esto no es ``un chatbot pegado a un
+formulario''. La diferencia está en qué se hace con la respuesta de la
+IA: en vez de mostrarte un texto para que lo leas, el sistema le pide a
+la IA que analice tu código y devuelva un resultado \textit{con
+estructura} (un JSON con puntajes), y ese resultado alimenta
+directamente a otro modelo que toma las decisiones. Es decir, la salida
+de la IA no es el producto final que ves --- es un dato interno que
+mueve toda la maquinaria. Por eso decimos que la IA es el núcleo
+computacional, y no un extra.
+
+% ============================================================
+%  3. ARQUITECTURA
+% ============================================================
+\section{Arquitectura de Implementación}
+
+\subsection{Cómo fluyen los datos}
+Cada vez que envías una solución, pasa lo siguiente, en orden:
+
+\begin{enumerate}[leftmargin=*]
+  \item Escribes tu código para el ejercicio y le das a enviar.
+  \item El \textbf{sandbox} lo ejecuta de verdad --- compila C con
+  \texttt{gcc}, Java con \texttt{javac}, y corre las consultas SQL
+  sobre una base de datos SQLite real --- para ver si funciona.
+  \item El \textbf{LLM} (puede ser Groq, Anthropic o Gemini, se pueden
+  intercambiar) lee tu código y clasifica qué tan bien dominas cada
+  concepto, devolviéndolo como JSON.
+  \item El \textbf{modelo BKT} toma ese resultado y actualiza su
+  estimación de cuánto dominas el concepto.
+  \item El \textbf{recomendador} mira esa estimación y decide qué
+  sigue: avanzarte, hacerte repetir, generarte un ejercicio de refuerzo
+  o reforzar el concepto más adelante.
+\end{enumerate}
+
+\captura{img/arquitectura.png}{Arquitectura del motor de IA: flujo desde el envío del estudiante hasta la decisión del sistema.}
+
+\subsection{Los cuatro lenguajes y sus referencias}
+Elegí cuatro lenguajes a propósito, porque cada uno representa una forma
+distinta de pensar la programación, y entre todos obligan al sistema a
+demostrar que funciona en escenarios muy diferentes:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Python} --- dinámico y flexible, ideal para empezar. La
+  currícula de este mundo se apoya en el enfoque para principiantes de
+  Sweigart~\cite{sweigart}, que construye los fundamentos sin dar nada
+  por sentado.
+  \item \textbf{C} --- de bajo nivel, con manejo manual de memoria y
+  punteros. Aquí la referencia es el clásico de Kernighan y
+  Ritchie~\cite{kr}, escrito por los propios creadores del lenguaje.
+  \item \textbf{Java} --- orientado a objetos y de tipado estático. Para
+  este mundo tomé como guía el enfoque didáctico de \textit{Head First
+  Java}~\cite{headfirst}, pensado para que los conceptos de POO
+  ``entren'' de verdad.
+  \item \textbf{SQL} --- declarativo, distinto a todos los demás: no
+  describes \textit{cómo} hacer algo, sino \textit{qué} quieres
+  obtener. La referencia es el libro de Beaulieu~\cite{beaulieu}, un
+  estándar para aprender consultas desde cero.
+\end{itemize}
+
+\subsection{Componentes técnicos}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}p{4cm}p{9cm}@{}}
+\toprule
+\textbf{Módulo} & \textbf{Responsabilidad} \\
+\midrule
+\texttt{content/*.json} & Currícula: teoría, lecciones, ejercicios,
+tests y soluciones (32 niveles). \\
+\texttt{sandbox.py} & Ejecuta y verifica la solución del estudiante,
+con una estrategia por lenguaje. \\
+\texttt{llm\_judge.py} & \textbf{Núcleo de IA.} Llama al LLM para
+clasificar el dominio conceptual en JSON. \\
+\texttt{mastery.py} & Modelo BKT: mantiene P(dominio) por concepto. \\
+\texttt{recommender.py} & Motor de decisión sobre la siguiente
+acción. \\
+\texttt{exercise\_generator.py} & Genera ejercicios remediales con IA. \\
+\texttt{app.py} & Interfaz visual (Streamlit). \\
+\bottomrule
+\end{tabular}
+\caption{Módulos principales del sistema.}
+\end{table}
+
+\subsection{Herramientas y tecnologías utilizadas}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Lenguaje base:} Python 3.
+  \item \textbf{Interfaz:} Streamlit.
+  \item \textbf{Modelo de dominio:} Bayesian Knowledge Tracing (BKT),
+  implementación propia.
+  \item \textbf{Proveedores de LLM (intercambiables):} Groq, Anthropic
+  y Google AI Studio (Gemini).
+  \item \textbf{Ejecución de código:} \texttt{gcc} (C),
+  \texttt{javac}/\texttt{java} (Java), \texttt{sqlite3} (SQL),
+  intérprete de Python.
+  \item \textbf{Control de versiones:} Git y GitHub.
+\end{itemize}
+
+% ============================================================
+%  4. SISTEMA DE APRENDIZAJE (3 AYUDAS)
+% ============================================================
+\section{Sistema de Aprendizaje Progresivo}
+
+Más allá de evaluar, el sistema está diseñado para \textbf{enseñar} a
+alguien sin conocimiento previo. Cada nivel ofrece tres niveles de
+ayuda, de menor a mayor grado de asistencia, para que el estudiante
+recurra a cada uno solo cuando lo necesite. Dos de estas tres ayudas
+usan la IA en tiempo real, reforzando el criterio de
+\textbf{Personalización}.
+
+\subsection{Ayuda 1: Lección completa (contenido estático)}
+Cada uno de los 32 niveles incluye una lección escrita para
+principiantes totales: una frase-resumen inicial (``En una frase:
+\ldots''), una explicación con analogía de la vida real, y un ejemplo
+resuelto \textit{distinto} al ejercicio a resolver (para no revelar la
+respuesta).
+
+\captura{img/leccion.png}{Lección completa desplegada: frase-resumen (``En una frase\ldots''), explicación con analogía y ejemplo resuelto, todo para principiantes sin conocimiento previo.}
+
+\subsection{Ayuda 2: Pista paso a paso (IA en tiempo real)}
+Si el estudiante está atascado, un botón solicita a la IA una pista de
+razonamiento --- que guía sin revelar el código. El prompt de sistema
+que fuerza este comportamiento es:
+
+\begin{lstlisting}[language=Python, caption={Prompt de la pista (src/llm\_judge.py)}]
+HINT_SYSTEM_PROMPT = """Eres un tutor de programacion ayudando a un
+estudiante principiante que esta atascado en un ejercicio. Te daran el
+enunciado del ejercicio y el codigo base (sin resolver).
+
+Tu tarea es dar una PISTA en pasos de razonamiento -- NUNCA escribas el
+codigo completo de la solucion ni la linea exacta que hay que escribir.
+Divide el problema en 3 a 5 pasos de pensamiento (que revisar primero,
+que estructura de control conviene usar, que caso especial no hay que
+olvidar), en lenguaje simple para alguien sin experiencia previa.
+
+Responde en espanol, en texto plano, con los pasos numerados, sin
+codigo completo."""
+\end{lstlisting}
+
+\captura{img/pista.png}{Ejecución real del prompt de la pista: la IA (Gemini) genera pasos de razonamiento para el ejercicio, sin escribir el código de la solución.}
+
+\subsection{Ayuda 3: Solución paso a paso (solucionario detallado)}
+Como último recurso, el estudiante puede abrir la solución completa del
+ejercicio, explicada \textbf{símbolo por símbolo} (qué hace cada
+\texttt{\&}, cada \texttt{;}, cada comilla, cada \texttt{return}). Está
+pensada para depurar el propio intento cuando falla por un detalle
+mínimo de sintaxis, no para copiar.
+
+\captura{img/solucion.png}{Solución paso a paso desplegada: el código de la solución seguido de la explicación detallada, símbolo por símbolo.}
+
+\subsection{Re-explicación adaptativa (IA en tiempo real)}
+Adicionalmente, un botón permite pedirle a la IA que re-explique el
+concepto de una forma \textit{completamente distinta} si la explicación
+original no se entendió. El prompt correspondiente:
+
+\begin{lstlisting}[language=Python, caption={Prompt de re-explicación (src/llm\_judge.py)}]
+REEXPLAIN_SYSTEM_PROMPT = """Eres un profesor paciente que explica
+fundamentos de programacion a alguien que nunca ha programado antes.
+Se te dara un concepto y su explicacion actual, que la persona NO
+entendio. Tu trabajo es explicarlo de nuevo, de una forma COMPLETAMENTE
+DISTINTA a la explicacion original -- usa una analogia diferente, un
+ejemplo de la vida cotidiana distinto, y un lenguaje todavia mas
+simple. Maximo 3 parrafos cortos. Responde en espanol, en texto plano."""
+\end{lstlisting}
+
+\captura{img/reexplicacion.png}{Ejecución real del prompt de re-explicación: la IA explica el mismo concepto con una analogía completamente distinta (notas adhesivas en un refrigerador).}
+
+Este sistema de tres ayudas fue una decisión de diseño posterior a la
+versión inicial: tras probar el prototipo, se identificó que un tutor
+que solo evalúa no sirve para \textit{aprender} desde cero, así que se
+añadió contenido pedagógico progresivo y dos usos adicionales de IA en
+tiempo real (pista y re-explicación).
+
+% ============================================================
+%  5. EVIDENCIA: EJECUCION Y PROMPTS
+% ============================================================
+\section{Evidencia de Ejecución}
+
+\subsection{El programa en ejecución}
+La siguiente captura muestra la aplicación arrancando, con el mapa de
+niveles de un mundo (lenguaje) y la barra lateral de configuración.
+
+\captura{img/arranque.png}{La aplicación en ejecución: mapa de niveles del mundo seleccionado y barra lateral de configuración (proveedor de IA, modelo, usuario).}
+
+\captura{img/inicio_c.png}{Vista inicial de un mundo (C): la teoría del nivel, la lección desplegable, los botones de ayuda y el enunciado del ejercicio, tal como los ve el estudiante al empezar.}
+
+\subsection{Verificación de los 4 lenguajes con análisis real de IA}
+Cada uno de los cuatro lenguajes fue probado enviando una solución y
+confirmando dos cosas: que los tests pasan (``Tests superados: 100\%'')
+y que la retroalimentación proviene de la IA en tiempo real (etiqueta
+``fuente: llm''). Esto verifica de extremo a extremo tanto el
+\textbf{sandbox} (que compila/ejecuta el código real) como el
+\textbf{núcleo de IA}.
+
+\captura{img/py_llm.png}{PYTHON: ejercicio resuelto, tests superados y retroalimentación con ``fuente: llm''.}
+
+\captura{img/c_llm.png}{C: ejercicio resuelto y verificado (compilado con gcc real), con retroalimentación de la IA.}
+
+\captura{img/java_llm.png}{JAVA: ejercicio resuelto y verificado (compilado con javac real), con retroalimentación de la IA.}
+
+\captura{img/sql_llm.png}{SQL: consulta resuelta y verificada (ejecutada sobre SQLite real), con retroalimentación de la IA.}
+
+\subsection{El prompt de sistema (núcleo de IA)}
+El siguiente es el mensaje fijo que se envía al LLM antes del código
+del estudiante. Obliga al modelo a responder únicamente en formato
+JSON estructurado, lo que permite integrar su salida directamente en
+la lógica del programa (a diferencia de un chatbot que respondería en
+texto libre).
+
+\begin{lstlisting}[language=Python, caption={Prompt de sistema del evaluador (src/llm\_judge.py)}]
+JUDGE_SYSTEM_PROMPT = """Eres un evaluador tecnico de codigo para
+una plataforma educativa de fundamentos de programacion. Recibiras:
+el enunciado de un ejercicio, los conceptos que evalua, y el codigo
+que un estudiante escribio como solucion.
+
+Tu tarea es analizar el CODIGO EN SI (no solo si el resultado es
+correcto) y devolver UNICAMENTE un JSON valido con esta forma exacta:
+
+{
+  "concept_scores": {"<concepto>": <float 0.0-1.0>},
+  "detected_issues": ["<descripcion de un error detectado>"],
+  "feedback": "<1-2 frases de retroalimentacion, en espanol>"
+}
+"""
+\end{lstlisting}
+
+% ============================================================
+%  5. USO DE IA COMO COPILOTO
+% ============================================================
+\section{Uso de la IA como Copiloto (Trazabilidad)}
+
+Conforme a los requisitos de documentación del Summer Camp, se
+registra el uso de IA como copiloto durante el desarrollo.
+
+\subsection{Distinción importante}
+Deben distinguirse dos usos de IA en este proyecto:
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{IA como copiloto de desarrollo:} la herramienta que
+  ayudó a \textit{construir} el proyecto (esta sección). Es análoga a
+  usar un editor de código o un compilador.
+  \item \textbf{IA en tiempo de ejecución:} la que la \textit{propia
+  aplicación} usa cada vez que un estudiante resuelve un ejercicio
+  (Groq/Gemini/Anthropic). Esta es el núcleo computacional exigido por
+  la rúbrica.
+\end{enumerate}
+
+\subsection{Herramienta de copiloto utilizada}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}p{4cm}p{9cm}@{}}
+\toprule
+\textbf{Herramienta} & \textbf{Uso} \\
+\midrule
+Claude (Anthropic) & Diseño de arquitectura, generación del esqueleto
+de código (motor BKT, sandbox, integración LLM, recomendador),
+currícula de los 32 niveles, depuración de la conexión con proveedores
+de IA, y apoyo en la configuración de Git/GitHub. \\
+OpenAI Tokenizer & Herramienta de análisis de tokens vista en clase;
+usada como apoyo conceptual para entender el consumo de tokens y el
+comportamiento de los modelos ``razonadores''. \\
+\bottomrule
+\end{tabular}
+\caption{Herramientas de IA usadas como copiloto de desarrollo.}
+\end{table}
+
+\subsection{Modelos usados en tiempo de ejecución}
+El sistema soporta tres proveedores intercambiables. Durante las
+pruebas se verificó su funcionamiento con Google AI Studio (Gemini,
+modelo \texttt{gemini-3.6-flash}), confirmando análisis conceptual
+real y específico sobre el código del estudiante.
+
+\subsection{Nota sobre depuración de proveedores}
+Durante el desarrollo se probaron los tres proveedores con resultados
+distintos, documentados como parte del proceso de ingeniería:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Groq:} la conexión externa funcionaba (verificado con
+  \texttt{curl}), pero fallaba de forma intermitente dentro de la
+  aplicación. Se identificó que el modelo \texttt{gpt-oss-120b} es un
+  modelo ``razonador'' que consume parte del límite de tokens en
+  razonamiento interno; se ajustó \texttt{max\_tokens} en
+  consecuencia.
+  \item \textbf{Gemini:} funcionando y verificado \textit{end-to-end}.
+\end{itemize}
+El diseño con proveedor intercambiable permitió que un fallo de
+conectividad con un proveedor no bloqueara el proyecto.
+
+% ============================================================
+%  COMO EJECUTAR
+% ============================================================
+\section{Cómo Ejecutar el Proyecto}
+
+El proyecto es multiplataforma (Windows, macOS o Linux). No requiere
+una máquina virtual --- esta se usó únicamente en el entorno de
+desarrollo del autor.
+
+\subsection{Requisitos}
+\begin{itemize}[leftmargin=*]
+  \item Python 3 instalado.
+  \item Una API key de un proveedor de IA (Groq, Anthropic o Google AI
+  Studio; todos tienen capa gratuita).
+  \item Para el mundo C: el compilador \texttt{gcc}. Para el mundo
+  Java: el JDK completo (\texttt{javac}). Python y SQL no requieren
+  nada adicional.
+\end{itemize}
+
+\subsection{Instalación y ejecución}
+\begin{lstlisting}[language=bash, caption={Pasos para ejecutar el proyecto}]
+# 1. Clonar el repositorio
+git clone https://github.com/Kaiman-p/tutor-adaptativo-ia.git
+cd tutor-adaptativo-ia
+
+# 2. Instalar dependencias
+pip install -r requirements.txt
+
+# 3. Ejecutar la aplicacion
+streamlit run src/app.py
+\end{lstlisting}
+
+La aplicación se abre en el navegador (\texttt{localhost:8501}). En la
+barra lateral se configura el proveedor de IA, el modelo y la API key.
+Sin API key, el sistema funciona en modo \textit{fallback} (solo
+verificación de tests, sin análisis conceptual de IA).
+
+% ============================================================
+%  6. RESULTADOS Y VERIFICACION
+% ============================================================
+\section{Resultados y Verificación}
+
+Los 32 niveles (4 lenguajes $\times$ 8 niveles) fueron verificados con
+ejecución real, no solo revisados manualmente:
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Python, C, SQL:} las soluciones de referencia se
+  probaron contra los tests reales de cada nivel mediante un script
+  automatizado.
+  \item \textbf{Java:} compilado y ejecutado con \texttt{javac} y
+  \texttt{java} reales en la máquina del autor.
+  \item \textbf{Interfaz completa:} probada con el framework oficial
+  de testing de Streamlit (\texttt{AppTest}), simulando interacciones
+  reales.
+\end{itemize}
+
+% ============================================================
+%  LIMITACIONES Y TRABAJO FUTURO
+% ============================================================
+\section{Limitaciones y Trabajo Futuro}
+
+Como todo prototipo desarrollado en un tiempo acotado, el sistema tiene
+limitaciones conocidas que se documentan con honestidad:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{No detecta copia directa de la solución.} El sistema
+  mide corrección y comprensión conceptual (vía el LLM), pero no puede
+  distinguir si el estudiante razonó la respuesta o copió la solución
+  mostrada en la ayuda ``Ver solución paso a paso''. El diseño confía
+  en un uso progresivo de las ayudas, como cualquier libro de texto con
+  soluciones al final.
+  \item \textbf{Es monousuario.} El progreso se guarda por nombre de
+  usuario en archivos locales; no hay un sistema de cuentas real. Dos
+  personas con el mismo nombre compartirían progreso.
+  \item \textbf{Dependencia de un servicio externo de IA.} El análisis
+  conceptual requiere conexión a un proveedor de LLM. Sin conexión, el
+  sistema se degrada al modo \textit{fallback} (funcional, pero sin
+  análisis conceptual).
+  \item \textbf{Cobertura de lenguajes.} Se implementaron 4 lenguajes;
+  extender a más requiere crear la currícula correspondiente (el motor
+  ya está diseñado para soportarlo sin cambios estructurales).
+\end{itemize}
+
+\subsection{Trabajo futuro}
+\begin{itemize}[leftmargin=*]
+  \item Extender a más lenguajes sobre el mismo motor genérico.
+  \item Añadir un sistema de cuentas real para uso multiusuario.
+  \item Incorporar una interfaz visual más rica (animaciones, sonidos)
+  al estilo de un videojuego completo.
+  \item Explorar detección de patrones de copia para reforzar la
+  integridad del aprendizaje.
+\end{itemize}
+
+% ============================================================
+%  7. CONCLUSIONES
+% ============================================================
+\section{Conclusiones}
+
+El proyecto demuestra que la IA puede ser el núcleo computacional real
+de una herramienta educativa, no un componente decorativo. La
+combinación de un LLM (para análisis conceptual del código) con un
+modelo probabilístico clásico (BKT, para modelar el dominio) permite
+tomar decisiones pedagógicas autónomas y personalizadas, cumpliendo
+simultáneamente los resultados de Personalización y Automatización
+definidos en el alcance del Summer Camp.
+
+El diseño modular y con proveedor de IA intercambiable demostró su
+valor durante el desarrollo, al permitir sortear problemas de
+conectividad sin rediseñar el sistema.
+
+% ============================================================
+%  DECLARACION DE USO DE IA
+% ============================================================
+\vspace{1cm}
+\noindent\rule{\textwidth}{0.4pt}
+
+\subsection*{Declaración de uso de Inteligencia Artificial}
+Este proyecto fue desarrollado con el apoyo de \textbf{Claude
+(Anthropic)} como herramienta de copiloto de programación, conforme a
+los lineamientos del Summer Camp que permiten y exigen documentar el
+uso de IA. El autor revisó, probó y comprende cada componente del
+sistema, y tomó las decisiones de diseño del proyecto (selección de
+lenguajes, elección del modelo de dominio, proveedores de IA, y
+enfoque pedagógico). El detalle completo de las sesiones de trabajo
+con IA se encuentra en el archivo \texttt{docs/registro\_prompts.md}
+del repositorio.
+
+% ============================================================
+%  BIBLIOGRAFIA
+% ============================================================
+\newpage
+\begin{thebibliography}{9}
+
+\bibitem{kr}
+Kernighan, B. W. \& Ritchie, D. M. (1988).
+\textit{The C Programming Language} (2\textsuperscript{a} ed.).
+Prentice Hall. ISBN 978-0131103627. Disponible en:
+\url{https://seriouscomputerist.atariverse.com/media/pdf/book/C\%20Programming\%20Language\%20-\%202nd\%20Edition\%20(OCR).pdf}.
+
+\bibitem{sweigart}
+Sweigart, A. (2020).
+\textit{Automate the Boring Stuff with Python} (2\textsuperscript{a} ed.).
+No Starch Press. Disponible en línea:
+\url{https://automatetheboringstuff.com/}.
+
+\bibitem{headfirst}
+Sierra, K. \& Bates, B. (2005).
+\textit{Head First Java} (2\textsuperscript{a} ed.).
+O'Reilly Media. ISBN 978-0596009205. Disponible en:
+\url{https://archive.org/details/HeadFirstJava2ndEdition_201511}.
+
+\bibitem{beaulieu}
+Beaulieu, A. (2020).
+\textit{Learning SQL} (3\textsuperscript{a} ed.).
+O'Reilly Media. ISBN 978-1492057611. Disponible en:
+\url{https://archive.org/details/learningsql0000beau_s2h5}.
+
+\end{thebibliography}
+
+\end{document}
