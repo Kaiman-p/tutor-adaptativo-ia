@@ -66,12 +66,37 @@ def save_student_model(student: str, language: str, model: StudentModel):
     model.save(save_path)
 
 
+def show_token_usage(usage):
+    """Muestra el conteo de tokens de una respuesta real de IA, si el
+    proveedor lo expuso -- evidencia adicional de que cada llamada es
+    real y no simulada."""
+    if usage:
+        st.caption(
+            f"🔢 Tokens: entrada {usage['input_tokens']} + salida "
+            f"{usage['output_tokens']} = {usage['total_tokens']} total"
+        )
+
+
 # --------------------------------------------------------------------------
 # Sidebar: identidad del estudiante + configuracion de IA
 # --------------------------------------------------------------------------
 
+def get_secret(key: str, default=None):
+    """
+    Lee un valor desde .streamlit/secrets.toml si existe (para precargar
+    usuario/proveedor/API key y no tener que escribirlos en vivo durante
+    una demo o video). Si el archivo no existe, cae al valor por defecto
+    sin romper nada -- asi el proyecto sigue funcionando normal para
+    cualquiera que lo descargue sin ese archivo.
+    """
+    try:
+        return st.secrets.get(key, default)
+    except Exception:
+        return default
+
+
 st.sidebar.title("🎮 Tutor Adaptativo")
-student = st.sidebar.text_input("Tu nombre / usuario", value="default")
+student = get_secret("default_username", "default")
 
 languages = list_languages()
 lang_labels = {code: name for code, name in languages}
@@ -81,7 +106,10 @@ selected_lang = st.sidebar.selectbox(
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Configuración de IA")
-provider = st.sidebar.selectbox("Proveedor del LLM", ["groq", "anthropic", "gemini"])
+_provider_options = ["groq", "anthropic", "gemini"]
+_default_provider = get_secret("default_provider", "groq")
+_default_provider_index = _provider_options.index(_default_provider) if _default_provider in _provider_options else 0
+provider = st.sidebar.selectbox("Proveedor del LLM", _provider_options, index=_default_provider_index)
 
 KEY_LABELS = {
     "anthropic": "ANTHROPIC_API_KEY",
@@ -94,12 +122,22 @@ DEFAULT_MODELS = {
     "groq": "openai/gpt-oss-120b",
 }
 
-api_key = st.sidebar.text_input(
-    KEY_LABELS[provider],
-    type="password",
-    help="Sin esto, el sistema funciona en modo fallback (solo revisa si pasaron los tests, sin analisis conceptual real).",
-)
-model_name = st.sidebar.text_input("Modelo", value=DEFAULT_MODELS[provider])
+_secret_key_value = get_secret(KEY_LABELS[provider], "")
+if _secret_key_value:
+    # Key ya configurada localmente (secrets.toml) -- no se muestra el
+    # campo en absoluto, para que nadie vea ni el campo ni la key durante
+    # una demo o video. El sistema la sigue usando internamente igual.
+    api_key = _secret_key_value
+else:
+    # Sin secrets.toml (ej. alguien mas descarga el proyecto): se muestra
+    # el campo normal para que puedan pegar su propia key.
+    api_key = st.sidebar.text_input(
+        KEY_LABELS[provider],
+        type="password",
+        value="",
+        help="Sin esto, el sistema funciona en modo fallback (solo revisa si pasaron los tests, sin analisis conceptual real).",
+    )
+model_name = st.sidebar.text_input("Modelo", value=get_secret("default_model", DEFAULT_MODELS[provider]))
 
 os.environ["LLM_PROVIDER"] = provider
 if api_key:
@@ -132,6 +170,18 @@ if concepts_seen:
         st.sidebar.progress(model.get_mastery(c), text=f"{c} — {model.get_mastery(c):.0%}")
 else:
     st.sidebar.caption("Aun no hay progreso registrado en este mundo.")
+
+st.sidebar.markdown("---")
+if st.sidebar.button("🔄 Reiniciar progreso de este mundo"):
+    save_path = os.path.join(SAVE_DIR, f"{student}_{selected_lang}.json")
+    if os.path.exists(save_path):
+        os.remove(save_path)
+    model_key = f"model_{student}_{selected_lang}"
+    st.session_state.pop(model_key, None)
+    st.session_state.pop("selected_level_id", None)
+    for k in [k for k in st.session_state if k.startswith(("result_", "celebrated_", "hint_", "reexplain_"))]:
+        del st.session_state[k]
+    st.rerun()
 
 # --------------------------------------------------------------------------
 # Mapa de niveles
@@ -183,6 +233,8 @@ else:
             code_lang = "sql" if selected_lang == "sql" else selected_lang
             st.code(lesson["ejemplo_resuelto"]["codigo"], language=code_lang)
             st.markdown(lesson["ejemplo_resuelto"]["explicacion_paso_a_paso"])
+            if lesson.get("para_profundizar"):
+                st.caption(f"📚 Para profundizar: {lesson['para_profundizar']}")
 
         reexplain_key = f"reexplain_{selected_level['id']}"
         if st.button("🤔 No entendí, explícamelo diferente", key=f"btn_reexplain_{selected_level['id']}"):
@@ -195,6 +247,8 @@ else:
             st.info(r["texto"])
             if r.get("_source") == "fallback":
                 st.caption("(No se pudo consultar la IA en este momento, ver mensaje arriba)")
+            else:
+                show_token_usage(r.get("_usage"))
 
     st.info(selected_level["exercise"]["prompt"])
 
@@ -204,6 +258,8 @@ else:
             st.session_state[hint_key] = generate_hint(selected_level, selected_lang)
     if hint_key in st.session_state:
         st.warning(st.session_state[hint_key]["texto"])
+        if st.session_state[hint_key].get("_source") == "llm":
+            show_token_usage(st.session_state[hint_key].get("_usage"))
 
     solucion = selected_level.get("solucion_paso_a_paso")
     if solucion:
@@ -282,6 +338,8 @@ else:
         if judgment.get("_source") == "fallback" and judgment.get("_error"):
             with st.expander("Detalle técnico del error (para depuración)"):
                 st.code(judgment["_error"])
+        else:
+            show_token_usage(judgment.get("_usage"))
 
         st.markdown(f"**Decisión del sistema:** `{decision['action']}`")
         st.caption(decision["reason"])

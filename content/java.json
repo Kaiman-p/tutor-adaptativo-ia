@@ -14,7 +14,8 @@
           "descripcion": "Declaremos variables de distintos tipos e imprimamos sus valores.",
           "codigo": "public class Main {\n    public static void main(String[] args) {\n        int edad = 15;\n        double estatura = 1.65;\n        String nombre = \"Sofia\";\n        boolean esEstudiante = true;\n\n        System.out.println(nombre + \" tiene \" + edad + \" anios.\");\n        System.out.println(\"Estatura: \" + estatura);\n        System.out.println(\"Es estudiante: \" + esEstudiante);\n    }\n}",
           "explicacion_paso_a_paso": "Cada variable declara su tipo antes del nombre: 'int edad', 'double estatura', 'String nombre' (con S mayuscula, porque en Java String es una clase, no un tipo primitivo como int).\n'System.out.println(...)' es como el 'print' de Python, pero con este nombre mas largo (System = el sistema, out = salida, println = imprimir linea).\nEl simbolo '+' entre texto y variables las UNE (concatena) en un solo mensaje -- Java convierte automaticamente los numeros a texto para poder pegarlos."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Escribe un metodo static double calcularIMC(double peso, double altura) que retorne el Indice de Masa Corporal.",
@@ -39,7 +40,8 @@
           "descripcion": "Revisemos si un numero es par o impar, y contemos del 1 al 5.",
           "codigo": "public class Main {\n    public static void main(String[] args) {\n        int numero = 7;\n\n        if (numero % 2 == 0) {\n            System.out.println(\"Es par\");\n        } else {\n            System.out.println(\"Es impar\");\n        }\n\n        for (int i = 1; i <= 5; i++) {\n            System.out.println(\"Contando: \" + i);\n        }\n    }\n}",
           "explicacion_paso_a_paso": "'numero % 2 == 0' revisa si el residuo de dividir entre 2 es cero (par). Como 7 % 2 es 1, entra al 'else' y muestra 'Es impar'.\nEl for declara 'int i = 0' (con tipo explicito), sigue mientras i sea menor o igual a 5, y aumenta i en 1 cada vuelta -- imprime 5 lineas, del 1 al 5."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Escribe un metodo static boolean esPrimo(int n) que retorne true si n es primo.",
@@ -64,7 +66,8 @@
           "descripcion": "Creemos dos versiones de un metodo 'describir', una para texto y otra para numeros.",
           "codigo": "public class Main {\n    public static void describir(String texto) {\n        System.out.println(\"Texto: \" + texto);\n    }\n\n    public static void describir(int numero) {\n        System.out.println(\"Numero: \" + numero);\n    }\n\n    public static void main(String[] args) {\n        describir(\"Hola\");\n        describir(42);\n    }\n}",
           "explicacion_paso_a_paso": "Hay DOS metodos llamados 'describir', pero uno recibe un String y el otro un int -- firmas distintas.\n'describir(\"Hola\")' -- como \"Hola\" es texto, Java usa automaticamente la version que recibe String.\n'describir(42)' -- como 42 es un numero, usa la version que recibe int.\nJava decide cual usar SOLO mirando el tipo del argumento que le mandaste, sin que tu tengas que especificarlo."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Escribe dos metodos sobrecargados llamados sumar: uno que reciba dos int y otro que reciba dos double, ambos retornando la suma.",
@@ -89,7 +92,8 @@
           "descripcion": "Comparemos un array fijo con un ArrayList que crece dinamicamente.",
           "codigo": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        int[] fijos = new int[3];\n        fijos[0] = 10;\n        fijos[1] = 20;\n        fijos[2] = 30;\n\n        ArrayList<Integer> dinamica = new ArrayList<>();\n        dinamica.add(10);\n        dinamica.add(20);\n        dinamica.add(30);\n        dinamica.add(40);  // el array fijo no podria crecer asi\n\n        System.out.println(\"Array fijo, tamanio: \" + fijos.length);\n        System.out.println(\"ArrayList, tamanio: \" + dinamica.size());\n    }\n}",
           "explicacion_paso_a_paso": "'fijos' se creo con espacio para exactamente 3 enteros -- no podriamos agregar un cuarto sin crear un array nuevo.\n'dinamica' empieza vacia y crece con cada '.add()' -- pudimos meter un cuarto elemento sin ningun problema.\n'.length' (sin parentesis) da el tamanio de un array normal. '.size()' (con parentesis, porque es un metodo) da el tamanio de un ArrayList -- son formas distintas de preguntar 'cuantos elementos hay', porque son estructuras distintas."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Escribe un metodo static int sumarArreglo(int[] arr) que retorne la suma de todos los elementos.",
@@ -114,7 +118,8 @@
           "descripcion": "Creemos una clase Perro con nombre, y un metodo para que ladre.",
           "codigo": "public class Main {\n    static class Perro {\n        String nombre;\n\n        public Perro(String nombre) {\n            this.nombre = nombre;\n        }\n\n        public String ladrar() {\n            return nombre + \" dice: Guau!\";\n        }\n    }\n\n    public static void main(String[] args) {\n        Perro miPerro = new Perro(\"Rex\");\n        System.out.println(miPerro.ladrar());\n    }\n}",
           "explicacion_paso_a_paso": "'class Perro { String nombre; ... }' define el molde con un campo (nombre) y dos metodos (el constructor y ladrar).\n'public Perro(String nombre)' es el constructor -- se llama automaticamente con 'new Perro(\"Rex\")'.\n'this.nombre = nombre;' significa 'el campo nombre DE ESTE objeto = el parametro que me pasaron' -- sin el 'this', Java se confundiria entre las dos cosas que se llaman igual.\n'miPerro.ladrar()' le pide a ESE perro especifico que ejecute su metodo, usando su propio nombre guardado."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Crea una clase CuentaBancaria con un campo saldo, un constructor CuentaBancaria(double saldoInicial), y un metodo double consultarSaldo().",
@@ -139,7 +144,8 @@
           "descripcion": "Creemos una clase Vehiculo y una subclase Auto que sobreescribe el sonido.",
           "codigo": "public class Main {\n    static class Vehiculo {\n        String hacerSonido() {\n            return \"Sonido generico de vehiculo\";\n        }\n    }\n\n    static class Auto extends Vehiculo {\n        @Override\n        String hacerSonido() {\n            return \"Bip bip!\";\n        }\n    }\n\n    public static void main(String[] args) {\n        Vehiculo v = new Auto();\n        System.out.println(v.hacerSonido());\n    }\n}",
           "explicacion_paso_a_paso": "'Auto extends Vehiculo' hace que Auto herede de Vehiculo.\n'@Override' avisa que 'hacerSonido()' en Auto reemplaza intencionalmente al de Vehiculo (buena practica, ayuda a detectar errores de tipeo).\nAunque la variable 'v' esta declarada como tipo 'Vehiculo', el objeto REAL guardado adentro es un Auto -- por eso, al llamar 'v.hacerSonido()', se ejecuta la version de Auto (\"Bip bip!\"), no la generica del padre. Java decide esto mirando el tipo REAL del objeto, no el tipo de la variable."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Crea una clase Animal con metodo String hacerSonido() que retorne 'Sonido generico'. Crea una subclase Perro que sobreescriba hacerSonido() para retornar 'Guau'.",
@@ -164,7 +170,8 @@
           "descripcion": "Creemos una interface Figura, y dos clases distintas que la implementan.",
           "codigo": "public class Main {\n    interface Figura {\n        double area();\n    }\n\n    static class Cuadrado implements Figura {\n        double lado;\n        Cuadrado(double lado) { this.lado = lado; }\n        public double area() { return lado * lado; }\n    }\n\n    static class Circulo implements Figura {\n        double radio;\n        Circulo(double radio) { this.radio = radio; }\n        public double area() { return Math.PI * radio * radio; }\n    }\n\n    public static void main(String[] args) {\n        Figura[] figuras = { new Cuadrado(4), new Circulo(2) };\n        for (Figura f : figuras) {\n            System.out.printf(\"%.2f%n\", f.area());\n        }\n    }\n}",
           "explicacion_paso_a_paso": "'interface Figura { double area(); }' declara el contrato: cualquier Figura debe tener area().\nCuadrado y Circulo son MUY distintos internamente (uno usa lado, otro radio), pero ambos 'firman' Figura implementando su propia version de area().\n'Figura[] figuras = { new Cuadrado(4), new Circulo(2) };' crea un arreglo que mezcla ambos tipos, tratados uniformemente como Figura.\nEl for recorre el arreglo y llama 'f.area()' en cada uno -- Java ejecuta automaticamente la version correcta segun el tipo REAL de cada objeto (16.00 para el cuadrado, 12.57 para el circulo)."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Crea una interface Figura con el metodo double area(). Crea una clase Circulo que implemente Figura, con constructor Circulo(double radio) y area() = PI * radio^2.",
@@ -189,7 +196,8 @@
           "descripcion": "Protejamos una division para que no rompa el programa si el divisor es cero.",
           "codigo": "public class Main {\n    static String dividir(int a, int b) {\n        try {\n            int resultado = a / b;\n            return \"Resultado: \" + resultado;\n        } catch (ArithmeticException e) {\n            return \"Error: no se puede dividir entre cero\";\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(dividir(10, 2));\n        System.out.println(dividir(5, 0));\n    }\n}",
           "explicacion_paso_a_paso": "'a / b' con enteros, cuando b es 0, lanza una 'ArithmeticException' en Java (a diferencia de los decimales, donde daria 'Infinity').\nCon (10, 2), la division funciona normal y retorna 'Resultado: 5'.\nCon (5, 0), Java lanza la excepcion DENTRO del try, asi que salta inmediatamente al catch, que atrapa especificamente 'ArithmeticException' y retorna el mensaje de error -- el programa NO se rompe, sigue corriendo normalmente despues."
-        }
+        },
+        "para_profundizar": "Head First Java, de Sierra & Bates."
       },
       "exercise": {
         "prompt": "Escribe un metodo static String dividirSeguro(int a, int b) que retorne el resultado de a/b como String, o 'Error: division por cero' si b es 0, usando try/catch con ArithmeticException.",

@@ -56,7 +56,7 @@ def _build_user_prompt(level: dict, student_code: str, test_result: dict) -> str
     }, ensure_ascii=False)
 
 
-def _call_anthropic(system: str, user: str) -> str:
+def _call_anthropic(system: str, user: str):
     from anthropic import Anthropic  # pip install anthropic
     client = Anthropic()  # lee ANTHROPIC_API_KEY del entorno
     model = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5")
@@ -66,19 +66,37 @@ def _call_anthropic(system: str, user: str) -> str:
         system=system,
         messages=[{"role": "user", "content": user}],
     )
-    return resp.content[0].text
+    usage = None
+    try:
+        usage = {
+            "input_tokens": resp.usage.input_tokens,
+            "output_tokens": resp.usage.output_tokens,
+            "total_tokens": resp.usage.input_tokens + resp.usage.output_tokens,
+        }
+    except Exception:
+        pass
+    return resp.content[0].text, usage
 
 
-def _call_gemini(system: str, user: str) -> str:
+def _call_gemini(system: str, user: str):
     import google.generativeai as genai  # pip install google-generativeai
     genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
     model_name = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
     model = genai.GenerativeModel(model_name, system_instruction=system)
     resp = model.generate_content(user)
-    return resp.text
+    usage = None
+    try:
+        usage = {
+            "input_tokens": resp.usage_metadata.prompt_token_count,
+            "output_tokens": resp.usage_metadata.candidates_token_count,
+            "total_tokens": resp.usage_metadata.total_token_count,
+        }
+    except Exception:
+        pass
+    return resp.text, usage
 
 
-def _call_groq(system: str, user: str) -> str:
+def _call_groq(system: str, user: str):
     from groq import Groq  # pip install groq
     client = Groq(timeout=30.0)  # mas margen de tiempo, la VM puede ser mas lenta
     model = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
@@ -94,10 +112,25 @@ def _call_groq(system: str, user: str) -> str:
             {"role": "user", "content": user},
         ],
     )
-    return resp.choices[0].message.content
+    usage = None
+    try:
+        usage = {
+            "input_tokens": resp.usage.prompt_tokens,
+            "output_tokens": resp.usage.completion_tokens,
+            "total_tokens": resp.usage.total_tokens,
+        }
+    except Exception:
+        pass
+    return resp.choices[0].message.content, usage
 
 
-def _call_llm(system: str, user: str) -> str:
+def _call_llm(system: str, user: str):
+    """
+    Retorna (texto, usage) donde usage es un dict con input_tokens/
+    output_tokens/total_tokens, o None si el proveedor no lo expuso.
+    Se usa para mostrar el conteo de tokens de cada respuesta en la
+    interfaz, evidencia adicional de que cada llamada es real.
+    """
     # Se lee el proveedor en CADA llamada (no una sola vez al importar el
     # modulo) para que cambiarlo desde la barra lateral de app.py, en medio
     # de una sesion, tenga efecto inmediato sin reiniciar la app.
@@ -131,8 +164,8 @@ def reexplain_concept(language: str, concept: str, explicacion_actual: str) -> d
         "explicacion_que_no_entendio": explicacion_actual,
     }, ensure_ascii=False)
     try:
-        texto = _call_llm(REEXPLAIN_SYSTEM_PROMPT, user_prompt)
-        return {"texto": texto.strip(), "_source": "llm"}
+        texto, usage = _call_llm(REEXPLAIN_SYSTEM_PROMPT, user_prompt)
+        return {"texto": texto.strip(), "_source": "llm", "_usage": usage}
     except Exception as e:
         return {
             "texto": "No se pudo generar una nueva explicacion en este momento "
@@ -166,8 +199,8 @@ def generate_hint(level: dict, language: str) -> dict:
         "codigo_base": level["exercise"]["starter_code"],
     }, ensure_ascii=False)
     try:
-        texto = _call_llm(HINT_SYSTEM_PROMPT, user_prompt)
-        return {"texto": texto.strip(), "_source": "llm"}
+        texto, usage = _call_llm(HINT_SYSTEM_PROMPT, user_prompt)
+        return {"texto": texto.strip(), "_source": "llm", "_usage": usage}
     except Exception as e:
         return {
             "texto": "No se pudo generar una pista en este momento. Mientras tanto: "
@@ -193,10 +226,11 @@ def judge_submission(level: dict, student_code: str, test_result: dict) -> dict:
     """
     user_prompt = _build_user_prompt(level, student_code, test_result)
     try:
-        raw = _call_llm(JUDGE_SYSTEM_PROMPT, user_prompt)
+        raw, usage = _call_llm(JUDGE_SYSTEM_PROMPT, user_prompt)
         raw = raw.strip().strip("```json").strip("```").strip()
         parsed = json.loads(raw)
         parsed["_source"] = "llm"
+        parsed["_usage"] = usage
         return parsed
     except Exception as e:
         concept = level["concept"]

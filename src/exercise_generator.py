@@ -31,10 +31,11 @@ def generate_remedial_exercise(language: str, concept: str, previous_issues: lis
     }, ensure_ascii=False)
 
     try:
-        raw = _call_llm(GENERATOR_SYSTEM_PROMPT, user_prompt)
+        raw, usage = _call_llm(GENERATOR_SYSTEM_PROMPT, user_prompt)
         raw = raw.strip().strip("```json").strip("```").strip()
         parsed = json.loads(raw)
         parsed["_source"] = "llm_generated"
+        parsed["_usage"] = usage
         return parsed
     except Exception as e:
         return {

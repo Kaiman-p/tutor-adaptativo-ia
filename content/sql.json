@@ -16,7 +16,8 @@
           "descripcion": "Selecciona el nombre de los clientes de Guayaquil.",
           "codigo": "SELECT nombre FROM clientes WHERE ciudad = 'Guayaquil';",
           "explicacion_paso_a_paso": "'SELECT nombre' dice 'quiero ver solo la columna nombre' (no todas las columnas).\n'FROM clientes' dice 'de la tabla clientes'.\n'WHERE ciudad = 'Guayaquil'' filtra: de todas las filas, solo quedate con las que tengan 'Guayaquil' exactamente en la columna ciudad.\nEl resultado seria una sola fila: 'Luis Vega' (el unico cliente de Guayaquil en la tabla)."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el nombre y la ciudad de todos los clientes que viven en 'Quito'.",
@@ -54,7 +55,8 @@
           "descripcion": "Muestra los 2 clientes cuyo nombre viene primero en orden alfabetico.",
           "codigo": "SELECT nombre FROM clientes ORDER BY nombre ASC LIMIT 2;",
           "explicacion_paso_a_paso": "'ORDER BY nombre ASC' ordena todos los nombres alfabeticamente, de la A a la Z.\n'LIMIT 2' se queda solo con las primeras 2 filas de ese resultado ya ordenado.\nEntre 'Ana Torres', 'Luis Vega', 'Marta Ruiz', 'Pedro Sanchez', 'Sofia Leon', los dos primeros alfabeticamente son 'Ana Torres' y 'Luis Vega'."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el producto y monto de los 3 pedidos con mayor monto, ordenados de mayor a menor.",
@@ -92,7 +94,8 @@
           "descripcion": "Cuenta cuantos clientes hay en cada ciudad.",
           "codigo": "SELECT ciudad, COUNT(*) FROM clientes GROUP BY ciudad;",
           "explicacion_paso_a_paso": "'GROUP BY ciudad' separa a los clientes en montoncitos: uno para Quito, uno para Guayaquil, uno para Cuenca.\n'COUNT(*)' cuenta cuantas filas hay en CADA montoncito por separado (no el total de toda la tabla).\nResultado: Quito tiene 3 clientes (Ana, Marta, Sofia), Guayaquil tiene 1 (Luis), Cuenca tiene 1 (Pedro) -- una fila de resultado POR CADA grupo distinto."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne cliente_id y cuantos pedidos ha hecho cada cliente.",
@@ -134,7 +137,8 @@
           "descripcion": "Muestra el nombre del cliente y la ciudad, junto al producto de cada uno de sus pedidos.",
           "codigo": "SELECT clientes.nombre, clientes.ciudad, pedidos.producto\nFROM pedidos\nJOIN clientes ON pedidos.cliente_id = clientes.id\nWHERE clientes.ciudad = 'Quito';",
           "explicacion_paso_a_paso": "Primero se conectan pedidos con clientes usando 'pedidos.cliente_id = clientes.id' -- cada pedido queda emparejado con los datos de su cliente correspondiente.\nDespues del JOIN, ya se puede usar WHERE para filtrar sobre columnas de CUALQUIERA de las dos tablas, en este caso la ciudad (que solo existe en la tabla clientes).\nResultado: todas las filas de pedidos hechos por clientes de Quito, mostrando su nombre, ciudad y que compraron."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el nombre del cliente y el producto de cada pedido, uniendo clientes y pedidos.",
@@ -192,7 +196,8 @@
           "descripcion": "Muestra TODOS los clientes y el producto de su primer pedido (si tienen alguno).",
           "codigo": "SELECT clientes.nombre, pedidos.producto\nFROM clientes\nLEFT JOIN pedidos ON clientes.id = pedidos.cliente_id\nGROUP BY clientes.id;",
           "explicacion_paso_a_paso": "'clientes' es la tabla de la izquierda (va primero, en el FROM) -- TODOS sus clientes van a aparecer en el resultado, tengan pedidos o no.\n'LEFT JOIN pedidos ON ...' intenta conectar cada cliente con sus pedidos, pero si un cliente no tiene ninguno, sus columnas de pedidos.producto simplemente salen vacias (NULL) en vez de que el cliente desaparezca.\nEn este caso, 'Pedro Sanchez' (que no tiene pedidos en la tabla) SI aparece en el resultado, con producto en NULL/vacio -- algo que un JOIN normal jamas mostraria."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne el nombre de cada cliente y cuantos pedidos tiene, incluyendo clientes con 0 pedidos.",
@@ -238,7 +243,8 @@
           "descripcion": "Cuenta pedidos por cliente, pero quedate solo con los clientes que tienen MAS DE 1 pedido.",
           "codigo": "SELECT cliente_id, COUNT(*) as cantidad\nFROM pedidos\nGROUP BY cliente_id\nHAVING cantidad > 1;",
           "explicacion_paso_a_paso": "Primero se agrupan los pedidos por cliente_id, y se cuenta cuantos tiene cada uno.\n'HAVING cantidad > 1' se aplica DESPUES de ese conteo, descartando los grupos (clientes) que tengan 1 o menos pedidos.\nSi intentaras 'WHERE COUNT(*) > 1' en vez de HAVING, SQL te daria un error -- en el momento del WHERE, el conteo por grupo todavia no existe."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne cliente_id y su gasto total (SUM de monto), pero solo para clientes cuyo gasto total supera 500.",
@@ -276,7 +282,8 @@
           "descripcion": "Encuentra los pedidos cuyo monto es mayor al monto promedio de TODOS los pedidos.",
           "codigo": "SELECT producto, monto\nFROM pedidos\nWHERE monto > (SELECT AVG(monto) FROM pedidos);",
           "explicacion_paso_a_paso": "La parte entre parentesis, '(SELECT AVG(monto) FROM pedidos)', es la subconsulta -- se ejecuta PRIMERO y calcula un solo numero: el promedio de todos los montos.\nLa consulta de afuera usa ese numero calculado como si fuera un valor fijo, comparando cada pedido individual contra el.\nSi agregaras mas pedidos a la tabla manana, el promedio cambiaria automaticamente, y esta misma consulta seguiria dando el resultado correcto sin que tengas que tocarla."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Escribe una consulta que retorne cliente_id y gasto total, solo para clientes cuyo gasto total supera el PROMEDIO del gasto total de todos los clientes (calculado con una subconsulta, no con un numero fijo).",
@@ -314,7 +321,8 @@
           "descripcion": "Usa un CTE para calcular cuantos pedidos tiene cada cliente, y luego muestra solo los que tienen mas de 1.",
           "codigo": "WITH conteos AS (\n    SELECT cliente_id, COUNT(*) as cantidad\n    FROM pedidos\n    GROUP BY cliente_id\n)\nSELECT cliente_id, cantidad\nFROM conteos\nWHERE cantidad > 1;",
           "explicacion_paso_a_paso": "'WITH conteos AS (...)' calcula primero la tabla temporal 'conteos', con el conteo de pedidos por cliente -- este paso queda guardado con nombre, listo para usarse.\nLa consulta principal, despues, trata a 'conteos' como si fuera una tabla real: 'SELECT ... FROM conteos WHERE cantidad > 1'.\nNota que aqui SI podemos usar WHERE (no HAVING) sobre 'cantidad', porque para cuando llegamos a esa parte, 'conteos' ya es una tabla normal con una columna llamada cantidad -- el CTE ya hizo el trabajo pesado de agregacion antes."
-        }
+        },
+        "para_profundizar": "Learning SQL, de Alan Beaulieu."
       },
       "exercise": {
         "prompt": "Usando un CTE (WITH), calcula el gasto total por cliente y muestra solo cliente_id y total para los clientes cuyo gasto total supera 900.",

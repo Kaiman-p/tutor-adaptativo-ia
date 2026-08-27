@@ -14,7 +14,8 @@
           "descripcion": "Guardemos el nombre y la edad de una persona, y calculemos en cuantos anios cumplira 100 anios.",
           "codigo": "nombre = \"Sofia\"\nedad = 15\nanios_para_100 = 100 - edad\n\nprint(nombre)\nprint(edad)\nprint(anios_para_100)",
           "explicacion_paso_a_paso": "Linea 1: creamos una caja llamada 'nombre' y guardamos el texto \"Sofia\" (las comillas le dicen a Python que es texto, no codigo).\nLinea 2: creamos una caja llamada 'edad' con el numero 15 (sin comillas, porque es un numero).\nLinea 3: Python hace la resta 100 - 15 y guarda el resultado (85) en una nueva caja llamada 'anios_para_100'.\nLineas 5-7: 'print' simplemente muestra en pantalla lo que hay dentro de cada caja."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe una funcion llamada calcular_imc(peso, altura) que reciba el peso en kg y la altura en metros, y retorne el Indice de Masa Corporal (peso / altura**2) redondeado a 2 decimales.",
@@ -47,7 +48,8 @@
           "descripcion": "Revisemos si un numero es par o impar, y contemos del 1 al 5 usando un for.",
           "codigo": "numero = 7\n\nif numero % 2 == 0:\n    print(\"Es par\")\nelse:\n    print(\"Es impar\")\n\nfor i in range(1, 6):\n    print(\"Contando:\", i)",
           "explicacion_paso_a_paso": "'numero % 2' calcula el RESIDUO de dividir numero entre 2 (el % se llama 'modulo'). Si el residuo es 0, el numero es par.\nComo 7 % 2 es 1 (no 0), entra al 'else' y muestra \"Es impar\".\n'range(1, 6)' genera los numeros 1, 2, 3, 4, 5 (el 6 NO se incluye, Python siempre para uno antes del limite).\nEl 'for' toma cada uno de esos numeros, lo guarda temporalmente en 'i', y ejecuta el print una vez por cada uno -- osea 5 veces en total."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe una funcion clasificar_triangulo(a, b, c) que reciba los 3 lados de un triangulo y retorne 'equilatero', 'isosceles' o 'escaleno'.",
@@ -84,7 +86,8 @@
           "descripcion": "Calculemos el factorial de un numero usando recursion.",
           "codigo": "def factorial(n):\n    if n == 0 or n == 1:\n        return 1  # caso base\n    return n * factorial(n - 1)  # llamada recursiva\n\nprint(factorial(5))",
           "explicacion_paso_a_paso": "Si n es 0 o 1, retornamos 1 directo -- ese es el 'fondo' de las munecas rusas, donde paramos de abrir mas.\nSi n es mayor, retornamos n multiplicado por factorial(n-1) -- es decir, le pedimos a la funcion que se resuelva a si misma pero con un numero mas pequenio.\nPara factorial(5): 5 * factorial(4) -> 5 * (4 * factorial(3)) -> ... -> 5 * 4 * 3 * 2 * 1 = 120.\nCada llamada 'espera' a que la siguiente termine antes de multiplicar, como una fila de fichas de domino cayendo y luego reconstruyendose al reves."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe una funcion fibonacci(n) que retorne el n-esimo numero de Fibonacci usando recursion (fibonacci(0)=0, fibonacci(1)=1).",
@@ -121,7 +124,8 @@
           "descripcion": "Guardemos frutas favoritas en una lista, y sus colores en un diccionario.",
           "codigo": "frutas = [\"manzana\", \"platano\", \"manzana\", \"uva\"]\ncolores = {\"manzana\": \"rojo\", \"platano\": \"amarillo\", \"uva\": \"morado\"}\n\nprint(len(frutas))\nprint(colores[\"platano\"])\n\nfor fruta in frutas:\n    print(fruta, \"es\", colores[fruta])",
           "explicacion_paso_a_paso": "'frutas' es una lista con 4 elementos (si, 'manzana' aparece dos veces, las listas lo permiten).\n'len(frutas)' cuenta cuantos elementos tiene la lista -> 4.\n'colores[\"platano\"]' busca la clave \"platano\" en el diccionario y devuelve su valor -> \"amarillo\".\nEl 'for' recorre cada fruta de la lista, y usa esa fruta como clave para buscar su color en el diccionario."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe una funcion contar_frecuencias(palabras) que reciba una lista de strings y retorne un diccionario con la frecuencia de cada palabra.",
@@ -154,7 +158,8 @@
           "descripcion": "Intentemos convertir texto a numero, protegiendonos si el texto no es un numero valido.",
           "codigo": "def texto_a_numero(texto):\n    try:\n        return int(texto)\n    except ValueError:\n        return \"Eso no es un numero valido\"\n\nprint(texto_a_numero(\"42\"))\nprint(texto_a_numero(\"hola\"))",
           "explicacion_paso_a_paso": "'int(texto)' intenta convertir el texto a un numero entero.\nCon \"42\", funciona perfecto y retorna 42.\nCon \"hola\", Python NO puede convertirlo a numero, asi que lanza un 'ValueError' -- pero como estaba dentro de un 'try', en vez de romper el programa, salta directo al 'except ValueError' y retorna el mensaje de aviso."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe una funcion dividir_seguro(a, b) que retorne a/b, o el string 'Error: division por cero' si b es 0, usando try/except (sin usar un if para revisar b antes).",
@@ -187,7 +192,8 @@
           "descripcion": "Convirtamos una lista de nombres a mayusculas, solo los que tienen mas de 3 letras.",
           "codigo": "nombres = [\"Ana\", \"Roberto\", \"Luis\", \"Fernanda\"]\n\nnombres_largos_mayus = [nombre.upper() for nombre in nombres if len(nombre) > 3]\n\nprint(nombres_largos_mayus)",
           "explicacion_paso_a_paso": "Se lee de derecha a izquierda casi: 'para cada nombre en nombres, SI su longitud es mayor a 3, ponlo en mayusculas'.\n'Ana' tiene 3 letras -> no cumple 'len > 3' -> se descarta.\n'Roberto', 'Luis' (4 letras) y 'Fernanda' si cumplen -> se convierten a mayusculas.\nResultado: ['ROBERTO', 'LUIS', 'FERNANDA']. Todo eso en una sola linea, sin loop explicito ni .append()."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe una funcion cuadrados_pares(n) que retorne una lista con los cuadrados de todos los numeros pares del 1 al n (inclusive), usando UNA sola comprension de lista.",
@@ -222,7 +228,8 @@
           "descripcion": "Creemos una clase Perro con nombre y raza, y un metodo para que ladre.",
           "codigo": "class Perro:\n    def __init__(self, nombre, raza):\n        self.nombre = nombre\n        self.raza = raza\n\n    def ladrar(self):\n        return f\"{self.nombre} dice: Guau!\"\n\nmi_perro = Perro(\"Rex\", \"Labrador\")\nprint(mi_perro.ladrar())",
           "explicacion_paso_a_paso": "'class Perro:' crea el molde llamado Perro.\n'__init__(self, nombre, raza)' se ejecuta cuando creamos un perro nuevo, y guarda el nombre y raza EN ESE perro especifico ('self.nombre = nombre').\n'Perro(\"Rex\", \"Labrador\")' presiona el molde: crea un objeto real, un perro llamado Rex.\n'mi_perro.ladrar()' le pide a ESE perro especifico que ejecute su metodo ladrar, y usa su propio nombre guardado (self.nombre) para armar el mensaje."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Crea una clase CuentaBancaria con saldo inicial, metodo depositar(monto) y retirar(monto) que lance ValueError si el retiro excede el saldo. Incluye un metodo consultar_saldo().",
@@ -251,7 +258,8 @@
           "descripcion": "Creemos un decorador que imprime un mensaje antes y despues de ejecutar cualquier funcion.",
           "codigo": "def anunciar(func):\n    def wrapper(*args, **kwargs):\n        print(\"Empezando...\")\n        resultado = func(*args, **kwargs)\n        print(\"Terminado.\")\n        return resultado\n    return wrapper\n\n@anunciar\ndef saludar(nombre):\n    return f\"Hola, {nombre}!\"\n\nprint(saludar(\"Sofia\"))",
           "explicacion_paso_a_paso": "'anunciar' es el decorador: recibe una funcion 'func' y retorna 'wrapper', una nueva funcion que envuelve a la original.\n'@anunciar' encima de 'def saludar' es la forma corta de decir 'saludar = anunciar(saludar)' -- reemplaza saludar por su version envuelta.\nCuando llamas 'saludar(\"Sofia\")', en realidad estas llamando a 'wrapper', que primero imprime \"Empezando...\", LUEGO ejecuta la funcion original (saludar de verdad), y despues imprime \"Terminado.\" -- todo eso sin haber tocado el codigo original de saludar."
-        }
+        },
+        "para_profundizar": "Automate the Boring Stuff with Python, de Al Sweigart -- gratis en automatetheboringstuff.com."
       },
       "exercise": {
         "prompt": "Escribe un decorador repetir(n) que, aplicado a una funcion sin argumentos, ejecute esa funcion n veces y retorne una lista con los n resultados.",

@@ -14,7 +14,8 @@
           "descripcion": "Declaremos variables de distintos tipos y mostremos sus valores.",
           "codigo": "#include <stdio.h>\n\nint main() {\n    int edad = 15;\n    float estatura = 1.65;\n    char inicial = 'S';\n\n    printf(\"Edad: %d\\n\", edad);\n    printf(\"Estatura: %.2f\\n\", estatura);\n    printf(\"Inicial: %c\\n\", inicial);\n    return 0;\n}",
           "explicacion_paso_a_paso": "'int edad = 15;' crea una caja de tipo entero llamada edad, con 15 adentro.\n'float estatura = 1.65;' crea una caja para decimales.\n'char inicial = 'S';' guarda UN SOLO caracter (con comillas simples, no dobles -- las dobles son para texto/strings, que en C son mas complejos, los veremos despues).\n'printf' es como el 'print' de Python pero mas estricto: tienes que decirle el FORMATO de lo que vas a imprimir. '%d' es para enteros, '%.2f' es para decimales con 2 posiciones despues del punto, '%c' es para un caracter. '\\n' al final significa 'salto de linea'."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Escribe una funcion float calcular_imc(float peso, float altura) que retorne el Indice de Masa Corporal (peso / altura^2).",
@@ -39,7 +40,8 @@
           "descripcion": "Revisemos si un numero es par o impar, y contemos del 1 al 5 con un for.",
           "codigo": "#include <stdio.h>\n\nint main() {\n    int numero = 7;\n\n    if (numero % 2 == 0) {\n        printf(\"Es par\\n\");\n    } else {\n        printf(\"Es impar\\n\");\n    }\n\n    for (int i = 1; i <= 5; i++) {\n        printf(\"Contando: %d\\n\", i);\n    }\n    return 0;\n}",
           "explicacion_paso_a_paso": "'numero % 2' calcula el residuo, igual que en Python.\n'== 0' compara si es igual a 0 (doble igual, NO uno solo -- un solo '=' en C es para ASIGNAR un valor, doble '==' es para COMPARAR, confundirlos es un error comun).\nEl for empieza con i=1, sigue mientras i<=5 (osea hasta 5 incluido), y suma 1 a i en cada vuelta -- imprime 'Contando: 1' hasta 'Contando: 5'."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Escribe una funcion int es_primo(int n) que retorne 1 si n es primo, 0 si no.",
@@ -64,7 +66,8 @@
           "descripcion": "Encontremos el numero mas grande en un arreglo.",
           "codigo": "#include <stdio.h>\n\nint encontrar_maximo(int arr[], int n) {\n    int maximo = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > maximo) {\n            maximo = arr[i];\n        }\n    }\n    return maximo;\n}\n\nint main() {\n    int numeros[] = {3, 7, 2, 9, 4};\n    printf(\"%d\\n\", encontrar_maximo(numeros, 5));\n    return 0;\n}",
           "explicacion_paso_a_paso": "Empezamos suponiendo que el primer casillero (arr[0], que es 3) es el maximo.\nRecorremos desde el casillero 1 en adelante, comparando cada uno contra el maximo actual.\nCada vez que encontramos algo mas grande, actualizamos 'maximo'.\nAl final, 'maximo' termina siendo 9 -- el numero mas grande del arreglo.\nNota que en main() le pasamos 'numeros' Y '5' (el tamanio) por separado -- la funcion no podria saber que hay 5 elementos solo con el arreglo."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Escribe una funcion int suma_arreglo(int arr[], int n) que retorne la suma de los n elementos del arreglo.",
@@ -89,7 +92,8 @@
           "descripcion": "Veamos la diferencia entre pasar una variable normal (no cambia el original) y pasar un puntero (si cambia).",
           "codigo": "#include <stdio.h>\n\nvoid no_funciona(int x) {\n    x = 100;  // solo cambia la copia local\n}\n\nvoid si_funciona(int *x) {\n    *x = 100;  // cambia el valor real, siguiendo el puntero\n}\n\nint main() {\n    int numero = 5;\n\n    no_funciona(numero);\n    printf(\"Despues de no_funciona: %d\\n\", numero);\n\n    si_funciona(&numero);\n    printf(\"Despues de si_funciona: %d\\n\", numero);\n    return 0;\n}",
           "explicacion_paso_a_paso": "'no_funciona(numero)' le pasa una COPIA del 5. Adentro de la funcion, x se vuelve 100, pero es la copia -- el 'numero' original en main() sigue siendo 5.\n'si_funciona(&numero)' le pasa la DIRECCION de numero (el '&'). Adentro, 'x' es un puntero que apunta a esa direccion. '*x = 100' dice 've a esa direccion y pon 100 ahi' -- esta vez si modifica el numero original.\nPor eso el primer printf muestra 5, y el segundo muestra 100."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Escribe una funcion void intercambiar(int *a, int *b) que intercambie los valores apuntados por a y b usando punteros.",
@@ -114,7 +118,8 @@
           "descripcion": "Creemos un struct Persona con nombre y edad, y calculemos si es mayor de edad.",
           "codigo": "#include <stdio.h>\n\nstruct Persona {\n    char nombre[50];\n    int edad;\n};\n\nint es_mayor_de_edad(struct Persona p) {\n    return p.edad >= 18;\n}\n\nint main() {\n    struct Persona alguien = {\"Carlos\", 20};\n    printf(\"%s tiene %d anios. Mayor de edad: %d\\n\",\n           alguien.nombre, alguien.edad, es_mayor_de_edad(alguien));\n    return 0;\n}",
           "explicacion_paso_a_paso": "'struct Persona { char nombre[50]; int edad; };' define el molde: cada Persona tiene un nombre (un arreglo de hasta 50 caracteres) y una edad.\n'struct Persona alguien = {\"Carlos\", 20};' crea una Persona real, llenando sus campos en orden.\n'alguien.nombre' y 'alguien.edad' acceden a cada campo con un punto.\n'es_mayor_de_edad(alguien)' recibe una COPIA completa del struct (nombre y edad juntos) y revisa el campo edad."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Define un struct Punto {int x; int y;} e implementa float distancia(struct Punto a, struct Punto b) que calcule la distancia euclidiana (usa sqrt y pow de math.h).",
@@ -139,7 +144,8 @@
           "descripcion": "Contemos cuantas letras tiene un texto, recorriendolo manualmente hasta el caracter nulo.",
           "codigo": "#include <stdio.h>\n\nint mi_longitud(char *s) {\n    int contador = 0;\n    while (s[contador] != '\\0') {\n        contador++;\n    }\n    return contador;\n}\n\nint main() {\n    printf(\"%d\\n\", mi_longitud(\"hola\"));\n    return 0;\n}",
           "explicacion_paso_a_paso": "Empezamos con contador en 0.\nEl 'while' sigue avanzando MIENTRAS la letra en la posicion actual NO sea el caracter nulo.\nCada vuelta, aumentamos el contador Y avanzamos una posicion en el string (s[0], s[1], s[2]...).\nCuando llegamos a la posicion donde esta el '\\0' invisible (justo despues de la 'a' en \"hola\"), el while se detiene.\nEl contador termino en 4 -- la cantidad de letras reales, sin contar el '\\0'."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Escribe una funcion int contar_vocales(char *s) que retorne cuantas vocales (a,e,i,o,u, mayus o minus) contiene el string.",
@@ -164,7 +170,8 @@
           "descripcion": "Reservemos memoria dinamicamente para guardar la edad de N personas, sin saber N de antemano.",
           "codigo": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n = 3;\n    int *edades = malloc(n * sizeof(int));\n\n    edades[0] = 15;\n    edades[1] = 22;\n    edades[2] = 40;\n\n    for (int i = 0; i < n; i++) {\n        printf(\"Persona %d: %d anios\\n\", i, edades[i]);\n    }\n\n    free(edades);\n    return 0;\n}",
           "explicacion_paso_a_paso": "'malloc(n * sizeof(int))' pide espacio para 3 enteros (sizeof(int) nos dice cuantos bytes ocupa un entero en esta computadora).\n'edades' es un puntero al inicio de ese espacio recien reservado -- lo podemos usar casi como un arreglo normal: edades[0], edades[1], etc.\nLlenamos y leemos los valores normalmente.\n'free(edades)' devuelve esa memoria al sistema quen ya no la necesitamos -- si olvidaramos esta linea, esos 3 enteros de espacio quedarian 'perdidos' hasta que el programa termine."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Escribe int* crear_arreglo_dinamico(int n) que reserve memoria con malloc para n enteros inicializados en 0, y void liberar_arreglo(int *arr) que la libere con free.",
@@ -189,7 +196,8 @@
           "descripcion": "Construyamos una lista enlazada de 3 numeros y la imprimamos recorriendola.",
           "codigo": "#include <stdio.h>\n#include <stdlib.h>\n\nstruct Nodo {\n    int valor;\n    struct Nodo *siguiente;\n};\n\nint main() {\n    struct Nodo *n3 = malloc(sizeof(struct Nodo));\n    n3->valor = 30;\n    n3->siguiente = NULL;\n\n    struct Nodo *n2 = malloc(sizeof(struct Nodo));\n    n2->valor = 20;\n    n2->siguiente = n3;\n\n    struct Nodo *n1 = malloc(sizeof(struct Nodo));\n    n1->valor = 10;\n    n1->siguiente = n2;\n\n    struct Nodo *actual = n1;\n    while (actual != NULL) {\n        printf(\"%d -> \", actual->valor);\n        actual = actual->siguiente;\n    }\n    printf(\"NULL\\n\");\n    return 0;\n}",
           "explicacion_paso_a_paso": "Creamos 3 nodos por separado con malloc, cada uno en un lugar distinto de la memoria (no estan pegados como un arreglo).\n'n3->siguiente = NULL' marca a n3 como el ULTIMO nodo (el flecha '->' se usa para acceder a los campos de un struct cuando tienes un PUNTERO al struct, en vez de un punto normal).\n'n2->siguiente = n3' conecta n2 con n3 -- n2 'sabe' donde esta n3 aunque no esten juntos en memoria.\nLo mismo con n1 apuntando a n2. Ahora n1 es la 'entrada' de toda la cadena: 10 -> 20 -> 30 -> NULL.\nEl while recorre la cadena siguiendo cada 'siguiente' hasta llegar a NULL, que marca el final."
-        }
+        },
+        "para_profundizar": "The C Programming Language, de Kernighan & Ritchie (el clasico 'K&R')."
       },
       "exercise": {
         "prompt": "Define struct Nodo {int valor; struct Nodo *siguiente;}. Implementa struct Nodo* insertar_al_inicio(struct Nodo *cabeza, int valor) que inserte un nodo nuevo al inicio de la lista, y int sumar_lista(struct Nodo *cabeza) que retorne la suma de todos los valores.",
