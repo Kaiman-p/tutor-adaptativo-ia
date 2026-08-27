@@ -1,7 +1,7 @@
 # Fundamentos de Inteligencia Artificial — Summer Camp 2026
 ## Tutor Adaptativo de Fundamentos de Programación
 
-**Autor:** César (Amo)
+**Autor:** César Oswaldo Yunga Nieves
 **Modalidad:** Individual
 **Fecha límite:** 28 de agosto de 2026 (supletorio 29 de agosto)
 
