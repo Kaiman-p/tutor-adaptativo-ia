@@ -139,6 +139,17 @@ funcionan los punteros y la memoria, no solo en que el código
 compile~\cite{kr}. Esa misma idea --- comprender, no memorizar --- es
 la que motiva este proyecto.
 
+Hay además una razón más personal, y más actual, detrás de este
+proyecto. Hoy en día es facilísimo pedirle a una IA que escriba
+código, y que lo escriba bien. Pero eso mismo esconde un riesgo: si no
+tienes los fundamentos, no puedes saber si lo que la IA generó hace lo
+que de verdad necesitas, no puedes detectar un error sutil, ni puedes
+adaptar esa solución a un caso distinto. Depender de la IA sin
+entender lo que produce es quedar a ciegas de tu propio código. Por
+eso quise construir una herramienta que, usando la IA como motor, me
+obligara a entender los fundamentos por mi propia cuenta --- no a
+saltármelos.
+
 El problema, entonces, es que las herramientas típicas de práctica te
 dicen \textit{si} acertaste, pero no \textit{qué tan bien} entendiste
 el concepto que estabas practicando. Y sin esa información, es fácil
@@ -182,7 +193,6 @@ concepto. En concreto, el sistema:
 % ============================================================
 %  2. RESULTADO DE IA
 % ============================================================
-\newpage
 \section{Qué hace la IA en este proyecto}
 
 Según el alcance del Summer Camp, la IA tenía que ser el motor real de
@@ -539,44 +549,7 @@ ejecución real, no solo revisados manualmente:
 \end{itemize}
 
 % ============================================================
-%  LIMITACIONES Y TRABAJO FUTURO
-% ============================================================
-\section{Limitaciones y Trabajo Futuro}
-
-Como todo prototipo desarrollado en un tiempo acotado, el sistema tiene
-limitaciones conocidas que se documentan con honestidad:
-
-\begin{itemize}[leftmargin=*]
-  \item \textbf{No detecta copia directa de la solución.} El sistema
-  mide corrección y comprensión conceptual (vía el LLM), pero no puede
-  distinguir si el estudiante razonó la respuesta o copió la solución
-  mostrada en la ayuda ``Ver solución paso a paso''. El diseño confía
-  en un uso progresivo de las ayudas, como cualquier libro de texto con
-  soluciones al final.
-  \item \textbf{Es monousuario.} El progreso se guarda por nombre de
-  usuario en archivos locales; no hay un sistema de cuentas real. Dos
-  personas con el mismo nombre compartirían progreso.
-  \item \textbf{Dependencia de un servicio externo de IA.} El análisis
-  conceptual requiere conexión a un proveedor de LLM. Sin conexión, el
-  sistema se degrada al modo \textit{fallback} (funcional, pero sin
-  análisis conceptual).
-  \item \textbf{Cobertura de lenguajes.} Se implementaron 4 lenguajes;
-  extender a más requiere crear la currícula correspondiente (el motor
-  ya está diseñado para soportarlo sin cambios estructurales).
-\end{itemize}
-
-\subsection{Trabajo futuro}
-\begin{itemize}[leftmargin=*]
-  \item Extender a más lenguajes sobre el mismo motor genérico.
-  \item Añadir un sistema de cuentas real para uso multiusuario.
-  \item Incorporar una interfaz visual más rica (animaciones, sonidos)
-  al estilo de un videojuego completo.
-  \item Explorar detección de patrones de copia para reforzar la
-  integridad del aprendizaje.
-\end{itemize}
-
-% ============================================================
-%  7. CONCLUSIONES
+%  6. CONCLUSIONES
 % ============================================================
 \section{Conclusiones}
 
@@ -612,7 +585,6 @@ del repositorio.
 % ============================================================
 %  BIBLIOGRAFIA
 % ============================================================
-\newpage
 \begin{thebibliography}{9}
 
 \bibitem{kr}
